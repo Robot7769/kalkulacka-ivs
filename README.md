@@ -11,7 +11,7 @@ Autori
 ------
 
 Nazev tymu
-- xsafar26 Vítezslav Šafář
+- xsafar26 Vítězslav Šafář
 - xskrab12 Jan Škrabal 
 - xkocia19 Richard Kocián
 - xcafou01 Pert Cafourek
