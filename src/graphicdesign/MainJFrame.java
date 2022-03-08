@@ -24,7 +24,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public void printf(String x){
         String y = jText.getText();
         StringBuilder sb = new StringBuilder(y);
-        if(x == "BACK"){
+        if(x.equals("BACK")){
             if(y.length() != 3){      
                 sb.deleteCharAt(y.length()-1);
             }
@@ -41,27 +41,28 @@ public class MainJFrame extends javax.swing.JFrame {
         jText.setText(sb.toString());
     }
     public void KeyTracker(char c){
-        char numbers[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-        char operators[] = {'+','-','*','/', '%'};
-        for (int i = 0; i < numbers.length; i++) {
-            if(c == numbers[i]){
+        char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        char[] operators = {'+','-','*','/', '%'};
+        for (char number : numbers) {
+            if (c == number) {
                 printf(Character.toString(c));
                 break;
             }
         }
-        for (int i = 0; i < operators.length; i++) {
-            if(c == operators[i]){
-                if(c == '/'){
+        for (char operator : operators) {
+            if (c == operator) {
+                if (c == '/') {
                     printOperator("÷");
-                }else{
+                } else {
                     printOperator(Character.toString(c));
                 }
-                 break;
+                break;
             }
         }
         switch (c) {
             case 'c':
             case 'C':
+            case KeyEvent.VK_DELETE:
                 jText.setText("  ");
                 break;
             case '!':
@@ -75,6 +76,9 @@ public class MainJFrame extends javax.swing.JFrame {
             case KeyEvent.VK_BACK_SPACE:
                 printf("BACK");
                 break;
+            case ',':
+            case '.':
+                printf(",");
             default:
                 break;
         }
@@ -132,11 +136,6 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         DarkMode.setText("Dark Mode");
-        DarkMode.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                DarkModeStateChanged(evt);
-            }
-        });
         DarkMode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DarkModeActionPerformed(evt);
@@ -806,10 +805,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInfoActionPerformed
-
-    private void DarkModeStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_DarkModeStateChanged
-
-    }//GEN-LAST:event_DarkModeStateChanged
 
     private void btnInfoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnInfoKeyTyped
         KeyTracker(evt.getKeyChar());
