@@ -9,13 +9,19 @@ import java.awt.event.KeyEvent;
 
 /**
  *
- * @author safar
+ * @author xsafar26
+ * @author xskrab12
+ * @author xkocia19
+ * @author xcafou01
  */
 public class MainJFrame extends javax.swing.JFrame {
-
     /**
      * Creates new form MainJFrame
      */
+    private double value1 = 0;
+    private double value2 = 0;
+    private boolean operator = false;
+    private boolean decimal = false;
     public MainJFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -64,6 +70,8 @@ public class MainJFrame extends javax.swing.JFrame {
             case 'C':
             case KeyEvent.VK_DELETE:
                 jText.setText("  ");
+                    value1 = 0;
+                    value2 = 0;
                 break;
             case '!':
                 //fucknce fac
@@ -75,6 +83,11 @@ public class MainJFrame extends javax.swing.JFrame {
                 break;
             case KeyEvent.VK_BACK_SPACE:
                 printf("BACK");
+                if (!operator) {
+                    value1 /= 10;
+                } else {
+                    value2 /= 10;
+                }
                 break;
             case ',':
             case '.':
@@ -83,11 +96,17 @@ public class MainJFrame extends javax.swing.JFrame {
                 break;
         }
     }
-    
+    public void countValue1(double x) {
+        if (!operator) {
+            value1 = value1 * 10 + x;
+        } else {
+            value2 = value2 * 10 + x;
+        }
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
         jPanel1 = new javax.swing.JPanel();
         btnInfo = new javax.swing.JButton();
         DarkMode = new javax.swing.JToggleButton();
@@ -596,62 +615,77 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
         printf("0");
+        countValue1(0);
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         printf("1");
+        countValue1(1);
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         printf("2");
+        countValue1(2);
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
         printf("3");
+        countValue1(3);
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
         printf("4");
+        countValue1(4);
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
         printf("5");
+        countValue1(5);
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
         printf("6");
+        countValue1(6);
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
         printf("7");
+        countValue1(7);
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
         printf("8");
+        countValue1(8);
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
         printf("9");
+        countValue1(9);
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
         printOperator("+");
+        operator = true;
     }//GEN-LAST:event_btnPlusActionPerformed
 
     private void btnMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinusActionPerformed
         printOperator("-");
+        operator = true;
     }//GEN-LAST:event_btnMinusActionPerformed
 
     private void btnMulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMulActionPerformed
         printOperator("*");
+        operator = true;
     }//GEN-LAST:event_btnMulActionPerformed
 
     private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivActionPerformed
         printOperator("÷");
+        operator = true;
     }//GEN-LAST:event_btnDivActionPerformed
 
     private void btnEQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEQActionPerformed
-        
+        String x = "   "+value1;
+        jText.setText(x);
     }//GEN-LAST:event_btnEQActionPerformed
 
     private void btnDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecActionPerformed
