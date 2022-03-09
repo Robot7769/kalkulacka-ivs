@@ -19,15 +19,29 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainJFrame
      */
-    private double value1 = 0;
-    private double value2 = 0;
+    private double value1 = 0.0;
+    private double value2 = 0.0;
     private boolean operatorSet = false;
-    private boolean decimal = false;
+    private boolean decimalVal1 = false;
+    private boolean decimalVal2 = false;
+    private double digitsVal1 = 0.0;
+    private double digitsVal2 = 0.0;
     private operatorsID operatorID = operatorsID.DEFAULT;
     public MainJFrame() {
         initComponents();
         setLocationRelativeTo(null);
         jText.setText("   ");
+    }
+    public void DeleteScreen(){
+        jText.setText("   ");
+        value1 = 0.0;
+        value2 = 0.0;
+        operatorID = operatorsID.DEFAULT;
+        operatorSet = false;
+        decimalVal1 = false;
+        decimalVal2 = false;
+        digitsVal1 = 0.0;
+        digitsVal2 = 0.0;
     }
     public void printf(String x){
         String y = jText.getText();
@@ -62,38 +76,34 @@ public class MainJFrame extends javax.swing.JFrame {
                 c = y.charAt(y.length()-1);
                 for (char number : numbers) {
                     if (c == number) {
-                        if(!decimal){
-                            if (!operatorSet) {
-                                double x = value1 % 10;
-                                value1 -= x;
-                                value1 /= 10;
+                        if(!operatorSet){
+                            if (!decimalVal1) {
+                                value1 -= ((double)c-'0');
+                                value1 /= 10.0;
                             } else {
-                                double x = value2 % 10;
-                                value2 -= x;
-                                value2 /= 10;
+                                value1 -= (double)(c-'0')/Math.pow(10.0, digitsVal1--);
                             }
                         }else{
-                            System.out.println(value1);
+                            if (!decimalVal2) {
+                                value2 -= ((double)c-'0');
+                                value2 /= 10;
+                            } else {
+                                value2 -= (double)(c-'0')/Math.pow(10.0, digitsVal2--);
+                            }
                         }
                         sb.deleteCharAt(y.length()-1);
                         break;
                     }
                 }
-
+                if(c == '.'){
+                    if(!operatorSet){
+                        decimalVal1 = false;
+                    }else{
+                        decimalVal2 = false;
+                    }
+                    sb.deleteCharAt(y.length()-1);
+                }
             }
-        if(!decimal){
-            if (!operatorSet) {
-                double x = value1 % 10;
-                value1 -= x;
-                value1 /= 10;
-            } else {
-                double x = value2 % 10;
-                value2 -= x;
-                value2 /= 10;
-            }
-        }else{
-            System.out.println(value1);
-        }
         jText.setText(sb.toString());
     }
     public void KeyTracker(char c){
@@ -102,11 +112,13 @@ public class MainJFrame extends javax.swing.JFrame {
         for (char number : numbers) {
             if (c == number) {
                 printf(Character.toString(c));
+                countValue(((double)c-'0'));
                 break;
             }
         }
         for (char operator : operators) {
             if (c == operator) {
+                operatorSet = true;
                 if (c == '/') {
                     printOperator("÷");
                 } else {
@@ -119,11 +131,7 @@ public class MainJFrame extends javax.swing.JFrame {
             case 'c':
             case 'C':
             case KeyEvent.VK_DELETE:
-                jText.setText("  ");
-                    value1 = 0;
-                    value2 = 0;
-                    operatorID = operatorsID.DEFAULT;
-                    decimal = false;
+                DeleteScreen();
                 break;
             case '!':
                 //fucknce fac
@@ -138,18 +146,33 @@ public class MainJFrame extends javax.swing.JFrame {
                 break;
             case ',':
             case '.':
-                printf(",");
+                printf(".");
+                if(!operatorSet){
+                    decimalVal1 = true;
+                }else{
+                    decimalVal2 = true;
+                }
+                break;
             default:
                 break;
         }
     }
     public void countValue(double x) {
-        //TODO upravit pro desetinná čísla
-        if (!operatorSet) {
-            value1 = value1 * 10 + x;
+        if(!operatorSet){
+            if (!decimalVal1) {
+                value1 = value1 * 10.0 + x;
+
+            } else {
+                value1 += x/Math.pow(10.0, ++digitsVal1);
+            }
             System.out.println(value1);
-        } else {
-            value2 = value2 * 10 + x;
+        }else{
+            if (!decimalVal2) {
+                value2 = value2 * 10.0 + x;
+            } else {
+                value2 += x/Math.pow(10.0, ++digitsVal2);
+            }
+            System.out.println(value2);
         }
     }
 
@@ -664,52 +687,52 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
         printf("0");
-        countValue(0);
+        countValue(0.0);
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         printf("1");
-        countValue(1);
+        countValue(1.0);
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         printf("2");
-        countValue(2);
+        countValue(2.0);
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
         printf("3");
-        countValue(3);
+        countValue(3.0);
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
         printf("4");
-        countValue(4);
+        countValue(4.0);
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
         printf("5");
-        countValue(5);
+        countValue(5.0);
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
         printf("6");
-        countValue(6);
+        countValue(6.0);
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
         printf("7");
-        countValue(7);
+        countValue(7.0);
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
         printf("8");
-        countValue(8);
+        countValue(8.0);
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
         printf("9");
-        countValue(9);
+        countValue(9.0);
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
@@ -737,13 +760,13 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDivActionPerformed
 
     private void btnEQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEQActionPerformed
-        String x = "   "+value1;
+        String x = "   "+value1+"\n   "+value2;
         jText.setText(x);
     }//GEN-LAST:event_btnEQActionPerformed
 
     private void btnDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecActionPerformed
-        printf(",");
-        decimal = true;
+        printf(".");
+        decimalVal1 = true;
     }//GEN-LAST:event_btnDecActionPerformed
 
     private void btnFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacActionPerformed
@@ -771,7 +794,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBraLActionPerformed
 
     private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
-        jText.setText("  ");
+        DeleteScreen();
     }//GEN-LAST:event_btnCActionPerformed
 
     private void DarkModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DarkModeActionPerformed
