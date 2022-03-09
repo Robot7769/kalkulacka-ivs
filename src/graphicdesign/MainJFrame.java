@@ -7,6 +7,7 @@ package graphicdesign;
 
 import java.awt.event.KeyEvent;
 
+enum operatorsID {DEFAULT, PLUS, MINUS, MULTIPLY, DIVIDE, FACTORIAL, SQRT, POWER, MOD}
 /**
  *
  * @author xsafar26
@@ -20,8 +21,9 @@ public class MainJFrame extends javax.swing.JFrame {
      */
     private double value1 = 0;
     private double value2 = 0;
-    private boolean operator = false;
+    private boolean operatorSet = false;
     private boolean decimal = false;
+    private operatorsID operatorID = operatorsID.DEFAULT;
     public MainJFrame() {
         initComponents();
         setLocationRelativeTo(null);
@@ -30,13 +32,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public void printf(String x){
         String y = jText.getText();
         StringBuilder sb = new StringBuilder(y);
-        if(x.equals("BACK")){
-            if(y.length() != 3){      
-                sb.deleteCharAt(y.length()-1);
-            }
-        }else{
         sb.append(x);
-        }           
         jText.setText(sb.toString());
     }
     public void printOperator(String x){
@@ -44,6 +40,60 @@ public class MainJFrame extends javax.swing.JFrame {
         StringBuilder sb = new StringBuilder(y);
         sb.append("\n");
         sb.append(x + " ");
+        jText.setText(sb.toString());
+    }
+    public void BackSpace(){
+        String y = jText.getText();
+        StringBuilder sb = new StringBuilder(y);
+            if(y.length() != 3){
+                char[] operators = {'+','-','*','/', '%'};
+                char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+                char c = y.charAt(y.length()-2);
+                for (char operator : operators) {
+                    if (c == operator) {
+                        sb.deleteCharAt(y.length()-1);
+                        sb.deleteCharAt(y.length()-2);
+                        sb.deleteCharAt(y.length()-3);
+                        operatorID = operatorsID.DEFAULT;
+                        operatorSet = false;
+                        break;
+                    }
+                }
+                c = y.charAt(y.length()-1);
+                for (char number : numbers) {
+                    if (c == number) {
+                        if(!decimal){
+                            if (!operatorSet) {
+                                double x = value1 % 10;
+                                value1 -= x;
+                                value1 /= 10;
+                            } else {
+                                double x = value2 % 10;
+                                value2 -= x;
+                                value2 /= 10;
+                            }
+                        }else{
+                            System.out.println(value1);
+                        }
+                        sb.deleteCharAt(y.length()-1);
+                        break;
+                    }
+                }
+
+            }
+        if(!decimal){
+            if (!operatorSet) {
+                double x = value1 % 10;
+                value1 -= x;
+                value1 /= 10;
+            } else {
+                double x = value2 % 10;
+                value2 -= x;
+                value2 /= 10;
+            }
+        }else{
+            System.out.println(value1);
+        }
         jText.setText(sb.toString());
     }
     public void KeyTracker(char c){
@@ -72,6 +122,8 @@ public class MainJFrame extends javax.swing.JFrame {
                 jText.setText("  ");
                     value1 = 0;
                     value2 = 0;
+                    operatorID = operatorsID.DEFAULT;
+                    decimal = false;
                 break;
             case '!':
                 //fucknce fac
@@ -82,12 +134,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 //funkce na =
                 break;
             case KeyEvent.VK_BACK_SPACE:
-                printf("BACK");
-                if (!operator) {
-                    value1 /= 10;
-                } else {
-                    value2 /= 10;
-                }
+                BackSpace();
                 break;
             case ',':
             case '.':
@@ -96,9 +143,11 @@ public class MainJFrame extends javax.swing.JFrame {
                 break;
         }
     }
-    public void countValue1(double x) {
-        if (!operator) {
+    public void countValue(double x) {
+        //TODO upravit pro desetinná čísla
+        if (!operatorSet) {
             value1 = value1 * 10 + x;
+            System.out.println(value1);
         } else {
             value2 = value2 * 10 + x;
         }
@@ -615,72 +664,76 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
         printf("0");
-        countValue1(0);
+        countValue(0);
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         printf("1");
-        countValue1(1);
+        countValue(1);
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         printf("2");
-        countValue1(2);
+        countValue(2);
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
         printf("3");
-        countValue1(3);
+        countValue(3);
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
         printf("4");
-        countValue1(4);
+        countValue(4);
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
         printf("5");
-        countValue1(5);
+        countValue(5);
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
         printf("6");
-        countValue1(6);
+        countValue(6);
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
         printf("7");
-        countValue1(7);
+        countValue(7);
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
         printf("8");
-        countValue1(8);
+        countValue(8);
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
         printf("9");
-        countValue1(9);
+        countValue(9);
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
         printOperator("+");
-        operator = true;
+        operatorSet = true;
+        operatorID = operatorsID.PLUS;
     }//GEN-LAST:event_btnPlusActionPerformed
 
     private void btnMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinusActionPerformed
         printOperator("-");
-        operator = true;
+        operatorSet = true;
+        operatorID = operatorsID.MINUS;
     }//GEN-LAST:event_btnMinusActionPerformed
 
     private void btnMulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMulActionPerformed
         printOperator("*");
-        operator = true;
+        operatorSet = true;
+        operatorID = operatorsID.MULTIPLY;
     }//GEN-LAST:event_btnMulActionPerformed
 
     private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivActionPerformed
         printOperator("÷");
-        operator = true;
+        operatorSet = true;
+        operatorID = operatorsID.DIVIDE;
     }//GEN-LAST:event_btnDivActionPerformed
 
     private void btnEQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEQActionPerformed
@@ -690,6 +743,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecActionPerformed
         printf(",");
+        decimal = true;
     }//GEN-LAST:event_btnDecActionPerformed
 
     private void btnFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacActionPerformed
