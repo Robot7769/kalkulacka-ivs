@@ -24,8 +24,8 @@ public class MainJFrame extends javax.swing.JFrame {
     private boolean operatorSet = false;
     private boolean decimalVal1 = false;
     private boolean decimalVal2 = false;
-    private double digitsVal1 = 0.0;
-    private double digitsVal2 = 0.0;
+    private int digitsVal1 = 0;
+    private int digitsVal2 = 0;
     private operatorsID operatorID = operatorsID.DEFAULT;
     public MainJFrame() {
         initComponents();
@@ -40,8 +40,8 @@ public class MainJFrame extends javax.swing.JFrame {
         operatorSet = false;
         decimalVal1 = false;
         decimalVal2 = false;
-        digitsVal1 = 0.0;
-        digitsVal2 = 0.0;
+        digitsVal1 = 0;
+        digitsVal2 = 0;
     }
     public void printf(String x){
         String y = jText.getText();
@@ -163,7 +163,10 @@ public class MainJFrame extends javax.swing.JFrame {
                 value1 = value1 * 10.0 + x;
 
             } else {
-                value1 += x/Math.pow(10.0, ++digitsVal1);
+                int y = (int)Math.pow(10, ++digitsVal1);
+                double z = x/y;
+                //System.out.println("x is: " + x + " and y is: " + y + " and z is: " + z);
+                value1 = value1 + z;
             }
             System.out.println(value1);
         }else{
