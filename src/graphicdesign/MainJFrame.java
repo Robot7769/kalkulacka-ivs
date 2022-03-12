@@ -6,8 +6,12 @@
 package graphicdesign;
 
 import java.awt.event.KeyEvent;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-enum operatorsID {DEFAULT, PLUS, MINUS, MULTIPLY, DIVIDE, FACTORIAL, SQRT, POWER, MOD}
+import static graphicdesign.operatorsID.DEFAULT;
+
+enum operatorsID {DEFAULT, PLUS, MINUS, MULTIPLY, DIVIDE, FACTORIAL, SQRT, POWER, MODULO}
 /**
  *
  * @author xsafar26
@@ -24,19 +28,24 @@ public class MainJFrame extends javax.swing.JFrame {
     private boolean operatorSet = false;
     private boolean decimalVal1 = false;
     private boolean decimalVal2 = false;
+    private boolean negative = false;
     private int digitsVal1 = 0;
     private int digitsVal2 = 0;
-    private operatorsID operatorID = operatorsID.DEFAULT;
+    private operatorsID operatorID = DEFAULT;
     public MainJFrame() {
         initComponents();
         setLocationRelativeTo(null);
         jText.setText("   ");
     }
+    public static double Round(double value, int digits){
+        BigDecimal bd = new BigDecimal(value).setScale(digits, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
     public void DeleteScreen(){
         jText.setText("   ");
         value1 = 0.0;
         value2 = 0.0;
-        operatorID = operatorsID.DEFAULT;
+        operatorID = DEFAULT;
         operatorSet = false;
         decimalVal1 = false;
         decimalVal2 = false;
@@ -52,8 +61,24 @@ public class MainJFrame extends javax.swing.JFrame {
     public void printOperator(String x){
         String y = jText.getText();
         StringBuilder sb = new StringBuilder(y);
-        sb.append("\n");
-        sb.append(x + " ");
+        if(y.charAt(y.length()-1) == ' '){
+            if(operatorSet){
+                sb.deleteCharAt(y.length()-1);
+                sb.deleteCharAt(y.length()-2);
+                sb.deleteCharAt(y.length()-3);
+            }else if (x.equals("-")){
+                sb.deleteCharAt(y.length()-1);
+                sb.deleteCharAt(y.length()-2);
+                sb.deleteCharAt(y.length()-3);
+                sb.append(" " + x + " ");
+                jText.setText(sb.toString());
+                negative = true;
+                return;
+            }else{
+                return;
+            }
+        }
+        sb.append("\n" + x + " ");
         jText.setText(sb.toString());
     }
     public void BackSpace(){
@@ -68,7 +93,7 @@ public class MainJFrame extends javax.swing.JFrame {
                         sb.deleteCharAt(y.length()-1);
                         sb.deleteCharAt(y.length()-2);
                         sb.deleteCharAt(y.length()-3);
-                        operatorID = operatorsID.DEFAULT;
+                        operatorID = DEFAULT;
                         operatorSet = false;
                         break;
                     }
@@ -95,7 +120,7 @@ public class MainJFrame extends javax.swing.JFrame {
                         break;
                     }
                 }
-                if(c == '.'){
+                if(c == ','){
                     if(!operatorSet){
                         decimalVal1 = false;
                     }else{
@@ -103,12 +128,14 @@ public class MainJFrame extends javax.swing.JFrame {
                     }
                     sb.deleteCharAt(y.length()-1);
                 }
+            }else if(y.charAt(y.length()-2) == '-'){
+                jText.setText("   ");
+                return;
             }
         jText.setText(sb.toString());
     }
     public void KeyTracker(char c){
         char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-        char[] operators = {'+','-','*','/', '%'};
         for (char number : numbers) {
             if (c == number) {
                 printf(Character.toString(c));
@@ -116,18 +143,35 @@ public class MainJFrame extends javax.swing.JFrame {
                 break;
             }
         }
-        for (char operator : operators) {
-            if (c == operator) {
+        switch (c) {
+            case '+':
+                printOperator(Character.toString(c));
                 operatorSet = true;
-                if (c == '/') {
-                    printOperator("÷");
-                } else {
-                    printOperator(Character.toString(c));
+                operatorID = operatorsID.PLUS;
+                System.out.println(operatorSet);
+                break;
+            case '-':
+                printOperator(Character.toString(c));
+                if(!negative){
+                operatorSet = true;
+                operatorID = operatorsID.MINUS;
                 }
                 break;
-            }
-        }
-        switch (c) {
+            case '*':
+                printOperator(Character.toString(c));
+                operatorSet = true;
+                operatorID = operatorsID.MULTIPLY;
+                break;
+            case '/':
+                printOperator("÷");
+                operatorSet = true;
+                operatorID = operatorsID.DIVIDE;
+                break;
+            case '%':
+                printOperator(Character.toString(c));
+                operatorSet = true;
+                operatorID = operatorsID.MODULO;
+                break;
             case 'c':
             case 'C':
             case KeyEvent.VK_DELETE:
@@ -136,17 +180,16 @@ public class MainJFrame extends javax.swing.JFrame {
             case '!':
                 //fucknce fac
                 break;
-           // case '\n':
             case '=':
-                printf("=");
-                //funkce na =
+            case KeyEvent.VK_ENTER:
+                Equals();
                 break;
             case KeyEvent.VK_BACK_SPACE:
                 BackSpace();
                 break;
             case ',':
             case '.':
-                printf(".");
+                printf(",");
                 if(!operatorSet){
                     decimalVal1 = true;
                 }else{
@@ -161,12 +204,8 @@ public class MainJFrame extends javax.swing.JFrame {
         if(!operatorSet){
             if (!decimalVal1) {
                 value1 = value1 * 10.0 + x;
-
             } else {
-                int y = (int)Math.pow(10, ++digitsVal1);
-                double z = x/y;
-                //System.out.println("x is: " + x + " and y is: " + y + " and z is: " + z);
-                value1 = value1 + z;
+                value1 += x/Math.pow(10, ++digitsVal1);
             }
             System.out.println(value1);
         }else{
@@ -178,10 +217,65 @@ public class MainJFrame extends javax.swing.JFrame {
             System.out.println(value2);
         }
     }
+    public void Equals(){
+        String output = "";
+        if(negative){
+            value1 *= -1;
+        }
+        switch(operatorID){
+            case PLUS:
+                //funkce plus
+                value1 += value2; //jen kvůli testování (bude nahrazeno funkcí z knihovny)
+                value2 = 0;
+                if(digitsVal1 > digitsVal2){
+                    Round(value1, digitsVal1);
+                    digitsVal2 = 0;
+                    decimalVal2 = false;
+                    operatorID = DEFAULT;
+                    operatorSet = false;
+                }else{
+                    Round(value1, digitsVal2);
+                    digitsVal1 = digitsVal2;
+                    digitsVal2 = 0;
+                    decimalVal2 = false;
+                    operatorID = DEFAULT;
+                    operatorSet = false;
+                }
+                output = Double.toString(value1);
+                System.out.println(output);
+                output = output.replace(".", ",");
+                System.out.println(output);
+                break;
+            case MINUS:
+                //funkce minus
+                value1 -= value2; //jen kvůli testování
+                output = String.format("%7.8f", value1);
+                break;
+            case DIVIDE:
+                value1 /= value2; //jen kvůli testování
+                output = String.format("%7.8f", value1);
+                //funkce plus
+                break;
+            case MULTIPLY:
+                value1 *= value2; //jen kvůli testování
+                output = String.format("%7.8f", value1);
+                //funkce multiplay
+                break;
+            case MODULO:
+                //funkce modulo
+                value1 %= value2; //jen kvůli testování
+                output = String.format("%7.8f", value1);
+                break;
+            default:
+                break;
+        }
+        jText.setText("   " + output);
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+
         jPanel1 = new javax.swing.JPanel();
         btnInfo = new javax.swing.JButton();
         DarkMode = new javax.swing.JToggleButton();
@@ -218,335 +312,235 @@ public class MainJFrame extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         btnInfo.setText("INFO");
+        btnInfo.setFocusable(false);
         btnInfo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInfoActionPerformed(evt);
             }
         });
-        btnInfo.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnInfoKeyTyped(evt);
-            }
-        });
 
         DarkMode.setText("Dark Mode");
+        DarkMode.setFocusable(false);
         DarkMode.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 DarkModeActionPerformed(evt);
             }
         });
-        DarkMode.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                DarkModeKeyTyped(evt);
-            }
-        });
 
         btnC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnC.setText("C");
+        btnC.setFocusable(false);
         btnC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCActionPerformed(evt);
             }
         });
-        btnC.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnCKeyTyped(evt);
-            }
-        });
 
         btnBraL.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnBraL.setText("(");
+        btnBraL.setFocusable(false);
         btnBraL.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBraLActionPerformed(evt);
             }
         });
-        btnBraL.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnBraLKeyTyped(evt);
-            }
-        });
 
         btnBraR.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnBraR.setText(")");
+        btnBraR.setFocusable(false);
         btnBraR.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBraRActionPerformed(evt);
             }
         });
-        btnBraR.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnBraRKeyTyped(evt);
-            }
-        });
 
         brnMod.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         brnMod.setText("%");
+        brnMod.setFocusable(false);
         brnMod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 brnModActionPerformed(evt);
             }
         });
-        brnMod.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                brnModKeyTyped(evt);
-            }
-        });
 
         btnExp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnExp.setText("^");
+        btnExp.setFocusable(false);
         btnExp.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnExpActionPerformed(evt);
             }
         });
-        btnExp.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnExpKeyTyped(evt);
-            }
-        });
 
         btnSqrt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSqrt.setText("√");
+        btnSqrt.setFocusable(false);
         btnSqrt.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnSqrtActionPerformed(evt);
             }
         });
-        btnSqrt.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnSqrtKeyTyped(evt);
-            }
-        });
 
         btnFac.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnFac.setText("!");
+        btnFac.setFocusable(false);
         btnFac.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnFacActionPerformed(evt);
             }
         });
-        btnFac.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnFacKeyTyped(evt);
-            }
-        });
 
         btnDiv.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnDiv.setText("÷");
+        btnDiv.setFocusable(false);
         btnDiv.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDivActionPerformed(evt);
             }
         });
-        btnDiv.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnDivKeyTyped(evt);
-            }
-        });
 
         btnMul.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnMul.setText("*");
+        btnMul.setFocusable(false);
         btnMul.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMulActionPerformed(evt);
-            }
-        });
-        btnMul.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnMulKeyTyped(evt);
             }
         });
 
         btn9.setBackground(new java.awt.Color(210, 210, 210));
         btn9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn9.setText("9");
+        btn9.setFocusable(false);
         btn9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn9ActionPerformed(evt);
-            }
-        });
-        btn9.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btn9KeyTyped(evt);
             }
         });
 
         btn8.setBackground(new java.awt.Color(210, 210, 210));
         btn8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn8.setText("8");
+        btn8.setFocusable(false);
         btn8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn8ActionPerformed(evt);
-            }
-        });
-        btn8.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btn8KeyTyped(evt);
             }
         });
 
         btn7.setBackground(new java.awt.Color(210, 210, 210));
         btn7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn7.setText("7");
+        btn7.setFocusable(false);
         btn7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn7ActionPerformed(evt);
-            }
-        });
-        btn7.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btn7KeyTyped(evt);
             }
         });
 
         btn4.setBackground(new java.awt.Color(210, 210, 210));
         btn4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn4.setText("4");
+        btn4.setFocusable(false);
         btn4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn4ActionPerformed(evt);
-            }
-        });
-        btn4.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btn4KeyTyped(evt);
             }
         });
 
         btn1.setBackground(new java.awt.Color(210, 210, 210));
         btn1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn1.setText("1");
+        btn1.setFocusable(false);
         btn1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn1ActionPerformed(evt);
-            }
-        });
-        btn1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btn1KeyTyped(evt);
             }
         });
 
         btn0.setBackground(new java.awt.Color(210, 210, 210));
         btn0.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn0.setText("0");
+        btn0.setFocusable(false);
         btn0.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn0ActionPerformed(evt);
-            }
-        });
-        btn0.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btn0KeyTyped(evt);
             }
         });
 
         btn5.setBackground(new java.awt.Color(210, 210, 210));
         btn5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn5.setText("5");
+        btn5.setFocusable(false);
         btn5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn5ActionPerformed(evt);
-            }
-        });
-        btn5.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btn5KeyTyped(evt);
             }
         });
 
         btn6.setBackground(new java.awt.Color(210, 210, 210));
         btn6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn6.setText("6");
+        btn6.setFocusable(false);
         btn6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn6ActionPerformed(evt);
             }
         });
-        btn6.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btn6KeyTyped(evt);
-            }
-        });
 
         btnMinus.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnMinus.setText("-");
+        btnMinus.setFocusable(false);
         btnMinus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnMinusActionPerformed(evt);
             }
         });
-        btnMinus.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnMinusKeyTyped(evt);
-            }
-        });
 
         btnPlus.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnPlus.setText("+");
+        btnPlus.setFocusable(false);
         btnPlus.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnPlusActionPerformed(evt);
             }
         });
-        btnPlus.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnPlusKeyTyped(evt);
-            }
-        });
 
         btnEQ.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnEQ.setText("=");
+        btnEQ.setFocusable(false);
         btnEQ.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEQActionPerformed(evt);
-            }
-        });
-        btnEQ.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnEQKeyTyped(evt);
             }
         });
 
         btn3.setBackground(new java.awt.Color(210, 210, 210));
         btn3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn3.setText("3");
+        btn3.setFocusable(false);
         btn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn3ActionPerformed(evt);
-            }
-        });
-        btn3.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btn3KeyTyped(evt);
             }
         });
 
         btn2.setBackground(new java.awt.Color(210, 210, 210));
         btn2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btn2.setText("2");
+        btn2.setFocusable(false);
         btn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn2ActionPerformed(evt);
             }
         });
-        btn2.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btn2KeyTyped(evt);
-            }
-        });
 
         btnDec.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnDec.setText(",");
+        btnDec.setFocusable(false);
         btnDec.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnDecActionPerformed(evt);
-            }
-        });
-        btnDec.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                btnDecKeyTyped(evt);
             }
         });
 
@@ -742,12 +736,15 @@ public class MainJFrame extends javax.swing.JFrame {
         printOperator("+");
         operatorSet = true;
         operatorID = operatorsID.PLUS;
+        System.out.println(operatorID);
     }//GEN-LAST:event_btnPlusActionPerformed
 
     private void btnMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinusActionPerformed
         printOperator("-");
-        operatorSet = true;
-        operatorID = operatorsID.MINUS;
+        if(!negative){
+            operatorID = operatorsID.MINUS;
+            operatorSet = true;
+        }
     }//GEN-LAST:event_btnMinusActionPerformed
 
     private void btnMulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMulActionPerformed
@@ -763,13 +760,17 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDivActionPerformed
 
     private void btnEQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEQActionPerformed
-        String x = "   "+value1+"\n   "+value2;
-        jText.setText(x);
+        Equals();
     }//GEN-LAST:event_btnEQActionPerformed
 
     private void btnDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecActionPerformed
-        printf(".");
-        decimalVal1 = true;
+        printf(",");
+        if(operatorSet){
+            decimalVal2 = true;
+        }else{
+            decimalVal1 = true;
+        }
+
     }//GEN-LAST:event_btnDecActionPerformed
 
     private void btnFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacActionPerformed
@@ -919,114 +920,9 @@ public class MainJFrame extends javax.swing.JFrame {
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnInfoActionPerformed
-
-    private void btnInfoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnInfoKeyTyped
+    private void jTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDivActionPerformed
         KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnInfoKeyTyped
-
-    private void DarkModeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_DarkModeKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_DarkModeKeyTyped
-
-    private void jTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextKeyTyped
-        if(evt.getKeyChar() == KeyEvent.VK_ENTER){
-            printf("=");
-        }
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_jTextKeyTyped
-
-    private void btnCKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnCKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnCKeyTyped
-
-    private void btnBraLKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBraLKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnBraLKeyTyped
-
-    private void btnBraRKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBraRKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnBraRKeyTyped
-
-    private void brnModKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_brnModKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_brnModKeyTyped
-
-    private void btnExpKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnExpKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnExpKeyTyped
-
-    private void btnSqrtKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnSqrtKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnSqrtKeyTyped
-
-    private void btnFacKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnFacKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnFacKeyTyped
-
-    private void btnDivKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDivKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnDivKeyTyped
-
-    private void btn7KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn7KeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btn7KeyTyped
-
-    private void btn8KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn8KeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btn8KeyTyped
-
-    private void btn9KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn9KeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btn9KeyTyped
-
-    private void btnMulKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnMulKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnMulKeyTyped
-
-    private void btn4KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn4KeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btn4KeyTyped
-
-    private void btn5KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn5KeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btn5KeyTyped
-
-    private void btn6KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn6KeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btn6KeyTyped
-
-    private void btnMinusKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnMinusKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnMinusKeyTyped
-
-    private void btn1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn1KeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btn1KeyTyped
-
-    private void btn2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn2KeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btn2KeyTyped
-
-    private void btn3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn3KeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btn3KeyTyped
-
-    private void btnPlusKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnPlusKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnPlusKeyTyped
-
-    private void btn0KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btn0KeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btn0KeyTyped
-
-    private void btnDecKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDecKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnDecKeyTyped
-
-    private void btnEQKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnEQKeyTyped
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnEQKeyTyped
-
+    }//GEN-LAST:event_btnDivActionPerformed
     /**
      * @param args the command line arguments
      */
