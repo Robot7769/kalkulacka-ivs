@@ -157,66 +157,77 @@ public class MainJFrame extends javax.swing.JFrame {
             jText.setText(sb.toString());
     }
     public void KeyTracker(char c){
-        char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-        for (char number : numbers) {
-            if (c == number) {
-                printf(Character.toString(c));
-                countValue(((double)c-'0'));
-                break;
-            }
-        }
         switch (c) {
+            case '1':
+                btn1.doClick();
+                break;
+            case '2':
+                btn2.doClick();
+                break;
+            case '3':
+                btn3.doClick();
+                break;
+            case '4':
+                btn4.doClick();
+                break;
+            case '5':
+                btn5.doClick();
+                break;
+            case '6':
+                btn6.doClick();
+                break;
+            case '7':
+                btn7.doClick();
+                break;
+            case '8':
+                btn8.doClick();
+                break;
+            case '9':
+                btn9.doClick();
+                break;
+            case '0':
+                btn0.doClick();
+                break;
             case '+':
-                printOperator(Character.toString(c));
-                operatorSet = true;
-                operatorID = operatorsID.PLUS;
+                btnPlus.doClick();
                 break;
             case '-':
-                printOperator(Character.toString(c));
-                if(!negative){
-                operatorSet = true;
-                operatorID = operatorsID.MINUS;
-                }
+                btnMinus.doClick();
                 break;
             case '*':
-                printOperator(Character.toString(c));
-                operatorSet = true;
-                operatorID = operatorsID.MULTIPLY;
+                btnMul.doClick();
                 break;
             case '/':
-                printOperator("÷");
-                operatorSet = true;
-                operatorID = operatorsID.DIVIDE;
+                btnDiv.doClick();
                 break;
             case '%':
-                printOperator(Character.toString(c));
-                operatorSet = true;
-                operatorID = operatorsID.MODULO;
+                btnMod.doClick();
                 break;
             case 'c':
             case 'C':
             case KeyEvent.VK_DELETE:
-                DeleteScreen();
+                btnC.doClick();
                 break;
             case '!':
-                //fucknce fac
+                btnFac.doClick();
                 break;
             case '=':
             case KeyEvent.VK_ENTER:
-                Equals();
+                btnEQ.doClick();
                 break;
             case KeyEvent.VK_BACK_SPACE:
                 BackSpace();
                 break;
             case ',':
             case '.':
-                printf(",");
-                if(!operatorSet){
-                    decimalVal1 = true;
-                }else{
-                    decimalVal2 = true;
-                }
+                btnDec.doClick();
                 break;
+            case 'd':
+            case 'D':
+                DarkMode.doClick();
+            case 'i':
+            case 'I':
+                btnInfo.doClick();
             default:
                 break;
         }
@@ -228,14 +239,14 @@ public class MainJFrame extends javax.swing.JFrame {
             } else {
                 value1 += x/Math.pow(10, ++digitsVal1);
             }
-            System.out.println(value1);
+            //System.out.println(value1);
         }else{
             if (!decimalVal2) {
                 value2 = value2 * 10.0 + x;
             } else {
                 value2 += x/Math.pow(10.0, ++digitsVal2);
             }
-            System.out.println(value2);
+            //System.out.println(value2);
         }
     }
     public void Equals(){
@@ -260,10 +271,10 @@ public class MainJFrame extends javax.swing.JFrame {
                     operatorID = DEFAULT;
                     operatorSet = false;
                 }
-                System.out.println(value1);
+                System.out.println("Číslo před zaokrouhlením: " + value1);
                 output = Round(value1);
                 output = output.replace(".", ",");
-                System.out.println(output);
+                System.out.println("Číslo před zaokrouhlením: " + output);
                 break;
             case MINUS:
                 //funkce minus
@@ -290,6 +301,121 @@ public class MainJFrame extends javax.swing.JFrame {
         }
         jText.setText("   " + output);
     }
+    public void DarkMode(){
+        if(DarkMode.isSelected()){
+            jPanel1.setBackground(new java.awt.Color(51, 51, 51));
+            jText.setBackground(new java.awt.Color(0, 0, 0));
+            jText.setForeground(new java.awt.Color(255, 255, 255));
+            btn0.setBackground(new java.awt.Color(45, 45, 45));
+            btn0.setForeground(new java.awt.Color(255, 255, 255));
+            btn1.setBackground(new java.awt.Color(45, 45, 45));
+            btn1.setForeground(new java.awt.Color(255, 255, 255));
+            btn2.setBackground(new java.awt.Color(45, 45, 45));
+            btn2.setForeground(new java.awt.Color(255, 255, 255));
+            btn3.setBackground(new java.awt.Color(45, 45, 45));
+            btn3.setForeground(new java.awt.Color(255, 255, 255));
+            btn4.setBackground(new java.awt.Color(45, 45, 45));
+            btn4.setForeground(new java.awt.Color(255, 255, 255));
+            btn5.setBackground(new java.awt.Color(45, 45, 45));
+            btn5.setForeground(new java.awt.Color(255, 255, 255));
+            btn6.setBackground(new java.awt.Color(45, 45, 45));
+            btn6.setForeground(new java.awt.Color(255, 255, 255));
+            btn7.setBackground(new java.awt.Color(45, 45, 45));
+            btn7.setForeground(new java.awt.Color(255, 255, 255));
+            btn8.setBackground(new java.awt.Color(45, 45, 45));
+            btn8.setForeground(new java.awt.Color(255, 255, 255));
+            btn9.setBackground(new java.awt.Color(45, 45, 45));
+            btn9.setForeground(new java.awt.Color(255, 255, 255));
+            btnDec.setBackground(new java.awt.Color(15, 15, 15));
+            btnDec.setForeground(new java.awt.Color(255, 255, 255));
+            btnEQ.setBackground(new java.awt.Color(15, 15, 15));
+            btnEQ.setForeground(new java.awt.Color(255, 255, 255));
+            btnPlus.setBackground(new java.awt.Color(15, 15, 15));
+            btnPlus.setForeground(new java.awt.Color(255, 255, 255));
+            btnMinus.setBackground(new java.awt.Color(15, 15, 15));
+            btnMinus.setForeground(new java.awt.Color(255, 255, 255));
+            btnMul.setBackground(new java.awt.Color(15, 15, 15));
+            btnMul.setForeground(new java.awt.Color(255, 255, 255));
+            btnDiv.setBackground(new java.awt.Color(15, 15, 15));
+            btnDiv.setForeground(new java.awt.Color(255, 255, 255));
+            btnFac.setBackground(new java.awt.Color(15, 15, 15));
+            btnFac.setForeground(new java.awt.Color(255, 255, 255));
+            btnBraR.setBackground(new java.awt.Color(15, 15, 15));
+            btnBraR.setForeground(new java.awt.Color(255, 255, 255));
+            btnBraL.setBackground(new java.awt.Color(15, 15, 15));
+            btnBraL.setForeground(new java.awt.Color(255, 255, 255));
+            btnExp.setBackground(new java.awt.Color(15, 15, 15));
+            btnExp.setForeground(new java.awt.Color(255, 255, 255));
+            btnSqrt.setBackground(new java.awt.Color(15, 15, 15));
+            btnSqrt.setForeground(new java.awt.Color(255, 255, 255));
+            btnInfo.setBackground(new java.awt.Color(15, 15, 15));
+            btnInfo.setForeground(new java.awt.Color(255, 255, 255));
+            DarkMode.setBackground(new java.awt.Color(15, 15, 15));
+            DarkMode.setForeground(new java.awt.Color(255, 255, 255));
+            DarkMode.setText("Light Mode");
+            btnC.setBackground(new java.awt.Color(15, 15, 15));
+            btnC.setForeground(new java.awt.Color(255, 255, 255));
+            btnMod.setBackground(new java.awt.Color(15, 15, 15));
+            btnMod.setForeground(new java.awt.Color(255, 255, 255));
+
+        }else{
+            jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+            jText.setBackground(new java.awt.Color(255,255,255)); //wtf
+            jText.setForeground(new java.awt.Color(0,0,0));
+            btn0.setBackground(new java.awt.Color(210, 210, 210));
+            btn0.setForeground(new java.awt.Color(0,0,0));
+            btn1.setBackground(new java.awt.Color(210, 210, 210));
+            btn1.setForeground(new java.awt.Color(0,0,0));
+            btn2.setBackground(new java.awt.Color(210, 210, 210));
+            btn2.setForeground(new java.awt.Color(0,0,0));
+            btn3.setBackground(new java.awt.Color(210, 210, 210));
+            btn3.setForeground(new java.awt.Color(0,0,0));
+            btn4.setBackground(new java.awt.Color(210, 210, 210));
+            btn4.setForeground(new java.awt.Color(0,0,0));
+            btn5.setBackground(new java.awt.Color(210, 210, 210));
+            btn5.setForeground(new java.awt.Color(0,0,0));
+            btn6.setBackground(new java.awt.Color(210, 210, 210));
+            btn6.setForeground(new java.awt.Color(0,0,0));
+            btn7.setBackground(new java.awt.Color(210, 210, 210));
+            btn7.setForeground(new java.awt.Color(0,0,0));
+            btn8.setBackground(new java.awt.Color(210, 210, 210));
+            btn8.setForeground(new java.awt.Color(0,0,0));
+            btn9.setBackground(new java.awt.Color(210, 210, 210));
+            btn9.setForeground(new java.awt.Color(0,0,0));
+            btnDec.setBackground(new java.awt.Color(180, 180, 180));
+            btnDec.setForeground(new java.awt.Color(0,0,0));
+            btnEQ.setBackground(new java.awt.Color(180, 180, 180));
+            btnEQ.setForeground(new java.awt.Color(0,0,0));
+            btnPlus.setBackground(new java.awt.Color(180, 180, 180));
+            btnPlus.setForeground(new java.awt.Color(0,0,0));
+            btnMinus.setBackground(new java.awt.Color(180, 180, 180));
+            btnMinus.setForeground(new java.awt.Color(0,0,0));
+            btnMul.setBackground(new java.awt.Color(180, 180, 180));
+            btnMul.setForeground(new java.awt.Color(0,0,0));
+            btnDiv.setBackground(new java.awt.Color(180, 180, 180));
+            btnDiv.setForeground(new java.awt.Color(0,0,0));
+            btnFac.setBackground(new java.awt.Color(180, 180, 180));
+            btnFac.setForeground(new java.awt.Color(0,0,0));
+            btnBraR.setBackground(new java.awt.Color(180, 180, 180));
+            btnBraR.setForeground(new java.awt.Color(0,0,0));
+            btnBraL.setBackground(new java.awt.Color(180, 180, 180));
+            btnBraL.setForeground(new java.awt.Color(0,0,0));
+            btnExp.setBackground(new java.awt.Color(180, 180, 180));
+            btnExp.setForeground(new java.awt.Color(0,0,0));
+            btnSqrt.setBackground(new java.awt.Color(180, 180, 180));
+            btnSqrt.setForeground(new java.awt.Color(0,0,0));
+            btnInfo.setBackground(new java.awt.Color(180, 180, 180));
+            btnInfo.setForeground(new java.awt.Color(0,0,0));
+            DarkMode.setBackground(new java.awt.Color(180, 180, 180));
+            DarkMode.setForeground(new java.awt.Color(0,0,0));
+            DarkMode.setText("Dark Mode");
+            btnC.setBackground(new java.awt.Color(180, 180, 180));
+            btnC.setForeground(new java.awt.Color(0,0,0));
+            btnMod.setBackground(new java.awt.Color(180, 180, 180));
+            btnMod.setForeground(new java.awt.Color(0,0,0));
+
+        }
+    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -301,7 +427,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btnC = new javax.swing.JButton();
         btnBraL = new javax.swing.JButton();
         btnBraR = new javax.swing.JButton();
-        brnMod = new javax.swing.JButton();
+        btnMod = new javax.swing.JButton();
         btnExp = new javax.swing.JButton();
         btnSqrt = new javax.swing.JButton();
         btnFac = new javax.swing.JButton();
@@ -373,12 +499,12 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        brnMod.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        brnMod.setText("%");
-        brnMod.setFocusable(false);
-        brnMod.addActionListener(new java.awt.event.ActionListener() {
+        btnMod.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnMod.setText("%");
+        btnMod.setFocusable(false);
+        btnMod.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                brnModActionPerformed(evt);
+                btnModActionPerformed(evt);
             }
         });
 
@@ -598,7 +724,7 @@ public class MainJFrame extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(btnBraR, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(brnMod, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(btnMod, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnExp, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -657,7 +783,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     .addComponent(btnC)
                     .addComponent(btnBraL)
                     .addComponent(btnBraR)
-                    .addComponent(brnMod))
+                    .addComponent(btnMod))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExp)
@@ -807,7 +933,7 @@ public class MainJFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnExpActionPerformed
 
-    private void brnModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnModActionPerformed
+    private void btnModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnModActionPerformed
         printOperator("%");
     }//GEN-LAST:event_brnModActionPerformed
 
@@ -824,119 +950,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCActionPerformed
 
     private void DarkModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DarkModeActionPerformed
-        if(DarkMode.isSelected()){
-            jPanel1.setBackground(new java.awt.Color(51, 51, 51));
-            jText.setBackground(new java.awt.Color(0, 0, 0)); 
-            jText.setForeground(new java.awt.Color(255, 255, 255));
-            btn0.setBackground(new java.awt.Color(45, 45, 45));
-            btn0.setForeground(new java.awt.Color(255, 255, 255));
-            btn1.setBackground(new java.awt.Color(45, 45, 45));
-            btn1.setForeground(new java.awt.Color(255, 255, 255));
-            btn2.setBackground(new java.awt.Color(45, 45, 45));
-            btn2.setForeground(new java.awt.Color(255, 255, 255));
-            btn3.setBackground(new java.awt.Color(45, 45, 45));
-            btn3.setForeground(new java.awt.Color(255, 255, 255));
-            btn4.setBackground(new java.awt.Color(45, 45, 45));
-            btn4.setForeground(new java.awt.Color(255, 255, 255));
-            btn5.setBackground(new java.awt.Color(45, 45, 45));
-            btn5.setForeground(new java.awt.Color(255, 255, 255));
-            btn6.setBackground(new java.awt.Color(45, 45, 45));
-            btn6.setForeground(new java.awt.Color(255, 255, 255));
-            btn7.setBackground(new java.awt.Color(45, 45, 45));
-            btn7.setForeground(new java.awt.Color(255, 255, 255));
-            btn8.setBackground(new java.awt.Color(45, 45, 45));
-            btn8.setForeground(new java.awt.Color(255, 255, 255));
-            btn9.setBackground(new java.awt.Color(45, 45, 45));
-            btn9.setForeground(new java.awt.Color(255, 255, 255));
-            btnDec.setBackground(new java.awt.Color(15, 15, 15));
-            btnDec.setForeground(new java.awt.Color(255, 255, 255));
-            btnEQ.setBackground(new java.awt.Color(15, 15, 15));
-            btnEQ.setForeground(new java.awt.Color(255, 255, 255));
-            btnPlus.setBackground(new java.awt.Color(15, 15, 15));
-            btnPlus.setForeground(new java.awt.Color(255, 255, 255));
-            btnMinus.setBackground(new java.awt.Color(15, 15, 15));
-            btnMinus.setForeground(new java.awt.Color(255, 255, 255));
-            btnMul.setBackground(new java.awt.Color(15, 15, 15));
-            btnMul.setForeground(new java.awt.Color(255, 255, 255));
-            btnDiv.setBackground(new java.awt.Color(15, 15, 15));
-            btnDiv.setForeground(new java.awt.Color(255, 255, 255));
-            btnFac.setBackground(new java.awt.Color(15, 15, 15));
-            btnFac.setForeground(new java.awt.Color(255, 255, 255));
-            btnBraR.setBackground(new java.awt.Color(15, 15, 15));
-            btnBraR.setForeground(new java.awt.Color(255, 255, 255));
-            btnBraL.setBackground(new java.awt.Color(15, 15, 15));
-            btnBraL.setForeground(new java.awt.Color(255, 255, 255));
-            btnExp.setBackground(new java.awt.Color(15, 15, 15));
-            btnExp.setForeground(new java.awt.Color(255, 255, 255));
-            btnSqrt.setBackground(new java.awt.Color(15, 15, 15));
-            btnSqrt.setForeground(new java.awt.Color(255, 255, 255));
-            btnInfo.setBackground(new java.awt.Color(15, 15, 15));
-            btnInfo.setForeground(new java.awt.Color(255, 255, 255));
-            DarkMode.setBackground(new java.awt.Color(15, 15, 15));
-            DarkMode.setForeground(new java.awt.Color(255, 255, 255));
-            DarkMode.setText("Light Mode");
-            btnC.setBackground(new java.awt.Color(15, 15, 15));
-            btnC.setForeground(new java.awt.Color(255, 255, 255));
-            brnMod.setBackground(new java.awt.Color(15, 15, 15));
-            brnMod.setForeground(new java.awt.Color(255, 255, 255));
-            
-        }else{
-            jPanel1.setBackground(new java.awt.Color(204, 204, 204));
-            jText.setBackground(new java.awt.Color(255,255,255)); //wtf
-            jText.setForeground(new java.awt.Color(0,0,0));
-            btn0.setBackground(new java.awt.Color(210, 210, 210));
-            btn0.setForeground(new java.awt.Color(0,0,0));
-            btn1.setBackground(new java.awt.Color(210, 210, 210));
-            btn1.setForeground(new java.awt.Color(0,0,0));
-            btn2.setBackground(new java.awt.Color(210, 210, 210));
-            btn2.setForeground(new java.awt.Color(0,0,0));
-            btn3.setBackground(new java.awt.Color(210, 210, 210));
-            btn3.setForeground(new java.awt.Color(0,0,0));
-            btn4.setBackground(new java.awt.Color(210, 210, 210));
-            btn4.setForeground(new java.awt.Color(0,0,0));
-            btn5.setBackground(new java.awt.Color(210, 210, 210));
-            btn5.setForeground(new java.awt.Color(0,0,0));
-            btn6.setBackground(new java.awt.Color(210, 210, 210));
-            btn6.setForeground(new java.awt.Color(0,0,0));
-            btn7.setBackground(new java.awt.Color(210, 210, 210));
-            btn7.setForeground(new java.awt.Color(0,0,0));
-            btn8.setBackground(new java.awt.Color(210, 210, 210));
-            btn8.setForeground(new java.awt.Color(0,0,0));
-            btn9.setBackground(new java.awt.Color(210, 210, 210));
-            btn9.setForeground(new java.awt.Color(0,0,0));
-            btnDec.setBackground(new java.awt.Color(180, 180, 180));
-            btnDec.setForeground(new java.awt.Color(0,0,0));
-            btnEQ.setBackground(new java.awt.Color(180, 180, 180));
-            btnEQ.setForeground(new java.awt.Color(0,0,0));
-            btnPlus.setBackground(new java.awt.Color(180, 180, 180));
-            btnPlus.setForeground(new java.awt.Color(0,0,0));
-            btnMinus.setBackground(new java.awt.Color(180, 180, 180));
-            btnMinus.setForeground(new java.awt.Color(0,0,0));
-            btnMul.setBackground(new java.awt.Color(180, 180, 180));
-            btnMul.setForeground(new java.awt.Color(0,0,0));
-            btnDiv.setBackground(new java.awt.Color(180, 180, 180));
-            btnDiv.setForeground(new java.awt.Color(0,0,0));
-            btnFac.setBackground(new java.awt.Color(180, 180, 180));
-            btnFac.setForeground(new java.awt.Color(0,0,0));
-            btnBraR.setBackground(new java.awt.Color(180, 180, 180));
-            btnBraR.setForeground(new java.awt.Color(0,0,0));
-            btnBraL.setBackground(new java.awt.Color(180, 180, 180));
-            btnBraL.setForeground(new java.awt.Color(0,0,0));
-            btnExp.setBackground(new java.awt.Color(180, 180, 180));
-            btnExp.setForeground(new java.awt.Color(0,0,0));
-            btnSqrt.setBackground(new java.awt.Color(180, 180, 180));
-            btnSqrt.setForeground(new java.awt.Color(0,0,0));
-            btnInfo.setBackground(new java.awt.Color(180, 180, 180));
-            btnInfo.setForeground(new java.awt.Color(0,0,0));
-            DarkMode.setBackground(new java.awt.Color(180, 180, 180));
-            DarkMode.setForeground(new java.awt.Color(0,0,0));
-            DarkMode.setText("Dark Mode");
-            btnC.setBackground(new java.awt.Color(180, 180, 180));
-            btnC.setForeground(new java.awt.Color(0,0,0));
-            brnMod.setBackground(new java.awt.Color(180, 180, 180));
-            brnMod.setForeground(new java.awt.Color(0,0,0));
-            
-        }
+        DarkMode();
     }//GEN-LAST:event_DarkModeActionPerformed
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
@@ -982,7 +996,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton DarkMode;
-    private javax.swing.JButton brnMod;
+    private javax.swing.JButton btnMod;
     private javax.swing.JButton btn0;
     private javax.swing.JButton btn1;
     private javax.swing.JButton btn2;
