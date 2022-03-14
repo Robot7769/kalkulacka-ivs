@@ -53,6 +53,7 @@ public class MainJFrame extends javax.swing.JFrame {
         if(sb.charAt(sb.length()-1)=='.'){
             sb.deleteCharAt(sb.length()-1);
         }
+        value1 = Double.parseDouble(sb.toString());
         return sb.toString();
     }
     public static int getScale(double value){
@@ -258,48 +259,44 @@ public class MainJFrame extends javax.swing.JFrame {
             case PLUS:
                 //funkce plus
                 value1 += value2; //jen kvůli testování (bude nahrazeno funkcí z knihovny)
-                value2 = 0;
-                if(digitsVal1 > digitsVal2){
-                    digitsVal2 = 0;
-                    decimalVal2 = false;
-                    operatorID = DEFAULT;
-                    operatorSet = false;
-                }else{
-                    digitsVal1 = digitsVal2;
-                    digitsVal2 = 0;
-                    decimalVal2 = false;
-                    operatorID = DEFAULT;
-                    operatorSet = false;
-                }
-                System.out.println("Číslo před zaokrouhlením: " + value1);
-                output = Round(value1);
-                output = output.replace(".", ",");
-                System.out.println("Číslo před zaokrouhlením: " + output);
+                output = Alignment(value1);
                 break;
             case MINUS:
                 //funkce minus
                 value1 -= value2; //jen kvůli testování
-                output = String.format("%7.8f", value1);
+                output = Alignment(value1);
                 break;
             case DIVIDE:
+                //funkce divide
                 value1 /= value2; //jen kvůli testování
-                output = String.format("%7.8f", value1);
-                //funkce plus
+                output = Alignment(value1);
                 break;
             case MULTIPLY:
-                value1 *= value2; //jen kvůli testování
-                output = String.format("%7.8f", value1);
                 //funkce multiplay
+                value1 *= value2; //jen kvůli testování
+                output = Alignment(value1);
                 break;
             case MODULO:
                 //funkce modulo
                 value1 %= value2; //jen kvůli testování
-                output = String.format("%7.8f", value1);
+                output = Alignment(value1);
                 break;
             default:
                 return;
         }
         jText.setText("   " + output);
+    }
+    public String Alignment(double value){
+        value2 = 0;
+        digitsVal2 = 0;
+        decimalVal2 = false;
+        operatorID = DEFAULT;
+        operatorSet = false;
+        System.out.println("Číslo před zaokrouhlením: " + value1);
+        String tmp = Round(value1);
+        tmp = tmp.replace(".", ",");
+        System.out.println("Číslo před zaokrouhlením: " + tmp);
+        return tmp;
     }
     public void DarkMode(){
         if(DarkMode.isSelected()){
