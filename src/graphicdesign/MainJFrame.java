@@ -5,13 +5,17 @@
  */
 package graphicdesign;
 
+import javax.swing.*;
+import javax.swing.text.DefaultEditorKit;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 
 import static graphicdesign.operatorsID.DEFAULT;
 
 enum operatorsID {DEFAULT, PLUS, MINUS, MULTIPLY, DIVIDE, FACTORIAL, SQRT, POWER, MODULO}
+
 /**
  *
  * @author xsafar26
@@ -37,9 +41,27 @@ public class MainJFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         jText.setText("   ");
     }
-    public static double Round(double value, int digits){
-        BigDecimal bd = new BigDecimal(value).setScale(digits, RoundingMode.HALF_UP);
-        return bd.doubleValue();
+    public String Round(double value){
+        int counter = 0;
+        DecimalFormat df = new DecimalFormat("#.#");
+        String tmp = new BigDecimal(value).setScale(getScale(value), RoundingMode.HALF_UP).toPlainString();
+        StringBuilder sb = new StringBuilder(tmp);
+        while(sb.charAt(sb.length()-1) == '0'){
+            sb.deleteCharAt(sb.length()-1);
+            counter++;
+        }
+        if(sb.charAt(sb.length()-1)=='.'){
+            sb.deleteCharAt(sb.length()-1);
+        }
+        return sb.toString();
+    }
+    public static int getScale(double value){
+        BigDecimal bd = new BigDecimal(value);
+        if (bd.intValue() == 0) {
+            return 15;
+        }
+        int scale = 15 - (int)Math.log10(bd.intValue());
+        return scale;
     }
     public void DeleteScreen(){
         jText.setText("   ");
@@ -90,9 +112,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 char c = y.charAt(y.length()-2);
                 for (char operator : operators) {
                     if (c == operator) {
-                        sb.deleteCharAt(y.length()-1);
-                        sb.deleteCharAt(y.length()-2);
-                        sb.deleteCharAt(y.length()-3);
+                        jText.replaceRange(null, y.length() - 3, y.length());
                         operatorID = DEFAULT;
                         operatorSet = false;
                         break;
@@ -116,7 +136,7 @@ public class MainJFrame extends javax.swing.JFrame {
                                 value2 -= (double)(c-'0')/Math.pow(10.0, digitsVal2--);
                             }
                         }
-                        sb.deleteCharAt(y.length()-1);
+                        jText.replaceRange(null, y.length() - 1, y.length());
                         break;
                     }
                 }
@@ -126,13 +146,12 @@ public class MainJFrame extends javax.swing.JFrame {
                     }else{
                         decimalVal2 = false;
                     }
-                    sb.deleteCharAt(y.length()-1);
+                    jText.replaceRange(null, y.length() - 1, y.length());
                 }
             }else if(y.charAt(y.length()-2) == '-'){
                 jText.setText("   ");
                 return;
             }
-        jText.setText(sb.toString());
     }
     public void KeyTracker(char c){
         char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
@@ -148,7 +167,6 @@ public class MainJFrame extends javax.swing.JFrame {
                 printOperator(Character.toString(c));
                 operatorSet = true;
                 operatorID = operatorsID.PLUS;
-                System.out.println(operatorSet);
                 break;
             case '-':
                 printOperator(Character.toString(c));
@@ -228,21 +246,19 @@ public class MainJFrame extends javax.swing.JFrame {
                 value1 += value2; //jen kvůli testování (bude nahrazeno funkcí z knihovny)
                 value2 = 0;
                 if(digitsVal1 > digitsVal2){
-                    Round(value1, digitsVal1);
                     digitsVal2 = 0;
                     decimalVal2 = false;
                     operatorID = DEFAULT;
                     operatorSet = false;
                 }else{
-                    Round(value1, digitsVal2);
                     digitsVal1 = digitsVal2;
                     digitsVal2 = 0;
                     decimalVal2 = false;
                     operatorID = DEFAULT;
                     operatorSet = false;
                 }
-                output = Double.toString(value1);
-                System.out.println(output);
+                System.out.println(value1);
+                output = Round(value1);
                 output = output.replace(".", ",");
                 System.out.println(output);
                 break;
@@ -267,7 +283,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 output = String.format("%7.8f", value1);
                 break;
             default:
-                break;
+                return;
         }
         jText.setText("   " + output);
     }
@@ -553,6 +569,8 @@ public class MainJFrame extends javax.swing.JFrame {
                 jTextKeyTyped(evt);
             }
         });
+        Action beep = jText.getActionMap().get(DefaultEditorKit.deletePrevCharAction);
+        beep.setEnabled(false);
         jScrollPane1.setViewportView(jText);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
