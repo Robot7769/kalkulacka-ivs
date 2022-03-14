@@ -112,7 +112,9 @@ public class MainJFrame extends javax.swing.JFrame {
                 char c = y.charAt(y.length()-2);
                 for (char operator : operators) {
                     if (c == operator) {
-                        jText.replaceRange(null, y.length() - 3, y.length());
+                        sb.deleteCharAt(y.length()-1);
+                        sb.deleteCharAt(y.length()-2);
+                        sb.deleteCharAt(y.length()-3);
                         operatorID = DEFAULT;
                         operatorSet = false;
                         break;
@@ -136,7 +138,7 @@ public class MainJFrame extends javax.swing.JFrame {
                                 value2 -= (double)(c-'0')/Math.pow(10.0, digitsVal2--);
                             }
                         }
-                        jText.replaceRange(null, y.length() - 1, y.length());
+                        sb.deleteCharAt(y.length()-1);
                         break;
                     }
                 }
@@ -146,12 +148,13 @@ public class MainJFrame extends javax.swing.JFrame {
                     }else{
                         decimalVal2 = false;
                     }
-                    jText.replaceRange(null, y.length() - 1, y.length());
+                    sb.deleteCharAt(y.length()-1);
                 }
             }else if(y.charAt(y.length()-2) == '-'){
                 jText.setText("   ");
                 return;
             }
+            jText.setText(sb.toString());
     }
     public void KeyTracker(char c){
         char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
@@ -570,7 +573,9 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
         Action beep = jText.getActionMap().get(DefaultEditorKit.deletePrevCharAction);
+        Action beep2 = jText.getActionMap().get(DefaultEditorKit.deleteNextCharAction);
         beep.setEnabled(false);
+        beep2.setEnabled(false);
         jScrollPane1.setViewportView(jText);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -754,7 +759,6 @@ public class MainJFrame extends javax.swing.JFrame {
         printOperator("+");
         operatorSet = true;
         operatorID = operatorsID.PLUS;
-        System.out.println(operatorID);
     }//GEN-LAST:event_btnPlusActionPerformed
 
     private void btnMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinusActionPerformed
