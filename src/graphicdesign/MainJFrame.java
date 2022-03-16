@@ -42,16 +42,20 @@ public class MainJFrame extends javax.swing.JFrame {
         jText.setText("   ");
     }
     public String Round(double value){
-        int counter = 0;
-        DecimalFormat df = new DecimalFormat("#.#");
+        //DecimalFormat df = new DecimalFormat("#.#");
         String tmp = new BigDecimal(value).setScale(getScale(value), RoundingMode.HALF_UP).toPlainString();
         StringBuilder sb = new StringBuilder(tmp);
         while(sb.charAt(sb.length()-1) == '0'){
             sb.deleteCharAt(sb.length()-1);
-            counter++;
         }
         if(sb.charAt(sb.length()-1)=='.'){
             sb.deleteCharAt(sb.length()-1);
+        }
+        if(sb.charAt(0) == '-'){
+            sb.deleteCharAt(0);
+            negative = true;
+        }else{
+            negative = false;
         }
         value1 = Double.parseDouble(sb.toString());
         return sb.toString();
@@ -232,17 +236,17 @@ public class MainJFrame extends javax.swing.JFrame {
                 btnInfo.doClick();
                 break;
             case 'h': //vypis záznam
-                System.out.println("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$");
-                System.out.println("OperatorID: " + operatorID);
-                System.out.println("OperatorSet: " + operatorSet);
-                System.out.println("Negative: " + negative);
-                System.out.println("Value1: " + value1);
-                System.out.println("Value2: " + value2);
-                System.out.println("DigitsVal1: " + digitsVal1);
-                System.out.println("DigitsVal2: " + digitsVal2);
-                System.out.println("DecimalVal1: " + decimalVal1);
-                System.out.println("DecimalVal2: " + decimalVal2);
-                System.out.println("#########################################");
+                StringBuilder debug = new StringBuilder();
+                debug.append("OperatorID: " + operatorID + "\n");
+                debug.append("OperatorSet: " + operatorSet + "\n");
+                debug.append("Negative: " + negative + "\n");
+                debug.append("Value1: " + value1 + "\n");
+                debug.append("Value2: " + value2 + "\n");
+                debug.append("DigitsVal1: " + digitsVal1 + "\n");
+                debug.append("DigitsVal2: " + digitsVal2 + "\n");
+                debug.append("DecimalVal1: " + decimalVal1 + "\n");
+                debug.append("DecimalVal2: " + decimalVal2 + "\n");
+                JOptionPane.showMessageDialog(null, debug.toString(), "DEBUG", JOptionPane.PLAIN_MESSAGE);
                 break;
             case 'p': //feature (odendat) !!ANO
                 btn3.doClick();
@@ -315,7 +319,11 @@ public class MainJFrame extends javax.swing.JFrame {
             default:
                 return;
         }
-        jText.setText("   " + output);
+        if(negative){
+            jText.setText(" - " + output);
+        }else{
+            jText.setText("   " + output);
+        }
     }
     public String Alignment(double value){
         value2 = 0;
@@ -1003,7 +1011,15 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_DarkModeActionPerformed
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
-        // TODO add your handling code here:
+        StringBuilder INFO = new StringBuilder();
+        INFO.append("Hi\n");
+        INFO.append("Hi\n");
+        INFO.append("Hi\n");
+        INFO.append("Hi\n");
+        INFO.append("Hi\n");
+        INFO.append("Hi\n");
+        INFO.append("Hi\n");
+        JOptionPane.showMessageDialog(null, INFO.toString(), "INFO", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnInfoActionPerformed
     private void jTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDivActionPerformed
         KeyTracker(evt.getKeyChar());
