@@ -93,7 +93,10 @@ public class MainJFrame extends javax.swing.JFrame {
                 sb.deleteCharAt(y.length()-1);
                 sb.deleteCharAt(y.length()-2);
                 sb.deleteCharAt(y.length()-3);
-            }else if (x.equals(" -") && value1 == 0){
+                if(x.equals(" -")){
+                    sb.deleteCharAt(y.length()-4);
+                }
+            }else if (x.equals(" -") && y.length() == 3){
                 sb.deleteCharAt(y.length()-1);
                 sb.deleteCharAt(y.length()-2);
                 sb.deleteCharAt(y.length()-3);
@@ -101,7 +104,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 jText.setText(sb.toString());
                 negative = true;
                 return;
-            }else if(value1 == 0){
+            }else if(y.length() == 3){
                 sb.append("0");
             }else{
                 return;
@@ -122,6 +125,9 @@ public class MainJFrame extends javax.swing.JFrame {
                         sb.deleteCharAt(y.length()-1);
                         sb.deleteCharAt(y.length()-2);
                         sb.deleteCharAt(y.length()-3);
+                        if(c=='-'){
+                            sb.deleteCharAt(y.length()-4);
+                        }
                         operatorID = DEFAULT;
                         operatorSet = false;
                         break;
