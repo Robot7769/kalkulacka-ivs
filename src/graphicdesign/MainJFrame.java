@@ -93,14 +93,16 @@ public class MainJFrame extends javax.swing.JFrame {
                 sb.deleteCharAt(y.length()-1);
                 sb.deleteCharAt(y.length()-2);
                 sb.deleteCharAt(y.length()-3);
-            }else if (x.equals("-")){
+            }else if (x.equals(" -") && value1 == 0){
                 sb.deleteCharAt(y.length()-1);
                 sb.deleteCharAt(y.length()-2);
                 sb.deleteCharAt(y.length()-3);
-                sb.append(" " + x + " ");
+                sb.append(" - ");
                 jText.setText(sb.toString());
                 negative = true;
                 return;
+            }else if(value1 == 0){
+                sb.append("0");
             }else{
                 return;
             }
@@ -334,7 +336,7 @@ public class MainJFrame extends javax.swing.JFrame {
         System.out.println("Číslo před zaokrouhlením: " + value1);
         String tmp = Round(value1);
         tmp = tmp.replace(".", ",");
-        System.out.println("Číslo před zaokrouhlením: " + tmp);
+        System.out.println("Číslo po zaokrouhlením: " + tmp);
         return tmp;
     }
     public void DarkMode(){
@@ -925,15 +927,15 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
         printOperator("+");
-        if(!negative || value1 != 0){
+        if(jText.getText().length() != 3){
         operatorSet = true;
         operatorID = operatorsID.PLUS;
         }
     }//GEN-LAST:event_btnPlusActionPerformed
 
     private void btnMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinusActionPerformed
-        printOperator("-");
-        if(!negative){
+        printOperator(" -");
+        if(jText.getText().length() != 3){
             operatorID = operatorsID.MINUS;
             operatorSet = true;
         }
@@ -941,7 +943,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnMulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMulActionPerformed
         printOperator("*");
-        if(!negative || value1 != 0) {
+        if(jText.getText().length() != 3) {
             operatorSet = true;
             operatorID = operatorsID.MULTIPLY;
         }
@@ -949,7 +951,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDivActionPerformed
         printOperator("÷");
-        if(!negative || value1 != 0) {
+        if(jText.getText().length() != 3) {
             operatorSet = true;
             operatorID = operatorsID.DIVIDE;
         }
@@ -988,7 +990,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnModActionPerformed
         printOperator("%");
-        if(!negative || value1 != 0) {
+        if(jText.getText().length() != 3) {
             operatorSet = true;
             operatorID = operatorsID.MODULO;
         }
