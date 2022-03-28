@@ -10,7 +10,6 @@ import javax.swing.text.DefaultEditorKit;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.text.DecimalFormat;
 
 import static graphicdesign.operatorsID.DEFAULT;
 
@@ -42,7 +41,6 @@ public class MainJFrame extends javax.swing.JFrame {
         jText.setText("   ");
     }
     public String Round(double value){
-        //DecimalFormat df = new DecimalFormat("#.#");
         String tmp = new BigDecimal(value).setScale(getScale(value), RoundingMode.HALF_UP).toPlainString();
         StringBuilder sb = new StringBuilder(tmp);
         while(sb.charAt(sb.length()-1) == '0'){
@@ -65,7 +63,10 @@ public class MainJFrame extends javax.swing.JFrame {
         if (bd.intValue() == 0) {
             return 15;
         }
-        int scale = 15 - (int)Math.log10(bd.intValue());
+        int scale = 10 - (int)Math.log10(bd.intValue());
+        if(scale < 0){
+            return 0;
+        }
         return scale;
     }
     public void DeleteScreen(){
@@ -97,11 +98,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     sb.deleteCharAt(y.length()-4);
                 }
             }else if (x.equals(" -") && y.length() == 3){
-                sb.deleteCharAt(y.length()-1);
-                sb.deleteCharAt(y.length()-2);
-                sb.deleteCharAt(y.length()-3);
-                sb.append(" - ");
-                jText.setText(sb.toString());
+                jText.setText(" - ");
                 negative = true;
                 return;
             }else if(y.length() == 3){
@@ -109,8 +106,30 @@ public class MainJFrame extends javax.swing.JFrame {
             }else{
                 return;
             }
+        }else if(y.charAt(y.length()-1) == ','){
+            sb.append("0");
         }
         sb.append("\n" + x + " ");
+        jText.setText(sb.toString());
+    }
+    public void printDec(){
+        if(operatorSet){
+            if(decimalVal2){
+                return;
+            }
+            decimalVal2 = true;
+        }else{
+            if(decimalVal1){
+                return;
+            }
+            decimalVal1 = true;
+        }
+        String y = jText.getText();
+        StringBuilder sb = new StringBuilder(y);
+        if(sb.charAt(sb.length()-1) == ' '){
+            sb.append('0');
+        }
+        sb.append(',');
         jText.setText(sb.toString());
     }
     public void BackSpace(){
@@ -257,26 +276,29 @@ public class MainJFrame extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, debug.toString(), "DEBUG", JOptionPane.PLAIN_MESSAGE);
                 break;
             case 'p': //feature (odendat) !!ANO
-                btn3.doClick();
-                btnDec.doClick();
-                btn1.doClick();
-                btn4.doClick();
-                btn1.doClick();
-                btn5.doClick();
-                btn9.doClick();
-                btn2.doClick();
-                btn6.doClick();
-                btn5.doClick();
-                btn3.doClick();
-                btn5.doClick();
-                btn8.doClick();
-                btn9.doClick();
-                btn7.doClick();
-                btn9.doClick();
+                Pi();
                 break;
             default:
                 break;
         }
+    }
+    public void Pi(){
+        btn3.doClick();
+        btnDec.doClick();
+        btn1.doClick();
+        btn4.doClick();
+        btn1.doClick();
+        btn5.doClick();
+        btn9.doClick();
+        btn2.doClick();
+        btn6.doClick();
+        btn5.doClick();
+        btn3.doClick();
+        btn5.doClick();
+        btn8.doClick();
+        btn9.doClick();
+        btn7.doClick();
+        btn9.doClick();
     }
     public void countValue(double x) {
         if(!operatorSet){
@@ -968,18 +990,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnEQActionPerformed
 
     private void btnDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecActionPerformed
-        if(operatorSet){
-            if(decimalVal2){
-               return;
-            }
-            decimalVal2 = true;
-        }else{
-            if(decimalVal1){
-                return;
-            }
-            decimalVal1 = true;
-        }
-        printf(",");
+        printDec();
     }//GEN-LAST:event_btnDecActionPerformed
 
     private void btnFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacActionPerformed
