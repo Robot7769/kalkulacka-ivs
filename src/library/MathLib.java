@@ -5,22 +5,22 @@ public class MathLib {
 
 
     public double plus(double a, double b) {
-        return 0;
+        return a+b;
     }
 
     public double minus(double a, double b) {
-        return 0;
+        return a-b;
     }
 
     public double mul(double a, double b) {
-        return 0;
+        return a*b;
     }
 
     public double div(double a, double b) {
-        return 0;
+        return a/b;
     }
 
-    public double mod(double a, double b) {
+    public int mod(double a, double b) {
         return 0;
     }
 
@@ -33,19 +33,26 @@ public class MathLib {
     }
 
     public double pow(double a) {
-        return 0;
+        return a*a;
     }
 
     public double nPow(double a, double n) {
-        return 0;
+        double a_n = a;
+        for (int i = 1; i < n; i++) {
+            a_n *= a;
+        }
+        return a_n;
     }
 
     public double fact(double a) {
-        return 0;
+        if (a == 1) {
+            return 1;
+        }
+        return a*(fact(a-1));
     }
 
     public double pi() {
-        return 0;
+        return 3.1415926536;
     }
 
     public double tan(double a) {
@@ -61,6 +68,6 @@ public class MathLib {
     }
 
     public double plusMinus(double a) {
-        return 0;
+        return -(a);
     }
 }
