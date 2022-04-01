@@ -30,7 +30,7 @@ public class MathLib {
     }
 
     public double sqrt(double a) {
-        if (a > 0) {
+        if (a < 0.0) {
             throw new ArithmeticException("Není definováno");
         }
         double min = 0.0;
@@ -82,7 +82,7 @@ public class MathLib {
     }
 
     public double tan(double a) {
-        return 0;
+        return sin(a)/cos(a);
     }
 
     public double cos(double a) {
