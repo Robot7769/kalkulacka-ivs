@@ -73,7 +73,7 @@ public class TestMathLib {
 
     @Test(expected = ArithmeticException.class)
     public void nSqrtExceptionTest() {
-        mathLib.nSqrt(-1.3133,391);
+        mathLib.nSqrt(-1.3133,392);
     }
 
     @Test
