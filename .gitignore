@@ -25,3 +25,4 @@ hs_err_pid*
 .idea
 out/
 kalkulacka-ivs.iml
+src/META-INF/MANIFEST.MF
