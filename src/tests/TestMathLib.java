@@ -19,7 +19,7 @@ public class TestMathLib {
         assertEquals(60,mathLib.plus(30,30),0);
         assertEquals(77,mathLib.plus(29,48),0);
         assertEquals(-62990,mathLib.plus(1597,-64587),0);
-        assertEquals(-35245.2291,mathLib.plus(923.8291,34321.4),0);
+        assertEquals(-33397.5709,mathLib.plus(923.8291,-34321.4),0);
     }
 
     @Test
@@ -32,8 +32,8 @@ public class TestMathLib {
 
     @Test
     public void mulTest() {
-        assertEquals(15,mathLib.mul(3,15),0);
-        assertEquals(35,mathLib.mul(3,15),0);
+        assertEquals(15,mathLib.mul(3,5),0);
+        assertEquals(45,mathLib.mul(3,15),0);
     }
 
     @Test
