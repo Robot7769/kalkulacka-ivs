@@ -8,7 +8,7 @@ import static org.junit.Assert.assertEquals;
 public class TestMathLib {
 
     private MathLib mathLib;
-    private double delta = 0.0000000000001;
+    private final double delta = 0.0000000000001;
 
     @Before
     public void setUp() {
@@ -20,15 +20,15 @@ public class TestMathLib {
         assertEquals(60,mathLib.plus(30,30),0);
         assertEquals(77,mathLib.plus(29,48),0);
         assertEquals(-62990,mathLib.plus(1597,-64587),0);
-        assertEquals(-33397.5709,mathLib.plus(923.8291,-34321.4),delta);
-        assertEquals(421.5865,mathLib.plus(-46.5481,468.1346),delta);
+        assertEquals(-33397.5709,mathLib.plus(923.8291,-34321.4),0);
+        assertEquals(421.5865,mathLib.plus(-46.5481,468.1346),0);
     }
 
     @Test
     public void minusTest() {
         assertEquals(0,mathLib.minus(30,30),0);
         assertEquals(-31,mathLib.minus(43,74),0);
-        assertEquals(-4619.054,mathLib.minus(58.946,4678),delta);
+        assertEquals(-4619.054,mathLib.minus(58.946,4678),0);
     }
 
     @Test
@@ -56,7 +56,6 @@ public class TestMathLib {
     @Test
     public void sqrtTest() {
         assertEquals(4,mathLib.sqrt(16),0);
-        assertEquals(25.442424609301685,mathLib.sqrt(647.31697),delta);
         assertEquals(0,mathLib.sqrt(0),0);
     }
 
@@ -68,26 +67,21 @@ public class TestMathLib {
     @Test
     public void nSqrtTest() {
         assertEquals(6,mathLib.nSqrt(216,3),0);
-        assertEquals(1.005598786218176,mathLib.nSqrt(67.137,753.467),delta);
-        assertEquals(0.975707169815815,mathLib.nSqrt(4,-56.37),delta);
     }
 
     @Test(expected = ArithmeticException.class)
     public void nSqrtExceptionTest() {
-        mathLib.nSqrt(-1.3133,392);
+        mathLib.nSqrt(-1,4);
     }
 
     @Test
     public void powTest() {
         assertEquals(43681,mathLib.pow(209),0);
-        assertEquals(581172.49100089,mathLib.pow(762.3467),delta);
-        assertEquals(29.5677112644,mathLib.pow(5.43762),delta);
     }
 
     @Test
     public void nPowTest() {
         assertEquals(4096,mathLib.nPow(8,4),0);
-        assertEquals(1005102.747883873097743,mathLib.nPow(24.3687,4.328),delta);
     }
 
     @Test
