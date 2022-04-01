@@ -21,8 +21,8 @@ public class RunnerTests {
         });
 
         System.out.println();
-        System.out.println("Úspěšné testy: " + (testResults.getRunCount() - testResults.getFailureCount()));
-        System.out.println("Neúspěšné testy: " + testResults.getFailureCount());
+        System.out.println("Úspěšné testy: " + (testResults.getRunCount() - testResults.getFailureCount()) + "/" + testResults.getRunCount());
+        System.out.println("Neúspěšné testy: " + testResults.getFailureCount() + "/" + testResults.getRunCount());
         double success = ((((double) testResults.getRunCount() - (double) testResults.getFailureCount()) / (double) testResults.getRunCount()) * 100);
         System.out.println("Úspěšnost: " + Math.round(success*100.0)/100.0 + " %");
         System.out.println();
