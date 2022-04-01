@@ -3,30 +3,30 @@ package library;
 public class MathLib {
 
     private double abs(double a) {
-        return a < 0 ? -a :a;
+        return a < 0 ? -a : a;
     }
 
     public double plus(double a, double b) {
-        return a+b;
+        return a + b;
     }
 
     public double minus(double a, double b) {
-        return a-b;
+        return a - b;
     }
 
     public double mul(double a, double b) {
-        return a*b;
+        return a * b;
     }
 
     public double div(double a, double b) {
         if (b == 0) {
             throw new ArithmeticException("Nelze dělit nulou");
         }
-        return a/b;
+        return a / b;
     }
 
     public double mod(double a, double b) {
-        return a%b;
+        return a % b;
     }
 
     public double sqrt(double a) {
@@ -52,7 +52,7 @@ public class MathLib {
     }
 
     public double pow(double a) {
-        return a*a;
+        return a * a;
     }
 
     /**
@@ -74,7 +74,7 @@ public class MathLib {
         if (a == 1) {
             return 1;
         }
-        return a*(fact(a-1));
+        return a * (fact(a - 1));
     }
 
     public double pi() {
@@ -93,7 +93,4 @@ public class MathLib {
         return 0;
     }
 
-    public double plusMinus(double a) {
-        return -(a);
-    }
 }

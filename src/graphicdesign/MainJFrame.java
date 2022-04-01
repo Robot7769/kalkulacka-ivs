@@ -901,7 +901,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnTan.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        btnTan.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         btnTan.setText("tan");
         btnTan.setFocusable(false);
         btnTan.addActionListener(new java.awt.event.ActionListener() {
@@ -910,7 +910,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnSin.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        btnSin.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         btnSin.setText("sin");
         btnSin.setFocusable(false);
         btnSin.addActionListener(new java.awt.event.ActionListener() {
@@ -919,7 +919,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnCos.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        btnCos.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
         btnCos.setText("cos");
         btnCos.setFocusable(false);
         btnCos.addActionListener(new java.awt.event.ActionListener() {
@@ -928,7 +928,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnPlusMinus.setFont(new java.awt.Font("Tahoma", 0, 13)); // NOI18N
+        btnPlusMinus.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         btnPlusMinus.setText("+/-");
         btnPlusMinus.setFocusable(false);
         btnPlusMinus.addActionListener(new java.awt.event.ActionListener() {
