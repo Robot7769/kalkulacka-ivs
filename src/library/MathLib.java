@@ -36,7 +36,7 @@ public class MathLib {
         double min = 0.0;
         double max = a;
         double middle = a;
-        while (abs(pow(middle) - a) > 0.000000000005 ) {
+        while (abs(pow(middle) - a) > 0.0000000000000005 ) {
             middle = div((min + max), 2);
             if (pow(middle) > a) {
                 max = middle;
@@ -45,9 +45,10 @@ public class MathLib {
             }
         }
         return middle;
+
     }
 
-    public double nSqrt(double a, double n) {
+    public double nSqrt(double a, int n) {
         return 0;
     }
 
@@ -62,15 +63,20 @@ public class MathLib {
      * @param n musí být větší jak 1 (n > 1)
      * @return  a^n
      */
-    public double nPow(double a, double n) {
-        double a_n = a;
-        for (int i = 1; i < n; i++) {
+    public double nPow(double a, int n) {
+        double a_n = 1;
+        for (int i = 0; i < abs(n); i++) {
             a_n *= a;
         }
-        return a_n;
+        if (n < 0) {
+            return 1/a_n;
+        } else {
+            return a_n;
+        }
+
     }
 
-    public double fact(double a) {
+    public double fact(int a) {
         if (a == 1) {
             return 1;
         }
