@@ -20,8 +20,8 @@ public class MathLib {
         return a/b;
     }
 
-    public int mod(double a, double b) {
-        return 0;
+    public double mod(double a, double b) {
+        return a%b;
     }
 
     public double sqrt(double a) {
