@@ -90,6 +90,15 @@ public class MathLib {
     }
 
     public double sin(double a) {
+        double sign = 1;
+        int denominator = -1;
+        double sina = mod(a,360);
+
+        if (sina == 0)
+            return sina;
+        if(sina < 0.0)
+            sign = -1;
+
         return 0;
     }
 
