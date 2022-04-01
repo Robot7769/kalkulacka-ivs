@@ -116,10 +116,4 @@ public class TestMathLib {
         assertEquals(0.6427876097,mathLib.sin(40),0);
     }
 
-    @Test
-    public void plusMinusTest() {
-        assertEquals(-20,mathLib.plusMinus(20),0);
-        assertEquals(283.10293,mathLib.plusMinus(-283.10293),0);
-    }
-
 }
