@@ -11,13 +11,16 @@ public class RunnerTests {
 
         if (testResults.getFailureCount() > 0) {
             System.out.println("#### Neúspěšné testy: ####");
+            System.out.println("----------------");
         }
 
         testResults.getFailures().forEach(failure -> {
             System.out.println("[Neúspěšný test] " + failure.toString());
-            System.out.println();
+            System.out.println(failure.getTrimmedTrace().substring(failure.getTrimmedTrace().lastIndexOf("at "),failure.getTrimmedTrace().lastIndexOf("\n")));
+            System.out.println("----------------");
         });
 
+        System.out.println();
         System.out.println("Úspěšné testy: " + (testResults.getRunCount() - testResults.getFailureCount()));
         System.out.println("Neúspěšné testy: " + testResults.getFailureCount());
         double success = ((((double) testResults.getRunCount() - (double) testResults.getFailureCount()) / (double) testResults.getRunCount()) * 100);
