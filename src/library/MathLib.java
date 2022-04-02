@@ -140,9 +140,9 @@ public class MathLib {
     }
 
     /**
-     * Funkce na výpočet n-té mocniny čísla 'a'
+     * Funkce na výpočet faktoriálu čísla 'a'
      * @param a základ
-     * @return  'aᴺ'
+     * @return  'a!'
      */
     public double fact(int a) {
         if (a > 170) {
@@ -157,18 +157,37 @@ public class MathLib {
         return a * (fact(a - 1));
     }
 
+    /**
+     * Funkce π (pí)
+     * @return  'π'
+     */
     public double pi() {
         return 3.141592653589793;
     }
 
+    /**
+     * Funkce na výpočt tangentu úhlu 'a°'
+     * @param a úhel ve ° (stupních)
+     * @return  'tan(a°)'
+     */
     public double tan(double a) {
         return div(sin(a),cos(a));
     }
 
+    /**
+     * Funkce na výpočt kosínusu úhlu 'a°'
+     * @param a úhel ve ° (stupních)
+     * @return  'cos(a°)'
+     */
     public double cos(double a) {
         return sin(a + 90);
     }
 
+    /**
+     * Funkce na výpočt sínusu úhlu 'a°'
+     * @param a úhel ve ° (stupních)
+     * @return  'sin(a°)'
+     */
     public double sin(double a) {
         double sina = 0.0;
         double rad;
