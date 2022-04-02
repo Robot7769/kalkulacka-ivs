@@ -111,8 +111,9 @@ public class TestMathLib {
         assertEquals(362880,mathLib.fact(9),0);
         assertEquals(-5040,mathLib.fact(-7),0);
         assertEquals(5040,mathLib.fact(7),0);
-        assertEquals(0,mathLib.fact(0),0);
+        assertEquals(1,mathLib.fact(0),0);
         assertEquals(1,mathLib.fact(1),0);
+        assertEquals(-1,mathLib.fact(-1),0);
     }
 
 
