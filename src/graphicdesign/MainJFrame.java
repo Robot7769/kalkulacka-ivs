@@ -5,16 +5,17 @@
  */
 package graphicdesign;
 
+import library.MathLib; //Matematická knihovna
+
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static graphicdesign.operatorsID.DEFAULT;
-import static graphicdesign.operatorsID.MULTIPLY;
+import static graphicdesign.operatorsID.*;
 
-enum operatorsID {DEFAULT, PLUS, MINUS, MULTIPLY, DIVIDE, FACTORIAL, SQRT, POWER, MODULO}
+enum operatorsID {DEFAULT, PLUS, MINUS, MULTIPLY, DIVIDE, FACTORIAL, POWER, SQRT, NPOWER, NSQRT, MODULO, SIN, COS, TAN}
 
 /**
  *
@@ -27,6 +28,7 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainJFrame
      */
+    private MathLib mathLib = new MathLib(); //Objekt matematické knihovny
     private double value1 = 0.0;
     private double value2 = 0.0;
     private boolean operatorSet = false;
@@ -57,14 +59,13 @@ public class MainJFrame extends javax.swing.JFrame {
             negative1 = true;
         }else{
             negative1 = false;
-        }
-        value1 = Double.parseDouble(sb.toString());
+        } 
         return sb.toString();
     }
     public static int getScale(double value){
         BigDecimal bd = new BigDecimal(value);
         if (bd.intValue() == 0) {
-            return 15;
+            return 10;
         }
         int scale = 10 - (int)Math.log10(bd.intValue());
         if(scale < 0){
@@ -87,7 +88,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
     public void printf(String x){
         String y = jText.getText();
-
         StringBuilder sb = new StringBuilder(y);
         if(sb.charAt(y.length()-1) == 'π'){
             printOperator("*");
@@ -115,6 +115,11 @@ public class MainJFrame extends javax.swing.JFrame {
         }
         if(y.charAt(y.length()-1) == ' '){
             if(y.length() == 3){
+                if(x.equals(" -")){
+                    jText.setText(" - ");
+                    negative1 = true;
+                    return;
+                }
                 sb.append("0");
             }else{
                 return;
@@ -173,14 +178,14 @@ public class MainJFrame extends javax.swing.JFrame {
                                 value1 -= ((double)c-'0');
                                 value1 /= 10.0;
                             } else {
-                                value1 -= (double)(c-'0')/Math.pow(10.0, digitsVal1--);
+                                value1 -= (double)(c-'0')/mathLib.nPow(10.0, digitsVal1--);
                             }
                         }else{
                             if (!decimalVal2) {
                                 value2 -= ((double)c-'0');
                                 value2 /= 10;
                             } else {
-                                value2 -= (double)(c-'0')/Math.pow(10.0, digitsVal2--);
+                                value2 -= (double)(c-'0')/mathLib.nPow(10.0, digitsVal2--);
                             }
                         }
                         sb.deleteCharAt(y.length()-1);
@@ -313,13 +318,13 @@ public class MainJFrame extends javax.swing.JFrame {
             if (!decimalVal1) {
                 value1 = value1 * 10.0 + x;
             } else {
-                value1 += x/Math.pow(10, ++digitsVal1);
+                value1 += x/mathLib.nPow(10, ++digitsVal1);
             }
         }else{
             if (!decimalVal2) {
                 value2 = value2 * 10.0 + x;
             } else {
-                value2 += x/Math.pow(10.0, ++digitsVal2);
+                value2 += x/mathLib.nPow(10.0, ++digitsVal2);
             }
         }
     }
@@ -334,27 +339,103 @@ public class MainJFrame extends javax.swing.JFrame {
         switch(operatorID){
             case PLUS:
                 //funkce plus
-                value1 += value2; //jen kvůli testování (bude nahrazeno funkcí z knihovny)
+                value1 = mathLib.plus(value1, value2);
                 output = Alignment(value1);
                 break;
             case MINUS:
                 //funkce minus
-                value1 -= value2; //jen kvůli testování
+                value1 = mathLib.minus(value1, value2);
                 output = Alignment(value1);
                 break;
             case DIVIDE:
                 //funkce divide
-                value1 /= value2; //jen kvůli testování
+                value1 = mathLib.div(value1, value2);
                 output = Alignment(value1);
                 break;
             case MULTIPLY:
                 //funkce multiplay
-                value1 *= value2; //jen kvůli testování
+                value1 = mathLib.mul(value1, value2);
                 output = Alignment(value1);
                 break;
             case MODULO:
                 //funkce modulo
-                value1 %= value2; //jen kvůli testování
+                value1 = mathLib.mod(value1, value2); //jen kvůli testování
+                output = Alignment(value1);
+                break;
+            case FACTORIAL:
+                //funkce faktorial
+                int tmp = (int) value1;
+                if(mathLib.mod(value1, tmp) != 0){
+                    JOptionPane.showMessageDialog(null, "Faktoriál je definovanán pouze nad celými čísly", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                try{
+                    value1 = mathLib.fact(tmp);
+                }catch(Exception e){
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                output = Alignment(value1);
+                //přidání funkce pro zapsání velkých čísel
+                break;
+            case POWER:
+                //TODO upravit
+                value1 = mathLib.pow(value1);
+                output = Alignment(value1);
+                break;
+            case SQRT:
+                //TODO upravit
+                try{
+                    value1 = mathLib.sqrt(value1);
+                }catch(Exception e){
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                break;
+            case NPOWER:
+                //TODO upravit
+                int tmp1 = (int) value2;
+                if(mathLib.mod(tmp1, value2) != 0){
+                    JOptionPane.showMessageDialog(null, "n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                try{
+                    value1 = mathLib.nPow(value1, tmp1);
+                }catch(Exception e){
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                output = Alignment(value1);
+                break;
+            case NSQRT:
+                //TODO upravit
+                int tmp2 = (int) value2;
+                if(mathLib.mod(tmp2, value2) != 0){
+                    JOptionPane.showMessageDialog(null, "n musí být celé nenulové číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                try{
+                    value1 = mathLib.nPow(value1, tmp2);
+                }catch(Exception e){
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+                output = Alignment(value1);
+                break;
+            case SIN:
+                value1 = mathLib.sin(value1);
+                output = Alignment(value1);
+                break;
+            case COS:
+                value1 = mathLib.cos(value1);
+                output = Alignment(value1);
+                break;
+            case TAN:
+                value1 = mathLib.tan(value1);
                 output = Alignment(value1);
                 break;
             default:
@@ -1166,15 +1247,27 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDecActionPerformed
 
     private void btnFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacActionPerformed
-        // TODO funkce Fac
+        if(operatorSet){
+        Equals();
+        }
+        operatorID = FACTORIAL;
+        Equals();
     }//GEN-LAST:event_btnFacActionPerformed
 
     private void btnSqrtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtActionPerformed
-        // TODO add your handling code here:
+        if(operatorSet){
+            Equals();
+        }
+        operatorID = SQRT;
+        Equals();
     }//GEN-LAST:event_btnSqrtActionPerformed
 
     private void btnExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpActionPerformed
-        // TODO add your handling code here:
+        if(operatorSet){
+            Equals();
+        }
+        operatorID = POWER;
+        Equals();
     }//GEN-LAST:event_btnExpActionPerformed
 
     private void btnModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnModActionPerformed
@@ -1190,7 +1283,11 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSqrtNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtNActionPerformed
-       // TODO SQRT na N
+        if(operatorSet){
+            Equals();
+        }
+        operatorID = NSQRT;
+        Equals();
     }//GEN-LAST:event_btnSqrtNActionPerformed
 
     private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
@@ -1217,24 +1314,39 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDivActionPerformed
 
     private void btnPiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiActionPerformed
-        //TODO dodělat
         Pi();
     }//GEN-LAST:event_btnPiActionPerformed
 
     private void btnExpNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpNActionPerformed
-        // TODO add your handling code here:
+        if(operatorSet){
+            Equals();
+        }
+        operatorID = NPOWER;
+        Equals();
     }//GEN-LAST:event_btnExpNActionPerformed
 
     private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
-        // TODO add your handling code here:
+        if(operatorSet){
+            Equals();
+        }
+        operatorID = TAN;
+        Equals();
     }//GEN-LAST:event_btnTanActionPerformed
 
     private void btnSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
-        // TODO add your handling code here:
+        if(operatorSet){
+            Equals();
+        }
+        operatorID = SIN;
+        Equals();
     }//GEN-LAST:event_btnSinActionPerformed
 
     private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
-        // TODO add your handling code here:
+        if(operatorSet){
+            Equals();
+        }
+        operatorID = COS;
+        Equals();
     }//GEN-LAST:event_btnCosActionPerformed
 
     private void btnPlusMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusMinusActionPerformed
