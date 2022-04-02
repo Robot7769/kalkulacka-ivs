@@ -92,7 +92,7 @@ public class MathLib {
     }
 
     public double cos(double a) {
-        return 0;
+        return sin(a + 90);
     }
 
     public double sin(double a) {
@@ -111,7 +111,7 @@ public class MathLib {
             sign = -1;
         }
 
-        for (int i = 0; i <= 10; i++){
+        for (int i = 0; i <= 25; i++){
             denominator += 2;
             sina += nPow(-1,i) * (nPow(a, denominator) / fact(denominator));
         }
