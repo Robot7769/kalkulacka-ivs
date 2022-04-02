@@ -57,6 +57,8 @@ public class TestMathLib {
     public void sqrtTest() {
         assertEquals(4,mathLib.sqrt(16),0);
         assertEquals(0,mathLib.sqrt(0),0);
+        assertEquals(22.360679774997897,mathLib.sqrt(500),delta);
+        assertEquals(104.704345659576135,mathLib.sqrt(10963),delta);
     }
 
     @Test(expected = ArithmeticException.class)
@@ -67,6 +69,8 @@ public class TestMathLib {
     @Test
     public void nSqrtTest() {
         assertEquals(6,mathLib.nSqrt(216,3),0);
+        assertEquals(8.6451640684383,mathLib.nSqrt(48291,5),delta);
+        assertEquals(1.0006887048116,mathLib.nSqrt(29,4891),delta);
     }
 
     @Test(expected = ArithmeticException.class)
@@ -77,11 +81,13 @@ public class TestMathLib {
     @Test
     public void powTest() {
         assertEquals(43681,mathLib.pow(209),0);
+        assertEquals(85266756,mathLib.pow(9234),0);
     }
 
     @Test
     public void nPowTest() {
         assertEquals(4096,mathLib.nPow(8,4),0);
+        assertEquals(9138686662951d,mathLib.nPow(391,5),0);
     }
 
     @Test
