@@ -30,26 +30,40 @@ public class MathLib {
     }
 
     public double sqrt(double a) {
-        if (a < 0.0) {
-            throw new ArithmeticException("Není definováno");
+        return nSqrt(a,2);
+    }
+
+    public double nSqrt(double a, int n) {
+        if (n == 0) {
+            throw new ArithmeticException("Není definována nultá odmocnina");
+        }
+        int sing = 1;
+        if (mod(n, 2) == 0) {
+            if (a < 0.0) {
+                throw new ArithmeticException("Není definována sudá odmocnina ze záporného čísla");
+            }
+        } else {
+            if (a < 0.0) {
+                sing = -1;
+            }
         }
         double min = 0.0;
-        double max = a;
-        double middle = a;
-        while (abs(pow(middle) - a) > 0.0000000000000005 ) {
+        double max = abs(a);
+        double middle = max;
+        for (int i = 0; (abs(nPow(middle,(int) abs(n)) - abs(a)) > 0.0000000000000005 ) && i < 100; i++) {
             middle = div((min + max), 2);
-            if (pow(middle) > a) {
+            if (nPow(middle,(int) abs(n)) > abs(a)) {
                 max = middle;
             } else {
                 min = middle;
             }
+            //System.out.println("i: " + i + " min: " + min + " max: " + max + " middle: " + middle + " nPow: " + nPow(middle,(int) abs(n)));
         }
-        return middle;
-
-    }
-
-    public double nSqrt(double a, int n) {
-        return 0;
+        if ( n < 0) {
+            return div(1,mul(sing, middle));
+        } else {
+            return sing * middle;
+        }
     }
 
     public double pow(double a) {
@@ -69,7 +83,7 @@ public class MathLib {
             a_n *= a;
         }
         if (n < 0) {
-            return 1/a_n;
+            return div(1,a_n);
         } else {
             return a_n;
         }
@@ -88,7 +102,7 @@ public class MathLib {
     }
 
     public double tan(double a) {
-        return sin(a)/cos(a);
+        return div(sin(a),cos(a));
     }
 
     public double cos(double a) {
