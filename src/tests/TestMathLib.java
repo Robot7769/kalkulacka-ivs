@@ -59,6 +59,8 @@ public class TestMathLib {
         assertEquals(0,mathLib.sqrt(0),0);
         assertEquals(22.360679774997897,mathLib.sqrt(500),delta);
         assertEquals(104.704345659576135,mathLib.sqrt(10963),delta);
+        assertEquals(1,mathLib.sqrt(1),0);
+        assertEquals(2,mathLib.sqrt(4),0);
     }
 
     @Test(expected = ArithmeticException.class)
@@ -71,6 +73,8 @@ public class TestMathLib {
         assertEquals(6,mathLib.nSqrt(216,3),0);
         assertEquals(8.6451640684383,mathLib.nSqrt(48291,5),delta);
         assertEquals(1.0006887048116,mathLib.nSqrt(29,4891),delta);
+        assertEquals(55,mathLib.nSqrt(55,1),0);
+        assertEquals(1,mathLib.nSqrt(1,-1),0);
     }
 
     @Test(expected = ArithmeticException.class)
@@ -78,16 +82,28 @@ public class TestMathLib {
         mathLib.nSqrt(-1,4);
     }
 
+    @Test(expected = ArithmeticException.class)
+    public void nSqrtExceptionTest2() {
+        mathLib.nSqrt(0,-20);
+    }
+
     @Test
     public void powTest() {
         assertEquals(43681,mathLib.pow(209),0);
         assertEquals(85266756,mathLib.pow(9234),0);
+        assertEquals(49,mathLib.pow(-7),0);
+        assertEquals(1,mathLib.pow(-1),0);
+        assertEquals(1,mathLib.pow(1),0);
     }
 
     @Test
     public void nPowTest() {
         assertEquals(4096,mathLib.nPow(8,4),0);
         assertEquals(9138686662951d,mathLib.nPow(391,5),0);
+        assertEquals(49,mathLib.nPow(-7,2),0);
+        assertEquals(0.001890359168241,mathLib.nPow(23,-2),delta);
+        assertEquals(196,mathLib.nPow(-14,2),delta);
+        assertEquals(-0.047619047619047,mathLib.nPow(-21,-1),delta);
     }
 
     @Test
