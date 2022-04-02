@@ -89,12 +89,26 @@ public class MathLib {
         }
 
     }
-//TODO HOZNA fix max factorial
-    public double fact(int a) {
+    private double calFact(int a) {
         if (a == 1) {
             return 1;
         }
-        return a * (fact(a - 1));
+        return a * (calFact(a - 1));
+    }
+
+    public double fact(int a) {
+        if (a > 170) {
+            throw new ArithmeticException("Příliš velký faktoriál čísla " + a);
+        }
+        int sing = 1;
+        if (a < 0) {
+            sing = -1;
+            a = (int) abs(a);
+        }
+        if (a == 1 || a == 0) {
+            return sing;
+        }
+        return sing * calFact(a);
     }
 
     public double pi() {
