@@ -16,7 +16,7 @@ public class TestMathLib {
     }
 
     @Test
-    public void addTest() {
+    public void plusTest() {
         assertEquals(60,mathLib.plus(30,30),0);
         assertEquals(77,mathLib.plus(29,48),0);
         assertEquals(-62990,mathLib.plus(1597,-64587),0);
@@ -109,11 +109,15 @@ public class TestMathLib {
     @Test
     public void factTest() {
         assertEquals(362880,mathLib.fact(9),0);
-        assertEquals(-5040,mathLib.fact(-7),0);
         assertEquals(5040,mathLib.fact(7),0);
         assertEquals(1,mathLib.fact(0),0);
         assertEquals(1,mathLib.fact(1),0);
-        assertEquals(-1,mathLib.fact(-1),0);
+    }
+
+
+    @Test(expected = ArithmeticException.class)
+    public void factTestException() {
+        mathLib.fact(-7);
     }
 
 
