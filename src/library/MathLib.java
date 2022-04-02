@@ -75,7 +75,7 @@ public class MathLib {
         }
 
     }
-
+//TODO HOZNA fix max factorial
     public double fact(int a) {
         if (a == 1) {
             return 1;
@@ -96,16 +96,26 @@ public class MathLib {
     }
 
     public double sin(double a) {
-        double sign = 1;
+        double sina = 0.0;
+        double rad;
+        rad = (a * pi())/180;
+
+        a = mod(rad,(2 * pi()));
         int denominator = -1;
-        double sina = mod(a,360);
+        if(a < 0.0)
+            a = (2 * pi()) + a;
 
-        if (sina == 0)
-            return sina;
-        if(sina < 0.0)
+        int sign = 1;
+        if (a > pi()){
+            a -= pi();
             sign = -1;
+        }
 
-        return 0;
+        for (int i = 0; i <= 10; i++){
+            denominator += 2;
+            sina += nPow(-1,i) * (nPow(a, denominator) / fact(denominator));
+        }
+        return sign*sina;
     }
 
 }
