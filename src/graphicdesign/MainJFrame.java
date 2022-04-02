@@ -393,6 +393,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
+                output = Alignment(value1);
                 break;
             case NPOWER:
                 //TODO upravit
