@@ -9,6 +9,7 @@ import library.MathLib; //Matematická knihovna
 
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -28,7 +29,7 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainJFrame
      */
-    private MathLib mathLib = new MathLib(); //Objekt matematické knihovny
+    private final MathLib MathLib = new MathLib(); //Objekt matematické knihovny
     private double value1 = 0.0;
     private double value2 = 0.0;
     private boolean operatorSet = false;
@@ -94,9 +95,7 @@ public class MainJFrame extends javax.swing.JFrame {
             operatorID = MULTIPLY;
             operatorSet = true;
             y = jText.getText();
-            StringBuilder sb2 = new StringBuilder(y);
-            sb2.append(x);
-            jText.setText(sb2.toString());
+            jText.setText(y + x);
             return;
         }
         sb.append(x);
@@ -108,9 +107,7 @@ public class MainJFrame extends javax.swing.JFrame {
         if(operatorSet) {
             Equals();
             String z = jText.getText();
-            StringBuilder sb2 = new StringBuilder(z);
-            sb2.append("\n" + x + " ");
-            jText.setText(sb2.toString());
+            jText.setText(z + "\n" + x + " ");
             return;
         }
         if(y.charAt(y.length()-1) == ' '){
@@ -127,7 +124,7 @@ public class MainJFrame extends javax.swing.JFrame {
         }else if(y.charAt(y.length()-1) == ','){
             sb.append("0");
         }
-            sb.append("\n" + x + " ");
+            sb.append("\n").append(x).append(" ");
         jText.setText(sb.toString());
     }
     public void printDec(){
@@ -178,14 +175,14 @@ public class MainJFrame extends javax.swing.JFrame {
                                 value1 -= ((double)c-'0');
                                 value1 /= 10.0;
                             } else {
-                                value1 -= (double)(c-'0')/mathLib.nPow(10.0, digitsVal1--);
+                                value1 -= (double)(c-'0')/ MathLib.nPow(10.0, digitsVal1--);
                             }
                         }else{
                             if (!decimalVal2) {
                                 value2 -= ((double)c-'0');
                                 value2 /= 10;
                             } else {
-                                value2 -= (double)(c-'0')/mathLib.nPow(10.0, digitsVal2--);
+                                value2 -= (double)(c-'0')/ MathLib.nPow(10.0, digitsVal2--);
                             }
                         }
                         sb.deleteCharAt(y.length()-1);
@@ -220,124 +217,53 @@ public class MainJFrame extends javax.swing.JFrame {
     }
     public void KeyTracker(char c){
         switch (c) {
-            case '1':
-                btn1.doClick();
-                break;
-            case '2':
-                btn2.doClick();
-                break;
-            case '3':
-                btn3.doClick();
-                break;
-            case '4':
-                btn4.doClick();
-                break;
-            case '5':
-                btn5.doClick();
-                break;
-            case '6':
-                btn6.doClick();
-                break;
-            case '7':
-                btn7.doClick();
-                break;
-            case '8':
-                btn8.doClick();
-                break;
-            case '9':
-                btn9.doClick();
-                break;
-            case '0':
-                btn0.doClick();
-                break;
-            case '+':
-                btnPlus.doClick();
-                break;
-            case '-':
-                btnMinus.doClick();
-                break;
-            case '*':
-                btnMul.doClick();
-                break;
-            case '/':
-                btnDiv.doClick();
-                break;
-            case '%':
-                btnMod.doClick();
-                break;
-            case KeyEvent.VK_DELETE:
-                btnC.doClick();
-                break;
-            case '!':
-                btnFac.doClick();
-                break;
-            case '^':
-            case 'M':
-                btnExpN.doClick();
-                break;
-            case 'm':
-                btnExp.doClick();
-                break;
-            case 'o':
-                btnSqrt.doClick();
-                break;
-            case 'O':
-                btnSqrtN.doClick();
-                break;
-            case 'c':
-            case 'C':
-                btnCos.doClick();
-                break;
-            case 's':
-            case 'S':
-                btnSin.doClick();
-                break;
-            case 't':
-            case 'T':
-                btnTan.doClick();
-                break;
-            case 'n':
-            case 'N':
-                btnPlusMinus.doClick();
-                break;
-            case '=':
-            case KeyEvent.VK_ENTER:
-                btnEQ.doClick();
-                break;
-            case KeyEvent.VK_BACK_SPACE:
-                btnBack.doClick();
-                break;
-            case ',':
-            case '.':
-                btnDec.doClick();
-                break;
-            case 'd':
-            case 'D':
-                DarkMode.doClick();
-                break;
-            case 'i':
-            case 'I':
-                btnInfo.doClick();
-                break;
-            case 'h': //vypis záznam
-                StringBuilder debug = new StringBuilder();
-                debug.append("OperatorID: " + operatorID + "\n");
-                debug.append("OperatorSet: " + operatorSet + "\n");
-                debug.append("Negative1: " + negative1 + "\n");
-                debug.append("Negative2: " + negative2 + "\n");
-                debug.append("Value1: " + value1 + "\n");
-                debug.append("Value2: " + value2 + "\n");
-                debug.append("DigitsVal1: " + digitsVal1 + "\n");
-                debug.append("DigitsVal2: " + digitsVal2 + "\n");
-                debug.append("DecimalVal1: " + decimalVal1 + "\n");
-                debug.append("DecimalVal2: " + decimalVal2 + "\n");
-                JOptionPane.showMessageDialog(null, debug.toString(), "DEBUG", JOptionPane.PLAIN_MESSAGE);
-                break;
-            case 'p': //feature (odendat) !!ANO
+            case '1' -> btn1.doClick();
+            case '2' -> btn2.doClick();
+            case '3' -> btn3.doClick();
+            case '4' -> btn4.doClick();
+            case '5' -> btn5.doClick();
+            case '6' -> btn6.doClick();
+            case '7' -> btn7.doClick();
+            case '8' -> btn8.doClick();
+            case '9' -> btn9.doClick();
+            case '0' -> btn0.doClick();
+            case '+' -> btnPlus.doClick();
+            case '-' -> btnMinus.doClick();
+            case '*' -> btnMul.doClick();
+            case '/' -> btnDiv.doClick();
+            case '%' -> btnMod.doClick();
+            case KeyEvent.VK_DELETE -> btnC.doClick();
+            case '!' -> btnFac.doClick();
+            case '^', 'M' -> btnExpN.doClick();
+            case 'm' -> btnExp.doClick();
+            case 'o' -> btnSqrt.doClick();
+            case 'O' -> btnSqrtN.doClick();
+            case 'c', 'C' -> btnCos.doClick();
+            case 's', 'S' -> btnSin.doClick();
+            case 't', 'T' -> btnTan.doClick();
+            case 'n', 'N' -> btnPlusMinus.doClick();
+            case '=', KeyEvent.VK_ENTER -> btnEQ.doClick();
+            case KeyEvent.VK_BACK_SPACE -> btnBack.doClick();
+            case ',', '.' -> btnDec.doClick();
+            case 'd', 'D' -> DarkMode.doClick();
+            case 'i', 'I' -> btnInfo.doClick();
+            case 'h' -> { //vypis záznam
+                String debug = "OperatorID: " + operatorID + "\n" +
+                    "OperatorSet: " + operatorSet + "\n" +
+                    "Negative1: " + negative1 + "\n" +
+                    "Negative2: " + negative2 + "\n" +
+                    "Value1: " + value1 + "\n" +
+                    "Value2: " + value2 + "\n" +
+                    "DigitsVal1: " + digitsVal1 + "\n" +
+                    "DigitsVal2: " + digitsVal2 + "\n" +
+                    "DecimalVal1: " + decimalVal1 + "\n" +
+                    "DecimalVal2: " + decimalVal2 + "\n";
+                JOptionPane.showMessageDialog(null, debug, "DEBUG", JOptionPane.PLAIN_MESSAGE);
+            }
+            case 'p' -> //feature (odendat) !!ANO
                 btnPi.doClick();
-                break;
-            default:
-                break;
+            default -> {
+            }
         }
     }
     public void countValue(double x) {
@@ -345,128 +271,129 @@ public class MainJFrame extends javax.swing.JFrame {
             if (!decimalVal1) {
                 value1 = value1 * 10.0 + x;
             } else {
-                value1 += x/mathLib.nPow(10, ++digitsVal1);
+                value1 += x/ MathLib.nPow(10, ++digitsVal1);
             }
         }else{
             if (!decimalVal2) {
                 value2 = value2 * 10.0 + x;
             } else {
-                value2 += x/mathLib.nPow(10.0, ++digitsVal2);
+                value2 += x/ MathLib.nPow(10.0, ++digitsVal2);
             }
         }
     }
     public void Equals(){
-        String output = "";
+        String output;
         negate();
-        switch(operatorID){
-            case PLUS:
+        switch (operatorID) {
+            case PLUS -> {
                 //funkce plus
-                value1 = mathLib.plus(value1, value2);
+                value1 = MathLib.plus(value1, value2);
                 output = Alignment(value1);
-                break;
-            case MINUS:
+            }
+            case MINUS -> {
                 //funkce minus
-                value1 = mathLib.minus(value1, value2);
+                value1 = MathLib.minus(value1, value2);
                 output = Alignment(value1);
-                break;
-            case DIVIDE:
+            }
+            case DIVIDE -> {
                 //funkce divide
-                value1 = mathLib.div(value1, value2);
+                value1 = MathLib.div(value1, value2);
                 output = Alignment(value1);
-                break;
-            case MULTIPLY:
+            }
+            case MULTIPLY -> {
                 //funkce multiplay
-                value1 = mathLib.mul(value1, value2);
+                value1 = MathLib.mul(value1, value2);
                 output = Alignment(value1);
-                break;
-            case MODULO:
+            }
+            case MODULO -> {
                 //funkce modulo
-                value1 = mathLib.mod(value1, value2); //jen kvůli testování
+                value1 = MathLib.mod(value1, value2); //jen kvůli testování
                 output = Alignment(value1);
-                break;
-            case FACTORIAL:
+            }
+            case FACTORIAL -> {
                 //funkce faktorial
                 int tmp = (int) value1;
-                if(mathLib.mod(value1, tmp) != 0){
+                if (MathLib.mod(value1, tmp) != 0) {
                     JOptionPane.showMessageDialog(null, "Faktoriál je definovanán pouze nad celými čísly", "ERROR", JOptionPane.ERROR_MESSAGE);
                     negate();
                     return;
                 }
-                try{
-                    value1 = mathLib.fact(tmp);
-                }catch(Exception e){
+                try {
+                    value1 = MathLib.fact(tmp);
+                } catch (Exception e) {
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negate();
                     return;
                 }
                 output = Alignment(value1);
-                //přidání funkce pro zapsání velkých čísel
-                break;
-            case POWER:
-                value1 = mathLib.pow(value1);
+            }
+            //přidání funkce pro zapsání velkých čísel
+            case POWER -> {
+                value1 = MathLib.pow(value1);
                 output = Alignment(value1);
-                break;
-            case SQRT:
-                try{
-                    value1 = mathLib.sqrt(value1);
-                }catch(Exception e){
+            }
+            case SQRT -> {
+                try {
+                    value1 = MathLib.sqrt(value1);
+                } catch (Exception e) {
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negate();
                     return;
                 }
                 output = Alignment(value1);
-                break;
-            case NPOWER:
+            }
+            case NPOWER -> {
                 int tmp1 = (int) value2;
-                if(mathLib.mod(tmp1, value2) != 0){
+                if (MathLib.mod(tmp1, value2) != 0) {
                     JOptionPane.showMessageDialog(null, "n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
                     negate();
                     return;
                 }
-                try{
-                    value1 = mathLib.nPow(value1, tmp1);
-                }catch(Exception e){
+                try {
+                    value1 = MathLib.nPow(value1, tmp1);
+                } catch (Exception e) {
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negate();
                     return;
                 }
                 output = Alignment(value1);
-                break;
-            case NSQRT:
+            }
+            case NSQRT -> {
                 int tmp2 = (int) value2;
-                if(mathLib.mod(tmp2, value2) != 0){
+                if (MathLib.mod(tmp2, value2) != 0) {
                     JOptionPane.showMessageDialog(null, "n musí být celé nenulové číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
                     negate();
                     return;
                 }
-                try{
-                    value1 = mathLib.nSqrt(value1, tmp2);
-                }catch(Exception e){
+                try {
+                    value1 = MathLib.nSqrt(value1, tmp2);
+                } catch (Exception e) {
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negate();
                     return;
                 }
                 output = Alignment(value1);
-                break;
-            case SIN:
-                value1 = mathLib.sin(value1);
+            }
+            case SIN -> {
+                value1 = MathLib.sin(value1);
                 output = Alignment(value1);
-                break;
-            case COS:
-                value1 = mathLib.cos(value1);
+            }
+            case COS -> {
+                value1 = MathLib.cos(value1);
                 output = Alignment(value1);
-                break;
-            case TAN:
-                value1 = mathLib.tan(value1);
+            }
+            case TAN -> {
+                value1 = MathLib.tan(value1);
                 output = Alignment(value1);
-                break;
-            default:
+            }
+            default -> {
                 negate();
                 return;
+            }
         }
         if(negative1){
             jText.setText(" - " + output);
@@ -733,7 +660,7 @@ public class MainJFrame extends javax.swing.JFrame {
         btn3 = new javax.swing.JButton();
         btn2 = new javax.swing.JButton();
         btnDec = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
+        JScrollPane jScrollPane1 = new JScrollPane();
         jText = new javax.swing.JTextArea();
         btnPi = new javax.swing.JButton();
         btnExpN = new javax.swing.JButton();
@@ -756,7 +683,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        DarkMode.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        DarkMode.setFont(new java.awt.Font("Thoma", Font.PLAIN, 11)); // NOI18N
         DarkMode.setText("Dark Mode");
         DarkMode.setFocusTraversalKeysEnabled(true);
         DarkMode.setFocusable(false);
@@ -766,7 +693,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnC.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnC.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnC.setText("AC");
         btnC.setFocusable(false);
         btnC.addActionListener(new java.awt.event.ActionListener() {
@@ -775,7 +702,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnSqrtN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnSqrtN.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnSqrtN.setText("n√");
         btnSqrtN.setFocusable(false);
         btnSqrtN.addActionListener(new java.awt.event.ActionListener() {
@@ -784,7 +711,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnBack.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnBack.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnBack.setText("←");
         btnBack.setFocusable(false);
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -793,7 +720,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnMod.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnMod.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnMod.setText("%");
         btnMod.setFocusable(false);
         btnMod.addActionListener(new java.awt.event.ActionListener() {
@@ -802,7 +729,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnExp.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnExp.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnExp.setText("x²");
         btnExp.setFocusable(false);
         btnExp.addActionListener(new java.awt.event.ActionListener() {
@@ -811,7 +738,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnSqrt.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnSqrt.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnSqrt.setText("√‾");
         btnSqrt.setFocusable(false);
         btnSqrt.addActionListener(new java.awt.event.ActionListener() {
@@ -820,7 +747,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnFac.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnFac.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnFac.setText("!");
         btnFac.setFocusable(false);
         btnFac.addActionListener(new java.awt.event.ActionListener() {
@@ -829,7 +756,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnDiv.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnDiv.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnDiv.setText("÷");
         btnDiv.setFocusable(false);
         btnDiv.addActionListener(new java.awt.event.ActionListener() {
@@ -838,7 +765,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnMul.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnMul.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnMul.setText("*");
         btnMul.setFocusable(false);
         btnMul.addActionListener(new java.awt.event.ActionListener() {
@@ -848,7 +775,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btn9.setBackground(new java.awt.Color(210, 210, 210));
-        btn9.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn9.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btn9.setText("9");
         btn9.setFocusable(false);
         btn9.addActionListener(new java.awt.event.ActionListener() {
@@ -858,7 +785,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btn8.setBackground(new java.awt.Color(210, 210, 210));
-        btn8.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn8.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btn8.setText("8");
         btn8.setFocusable(false);
         btn8.addActionListener(new java.awt.event.ActionListener() {
@@ -868,7 +795,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btn7.setBackground(new java.awt.Color(210, 210, 210));
-        btn7.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn7.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btn7.setText("7");
         btn7.setFocusable(false);
         btn7.addActionListener(new java.awt.event.ActionListener() {
@@ -878,7 +805,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btn4.setBackground(new java.awt.Color(210, 210, 210));
-        btn4.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn4.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btn4.setText("4");
         btn4.setFocusable(false);
         btn4.addActionListener(new java.awt.event.ActionListener() {
@@ -888,7 +815,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btn1.setBackground(new java.awt.Color(210, 210, 210));
-        btn1.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn1.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btn1.setText("1");
         btn1.setFocusable(false);
         btn1.addActionListener(new java.awt.event.ActionListener() {
@@ -898,7 +825,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btn0.setBackground(new java.awt.Color(210, 210, 210));
-        btn0.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn0.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btn0.setText("0");
         btn0.setFocusable(false);
         btn0.addActionListener(new java.awt.event.ActionListener() {
@@ -908,7 +835,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btn5.setBackground(new java.awt.Color(210, 210, 210));
-        btn5.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn5.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btn5.setText("5");
         btn5.setFocusable(false);
         btn5.addActionListener(new java.awt.event.ActionListener() {
@@ -918,7 +845,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btn6.setBackground(new java.awt.Color(210, 210, 210));
-        btn6.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn6.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btn6.setText("6");
         btn6.setFocusable(false);
         btn6.addActionListener(new java.awt.event.ActionListener() {
@@ -927,7 +854,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnMinus.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnMinus.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnMinus.setText("-");
         btnMinus.setFocusable(false);
         btnMinus.addActionListener(new java.awt.event.ActionListener() {
@@ -936,7 +863,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnPlus.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnPlus.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnPlus.setText("+");
         btnPlus.setFocusable(false);
         btnPlus.addActionListener(new java.awt.event.ActionListener() {
@@ -945,7 +872,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnEQ.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnEQ.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnEQ.setText("=");
         btnEQ.setFocusable(false);
         btnEQ.addActionListener(new java.awt.event.ActionListener() {
@@ -955,7 +882,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btn3.setBackground(new java.awt.Color(210, 210, 210));
-        btn3.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn3.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btn3.setText("3");
         btn3.setFocusable(false);
         btn3.addActionListener(new java.awt.event.ActionListener() {
@@ -965,7 +892,7 @@ public class MainJFrame extends javax.swing.JFrame {
         });
 
         btn2.setBackground(new java.awt.Color(210, 210, 210));
-        btn2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn2.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btn2.setText("2");
         btn2.setFocusable(false);
         btn2.addActionListener(new java.awt.event.ActionListener() {
@@ -974,7 +901,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnDec.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnDec.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnDec.setText(",");
         btnDec.setFocusable(false);
         btnDec.addActionListener(new java.awt.event.ActionListener() {
@@ -985,7 +912,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
         jText.setEditable(false);
         jText.setColumns(12);
-        jText.setFont(new java.awt.Font("Quicksand", 0, 18)); // NOI18N
+        jText.setFont(new java.awt.Font("Quicksand", Font.PLAIN, 18)); // NOI18N
         jText.setRows(2);
         jText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
@@ -1000,7 +927,7 @@ public class MainJFrame extends javax.swing.JFrame {
         beep2.setEnabled(false);
         jScrollPane1.setViewportView(jText);
 
-        btnPi.setFont(new java.awt.Font("Tamil MN", 0, 15)); // NOI18N
+        btnPi.setFont(new java.awt.Font("Tamil MN", Font.PLAIN, 15)); // NOI18N
         btnPi.setText("π");
         btnPi.setFocusable(false);
         btnPi.addActionListener(new java.awt.event.ActionListener() {
@@ -1009,7 +936,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnExpN.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btnExpN.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnExpN.setText("xʸ");
         btnExpN.setFocusable(false);
         btnExpN.addActionListener(new java.awt.event.ActionListener() {
@@ -1018,7 +945,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnTan.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        btnTan.setFont(new java.awt.Font("Thoma", Font.PLAIN, 11)); // NOI18N
         btnTan.setText("tan");
         btnTan.setFocusable(false);
         btnTan.addActionListener(new java.awt.event.ActionListener() {
@@ -1027,7 +954,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnSin.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
+        btnSin.setFont(new java.awt.Font("Thoma", Font.PLAIN, 11)); // NOI18N
         btnSin.setText("sin");
         btnSin.setFocusable(false);
         btnSin.addActionListener(new java.awt.event.ActionListener() {
@@ -1036,7 +963,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnCos.setFont(new java.awt.Font("Tahoma", 0, 10)); // NOI18N
+        btnCos.setFont(new java.awt.Font("Thoma", Font.PLAIN, 10)); // NOI18N
         btnCos.setText("cos");
         btnCos.setFocusable(false);
         btnCos.addActionListener(new java.awt.event.ActionListener() {
@@ -1045,7 +972,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnPlusMinus.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        btnPlusMinus.setFont(new java.awt.Font("Thoma", Font.PLAIN, 12)); // NOI18N
         btnPlusMinus.setText("+/-");
         btnPlusMinus.setFocusable(false);
         btnPlusMinus.addActionListener(new java.awt.event.ActionListener() {
@@ -1331,15 +1258,16 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_DarkModeActionPerformed
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
-        StringBuilder INFO = new StringBuilder();
-        INFO.append("Hi\n");
-        INFO.append("Hi\n");
-        INFO.append("Hi\n");
-        INFO.append("Hi\n");
-        INFO.append("Hi\n");
-        INFO.append("Hi\n");
-        INFO.append("Hi\n");
-        JOptionPane.showMessageDialog(null, INFO.toString(), "INFO", JOptionPane.INFORMATION_MESSAGE);
+        String INFO = """
+            Hi
+            Hi
+            Hi
+            Hi
+            Hi
+            Hi
+            Hi
+            """;
+        JOptionPane.showMessageDialog(null, INFO, "INFO", JOptionPane.INFORMATION_MESSAGE);
     }//GEN-LAST:event_btnInfoActionPerformed
     private void jTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDivActionPerformed
         KeyTracker(evt.getKeyChar());
@@ -1385,7 +1313,7 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -1398,13 +1326,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
@@ -1450,7 +1372,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnSqrtN;
     private javax.swing.JButton btnTan;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jText;
     // End of variables declaration//GEN-END:variables
 }
