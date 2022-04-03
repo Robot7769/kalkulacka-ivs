@@ -756,7 +756,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        DarkMode.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        DarkMode.setFont(new java.awt.Font("Tahoma", 0, 11)); // NOI18N
         DarkMode.setText("Dark Mode");
         DarkMode.setFocusTraversalKeysEnabled(true);
         DarkMode.setFocusable(false);
