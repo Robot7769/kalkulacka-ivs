@@ -104,7 +104,7 @@ public class MainJFrame extends javax.swing.JFrame {
     public void printOperator(String x){
         String y = jText.getText();
         StringBuilder sb = new StringBuilder(y);
-        if(operatorSet) {
+        if(operatorSet && (operatorID == PLUS || operatorID == MINUS)) {
             Equals();
             String z = jText.getText();
             jText.setText(z + "\n" + x + " ");
@@ -119,12 +119,15 @@ public class MainJFrame extends javax.swing.JFrame {
                 }
                 sb.append("0");
             }else{
-                return;
+                System.out.println("Ahoj");
+                sb.deleteCharAt(y.length()-1);
+                sb.deleteCharAt(y.length()-2);
+                sb.deleteCharAt(y.length()-3);
             }
         }else if(y.charAt(y.length()-1) == ','){
             sb.append("0");
         }
-            sb.append("\n").append(x).append(" ");
+        sb.append("\n").append(x).append(" ");
         jText.setText(sb.toString());
     }
     public void printDec(){
@@ -191,9 +194,9 @@ public class MainJFrame extends javax.swing.JFrame {
                 }
                 if(c == 'π'){
                     if(!operatorSet){
-                        value1 -= (3.14159265358979323);
+                        value1 -= MathLib.pi();
                     }else{
-                        value2 -= (3.14159265358979323);
+                        value2 -= MathLib.pi();
                     }
                     sb.deleteCharAt(y.length()-1);
                 }
@@ -297,7 +300,14 @@ public class MainJFrame extends javax.swing.JFrame {
             }
             case DIVIDE -> {
                 //funkce divide
-                value1 = MathLib.div(value1, value2);
+                try{
+                    value1 = MathLib.div(value1, value2);
+                }catch(Exception e){
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negate();
+                    return;
+                }
                 output = Alignment(value1);
             }
             case MULTIPLY -> {
@@ -307,7 +317,14 @@ public class MainJFrame extends javax.swing.JFrame {
             }
             case MODULO -> {
                 //funkce modulo
+                try{
                 value1 = MathLib.mod(value1, value2); //jen kvůli testování
+                }catch(Exception e){
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negate();
+                    return;
+                }
                 output = Alignment(value1);
             }
             case FACTORIAL -> {
@@ -425,29 +442,29 @@ public class MainJFrame extends javax.swing.JFrame {
     public void Pi(){
         if(operatorSet){
            if(value2 == 0){
-                value2 = 3.1415926535897932384;
+                value2 = MathLib.pi();
            }else{
                printOperator("*");
                operatorID = MULTIPLY;
                operatorSet = true;
-               value2 = 3.1415926535897932384;
+               value2 = MathLib.pi();
            }
         }else{
             if(value1 == 0){
                 if(jText.getText().length() == 3){
-                    value1 = 3.14159265358979323;
+                    value1 = MathLib.pi();
                 }else{
                     printOperator("*");
                     operatorID = MULTIPLY;
                     operatorSet = true;
-                    value2 = 3.1415926535897932384;
+                    value2 = MathLib.pi();
                 }
 
             }else{
                 printOperator("*");
                 operatorID = MULTIPLY;
                 operatorSet = true;
-                value2 = 3.1415926535897932384;
+                value2 = MathLib.pi();
             }
         }
         printf("π");
@@ -1173,16 +1190,16 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
         printOperator("+");
-        if(jText.getText().length() != 3){
         operatorSet = true;
         operatorID = operatorsID.PLUS;
-        }
     }//GEN-LAST:event_btnPlusActionPerformed
 
     private void btnMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinusActionPerformed
         printOperator(" -");
+        if(jText.getText().length() != 3){
         operatorID = operatorsID.MINUS;
         operatorSet = true;
+        }
     }//GEN-LAST:event_btnMinusActionPerformed
 
     private void btnMulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMulActionPerformed
@@ -1193,10 +1210,8 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {                                       
         printOperator("÷");
-        if(jText.getText().length() != 3) {
-            operatorSet = true;
-            operatorID = operatorsID.DIVIDE;
-        }
+        operatorSet = true;
+        operatorID = operatorsID.DIVIDE;
     }                                      
 
     private void btnEQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEQActionPerformed
