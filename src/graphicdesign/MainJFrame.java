@@ -47,9 +47,12 @@ public class MainJFrame extends javax.swing.JFrame {
         jText.setText("   ");
     }
     public String Round(double value){
-        String tmp = new BigDecimal(value).setScale(getScale(value), RoundingMode.HALF_UP).toPlainString();
+        int scale = getScale(value);
+        String tmp = new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).toPlainString();
+        digitsVal1 = scale;
         StringBuilder sb = new StringBuilder(tmp);
         while(sb.charAt(sb.length()-1) == '0'){
+            digitsVal1--;
             sb.deleteCharAt(sb.length()-1);
         }
         if(sb.charAt(sb.length()-1)=='.'){
@@ -104,12 +107,6 @@ public class MainJFrame extends javax.swing.JFrame {
     public void printOperator(String x){
         String y = jText.getText();
         StringBuilder sb = new StringBuilder(y);
-        if(operatorSet && (operatorID == PLUS || operatorID == MINUS)) {
-            Equals();
-            String z = jText.getText();
-            jText.setText(z + "\n" + x + " ");
-            return;
-        }
         if(y.charAt(y.length()-1) == ' '){
             if(y.length() == 3){
                 if(x.equals(" -")){
@@ -119,13 +116,17 @@ public class MainJFrame extends javax.swing.JFrame {
                 }
                 sb.append("0");
             }else{
-                System.out.println("Ahoj");
                 sb.deleteCharAt(y.length()-1);
                 sb.deleteCharAt(y.length()-2);
                 sb.deleteCharAt(y.length()-3);
             }
         }else if(y.charAt(y.length()-1) == ','){
             sb.append("0");
+        }else if(operatorSet) {
+            Equals();
+            String z = jText.getText();
+            jText.setText(z + "\n" + x + " ");
+            return;
         }
         sb.append("\n").append(x).append(" ");
         jText.setText(sb.toString());
@@ -203,7 +204,9 @@ public class MainJFrame extends javax.swing.JFrame {
                 if(c == ','){
                     if(!operatorSet){
                         decimalVal1 = false;
+                        value1 = (int)value1;
                     }else{
+                        value2 = (int)value2;
                         decimalVal2 = false;
                     }
                     sb.deleteCharAt(y.length()-1);
@@ -435,6 +438,9 @@ public class MainJFrame extends javax.swing.JFrame {
         operatorSet = false;
         System.out.println("Číslo před zaokrouhlením: " + value1);
         String tmp = Round(value1);
+        if(tmp.contains(".")){
+            decimalVal1 = true;
+        }
         tmp = tmp.replace(".", ",");
         System.out.println("Číslo po zaokrouhlením: " + tmp);
         return tmp;
