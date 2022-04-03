@@ -265,13 +265,40 @@ public class MainJFrame extends javax.swing.JFrame {
             case '%':
                 btnMod.doClick();
                 break;
-            case 'c':
-            case 'C':
             case KeyEvent.VK_DELETE:
                 btnC.doClick();
                 break;
             case '!':
                 btnFac.doClick();
+                break;
+            case '^':
+            case 'M':
+                btnExpN.doClick();
+                break;
+            case 'm':
+                btnExp.doClick();
+                break;
+            case 'o':
+                btnSqrt.doClick();
+                break;
+            case 'O':
+                btnSqrtN.doClick();
+                break;
+            case 'c':
+            case 'C':
+                btnCos.doClick();
+                break;
+            case 's':
+            case 'S':
+                btnSin.doClick();
+                break;
+            case 't':
+            case 'T':
+                btnTan.doClick();
+                break;
+            case 'n':
+            case 'N':
+                btnPlusMinus.doClick();
                 break;
             case '=':
             case KeyEvent.VK_ENTER:
@@ -330,12 +357,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }
     public void Equals(){
         String output = "";
-        if(negative1){
-            value1 *= -1;
-        }
-        if(negative2){
-            value2 *= -1;
-        }
+        negate();
         switch(operatorID){
             case PLUS:
                 //funkce plus
@@ -367,6 +389,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 int tmp = (int) value1;
                 if(mathLib.mod(value1, tmp) != 0){
                     JOptionPane.showMessageDialog(null, "Faktoriál je definovanán pouze nad celými čísly", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negate();
                     return;
                 }
                 try{
@@ -374,6 +397,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 }catch(Exception e){
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negate();
                     return;
                 }
                 output = Alignment(value1);
@@ -389,6 +413,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 }catch(Exception e){
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negate();
                     return;
                 }
                 output = Alignment(value1);
@@ -397,6 +422,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 int tmp1 = (int) value2;
                 if(mathLib.mod(tmp1, value2) != 0){
                     JOptionPane.showMessageDialog(null, "n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negate();
                     return;
                 }
                 try{
@@ -404,6 +430,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 }catch(Exception e){
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negate();
                     return;
                 }
                 output = Alignment(value1);
@@ -412,6 +439,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 int tmp2 = (int) value2;
                 if(mathLib.mod(tmp2, value2) != 0){
                     JOptionPane.showMessageDialog(null, "n musí být celé nenulové číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negate();
                     return;
                 }
                 try{
@@ -419,6 +447,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 }catch(Exception e){
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negate();
                     return;
                 }
                 output = Alignment(value1);
@@ -436,6 +465,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 output = Alignment(value1);
                 break;
             default:
+                negate();
                 return;
         }
         if(negative1){
@@ -444,6 +474,14 @@ public class MainJFrame extends javax.swing.JFrame {
             jText.setText("   " + output);
         }
         negative2 = false;
+    }
+    public void negate(){
+        if(negative1){
+            value1 *= -1;
+        }
+        if(negative2){
+            value2 *= -1;
+        }
     }
     public String Alignment(double value){
         value2 = 0;
@@ -718,6 +756,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        DarkMode.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         DarkMode.setText("Dark Mode");
         DarkMode.setFocusTraversalKeysEnabled(true);
         DarkMode.setFocusable(false);
