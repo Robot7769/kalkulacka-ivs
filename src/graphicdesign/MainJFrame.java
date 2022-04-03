@@ -127,7 +127,7 @@ public class MainJFrame extends javax.swing.JFrame {
         }else if(y.charAt(y.length()-1) == ','){
             sb.append("0");
         }
-        sb.append("\n" + x + " ");
+            sb.append("\n" + x + " ");
         jText.setText(sb.toString());
     }
     public void printDec(){
@@ -380,12 +380,10 @@ public class MainJFrame extends javax.swing.JFrame {
                 //přidání funkce pro zapsání velkých čísel
                 break;
             case POWER:
-                //TODO upravit
                 value1 = mathLib.pow(value1);
                 output = Alignment(value1);
                 break;
             case SQRT:
-                //TODO upravit
                 try{
                     value1 = mathLib.sqrt(value1);
                 }catch(Exception e){
@@ -396,7 +394,6 @@ public class MainJFrame extends javax.swing.JFrame {
                 output = Alignment(value1);
                 break;
             case NPOWER:
-                //TODO upravit
                 int tmp1 = (int) value2;
                 if(mathLib.mod(tmp1, value2) != 0){
                     JOptionPane.showMessageDialog(null, "n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -412,14 +409,13 @@ public class MainJFrame extends javax.swing.JFrame {
                 output = Alignment(value1);
                 break;
             case NSQRT:
-                //TODO upravit
                 int tmp2 = (int) value2;
                 if(mathLib.mod(tmp2, value2) != 0){
                     JOptionPane.showMessageDialog(null, "n musí být celé nenulové číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
                     return;
                 }
                 try{
-                    value1 = mathLib.nPow(value1, tmp2);
+                    value1 = mathLib.nSqrt(value1, tmp2);
                 }catch(Exception e){
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -1225,10 +1221,8 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnMulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMulActionPerformed
         printOperator("*");
-        if(jText.getText().length() != 3) {
-            operatorSet = true;
-            operatorID = MULTIPLY;
-        }
+        operatorSet = true;
+        operatorID = MULTIPLY;
     }//GEN-LAST:event_btnMulActionPerformed
 
     private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {                                       
@@ -1284,11 +1278,9 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnSqrtNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtNActionPerformed
-        if(operatorSet){
-            Equals();
-        }
+        printOperator("√");
         operatorID = NSQRT;
-        Equals();
+        operatorSet = true;
     }//GEN-LAST:event_btnSqrtNActionPerformed
 
     private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
@@ -1319,11 +1311,9 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPiActionPerformed
 
     private void btnExpNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpNActionPerformed
-        if(operatorSet){
-            Equals();
-        }
+        printOperator("^");
         operatorID = NPOWER;
-        Equals();
+        operatorSet = true;
     }//GEN-LAST:event_btnExpNActionPerformed
 
     private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
