@@ -26,9 +26,7 @@ enum operatorsID {DEFAULT, PLUS, MINUS, MULTIPLY, DIVIDE, FACTORIAL, POWER, SQRT
  * @author xcafou01
  */
 public class MainJFrame extends javax.swing.JFrame {
-    /**
-     * Creates new form MainJFrame
-     */
+
     private final MathLib MathLib = new MathLib(); //Objekt matematické knihovny
     private double value1 = 0.0;
     private double value2 = 0.0;
@@ -46,390 +44,7 @@ public class MainJFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         jText.setText("   ");
     }
-    public String Round(double value){
-        int scale = getScale(value);
-        String tmp = new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).toPlainString();
-        digitsVal1 = scale;
-        StringBuilder sb = new StringBuilder(tmp);
-        while(sb.charAt(sb.length()-1) == '0'){
-            digitsVal1--;
-            sb.deleteCharAt(sb.length()-1);
-        }
-        if(sb.charAt(sb.length()-1)=='.'){
-            sb.deleteCharAt(sb.length()-1);
-        }
-        if(sb.charAt(0) == '-'){
-            sb.deleteCharAt(0);
-            negative1 = true;
-        }else{
-            negative1 = false;
-        } 
-        return sb.toString();
-    }
-    public static int getScale(double value){
-        BigDecimal bd = new BigDecimal(value);
-        if (bd.intValue() == 0) {
-            return 10;
-        }
-        int scale = 10 - (int)Math.log10(bd.intValue());
-        if(scale < 0){
-            return 0;
-        }
-        return scale;
-    }
-    public void DeleteScreen(){
-        jText.setText("   ");
-        value1 = 0.0;
-        value2 = 0.0;
-        operatorID = DEFAULT;
-        operatorSet = false;
-        decimalVal1 = false;
-        decimalVal2 = false;
-        digitsVal1 = 0;
-        digitsVal2 = 0;
-        negative1 = false;
-        negative2 = false;
-    }
-    public void printf(String x){
-        String y = jText.getText();
-        StringBuilder sb = new StringBuilder(y);
-        if(sb.charAt(y.length()-1) == 'π'){
-            printOperator("*");
-            operatorID = MULTIPLY;
-            operatorSet = true;
-            y = jText.getText();
-            jText.setText(y + x);
-            return;
-        }
-        sb.append(x);
-        jText.setText(sb.toString());
-    }
-    public void printOperator(String x){
-        String y = jText.getText();
-        StringBuilder sb = new StringBuilder(y);
-        if(y.charAt(y.length()-1) == ' '){
-            if(y.length() == 3){
-                if(x.equals(" -")){
-                    jText.setText(" - ");
-                    negative1 = true;
-                    return;
-                }
-                sb.append("0");
-            }else{
-                sb.deleteCharAt(y.length()-1);
-                sb.deleteCharAt(y.length()-2);
-                sb.deleteCharAt(y.length()-3);
-            }
-        }else if(y.charAt(y.length()-1) == ','){
-            sb.append("0");
-        }else if(operatorSet) {
-            Equals();
-            String z = jText.getText();
-            jText.setText(z + "\n" + x + " ");
-            return;
-        }
-        sb.append("\n").append(x).append(" ");
-        jText.setText(sb.toString());
-    }
-    public void printDec(){
-        if(operatorSet){
-            if(decimalVal2){
-                return;
-            }
-            decimalVal2 = true;
-        }else{
-            if(decimalVal1){
-                return;
-            }
-            decimalVal1 = true;
-        }
-        String y = jText.getText();
-        StringBuilder sb = new StringBuilder(y);
-        if(sb.charAt(sb.length()-1) == ' '){
-            sb.append('0');
-        }
-        sb.append(',');
-        jText.setText(sb.toString());
-    }
-    public void BackSpace(){
-        String y = jText.getText();
-        StringBuilder sb = new StringBuilder(y);
-            if(y.length() != 3){
-                char[] operators = {'+','-','*','/', '%'};
-                char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-                char c = y.charAt(y.length()-2);
-                for (char operator : operators) {
-                    if (c == operator) {
-                        sb.deleteCharAt(y.length()-1);
-                        sb.deleteCharAt(y.length()-2);
-                        sb.deleteCharAt(y.length()-3);
-                        if(c=='-'){
-                            sb.deleteCharAt(y.length()-4);
-                        }
-                        operatorID = DEFAULT;
-                        operatorSet = false;
-                        break;
-                    }
-                }
-                c = y.charAt(y.length()-1);
-                for (char number : numbers) {
-                    if (c == number) {
-                        if(!operatorSet){
-                            if (!decimalVal1) {
-                                value1 -= ((double)c-'0');
-                                value1 /= 10.0;
-                            } else {
-                                value1 -= (double)(c-'0')/ MathLib.nPow(10.0, digitsVal1--);
-                            }
-                        }else{
-                            if (!decimalVal2) {
-                                value2 -= ((double)c-'0');
-                                value2 /= 10;
-                            } else {
-                                value2 -= (double)(c-'0')/ MathLib.nPow(10.0, digitsVal2--);
-                            }
-                        }
-                        sb.deleteCharAt(y.length()-1);
-                        break;
-                    }
-                }
-                if(c == 'π'){
-                    if(!operatorSet){
-                        value1 -= MathLib.pi();
-                    }else{
-                        value2 -= MathLib.pi();
-                    }
-                    sb.deleteCharAt(y.length()-1);
-                }
-                if(c == ','){
-                    if(!operatorSet){
-                        decimalVal1 = false;
-                        value1 = (int)value1;
-                    }else{
-                        value2 = (int)value2;
-                        decimalVal2 = false;
-                    }
-                    sb.deleteCharAt(y.length()-1);
-                }
-                if(c == '-'){
-                    negative2 = false;
-                    sb.deleteCharAt(y.length()-1);
-                }
-            }else if(y.charAt(y.length()-2) == '-'){
-                jText.setText("   ");
-                return;
-            }
-            jText.setText(sb.toString());
-    }
-    public void KeyTracker(char c){
-        switch (c) {
-            case '1' -> btn1.doClick();
-            case '2' -> btn2.doClick();
-            case '3' -> btn3.doClick();
-            case '4' -> btn4.doClick();
-            case '5' -> btn5.doClick();
-            case '6' -> btn6.doClick();
-            case '7' -> btn7.doClick();
-            case '8' -> btn8.doClick();
-            case '9' -> btn9.doClick();
-            case '0' -> btn0.doClick();
-            case '+' -> btnPlus.doClick();
-            case '-' -> btnMinus.doClick();
-            case '*' -> btnMul.doClick();
-            case '/' -> btnDiv.doClick();
-            case '%' -> btnMod.doClick();
-            case KeyEvent.VK_DELETE -> btnC.doClick();
-            case '!' -> btnFac.doClick();
-            case '^', 'M' -> btnExpN.doClick();
-            case 'm' -> btnExp.doClick();
-            case 'o' -> btnSqrt.doClick();
-            case 'O' -> btnSqrtN.doClick();
-            case 'c', 'C' -> btnCos.doClick();
-            case 's', 'S' -> btnSin.doClick();
-            case 't', 'T' -> btnTan.doClick();
-            case 'n', 'N' -> btnPlusMinus.doClick();
-            case '=', KeyEvent.VK_ENTER -> btnEQ.doClick();
-            case KeyEvent.VK_BACK_SPACE -> btnBack.doClick();
-            case ',', '.' -> btnDec.doClick();
-            case 'd', 'D' -> DarkMode.doClick();
-            case 'i', 'I' -> btnInfo.doClick();
-            case 'h' -> { //vypis záznam
-                String debug = "OperatorID: " + operatorID + "\n" +
-                    "OperatorSet: " + operatorSet + "\n" +
-                    "Negative1: " + negative1 + "\n" +
-                    "Negative2: " + negative2 + "\n" +
-                    "Value1: " + value1 + "\n" +
-                    "Value2: " + value2 + "\n" +
-                    "DigitsVal1: " + digitsVal1 + "\n" +
-                    "DigitsVal2: " + digitsVal2 + "\n" +
-                    "DecimalVal1: " + decimalVal1 + "\n" +
-                    "DecimalVal2: " + decimalVal2 + "\n";
-                JOptionPane.showMessageDialog(null, debug, "DEBUG", JOptionPane.PLAIN_MESSAGE);
-            }
-            case 'p' -> //feature (odendat) !!ANO
-                btnPi.doClick();
-            default -> {
-            }
-        }
-    }
-    public void countValue(double x) {
-        if(!operatorSet){
-            if (!decimalVal1) {
-                value1 = value1 * 10.0 + x;
-            } else {
-                value1 += x/ MathLib.nPow(10, ++digitsVal1);
-            }
-        }else{
-            if (!decimalVal2) {
-                value2 = value2 * 10.0 + x;
-            } else {
-                value2 += x/ MathLib.nPow(10.0, ++digitsVal2);
-            }
-        }
-    }
-    public void Equals(){
-        String output;
-        negate();
-        switch (operatorID) {
-            case PLUS -> {
-                //funkce plus
-                value1 = MathLib.plus(value1, value2);
-                output = Alignment(value1);
-            }
-            case MINUS -> {
-                //funkce minus
-                value1 = MathLib.minus(value1, value2);
-                output = Alignment(value1);
-            }
-            case DIVIDE -> {
-                //funkce divide
-                try{
-                    value1 = MathLib.div(value1, value2);
-                }catch(Exception e){
-                    String error = e.toString().substring(' ' - 1);
-                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negate();
-                    return;
-                }
-                output = Alignment(value1);
-            }
-            case MULTIPLY -> {
-                //funkce multiplay
-                value1 = MathLib.mul(value1, value2);
-                output = Alignment(value1);
-            }
-            case MODULO -> {
-                //funkce modulo
-                try{
-                value1 = MathLib.mod(value1, value2); //jen kvůli testování
-                }catch(Exception e){
-                    String error = e.toString().substring(' ' - 1);
-                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negate();
-                    return;
-                }
-                output = Alignment(value1);
-            }
-            case FACTORIAL -> {
-                //funkce faktorial
-                int tmp = (int) value1;
-                if (MathLib.mod(value1, tmp) != 0) {
-                    JOptionPane.showMessageDialog(null, "Faktoriál je definovanán pouze nad celými čísly", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negate();
-                    return;
-                }
-                try {
-                    value1 = MathLib.fact(tmp);
-                } catch (Exception e) {
-                    String error = e.toString().substring(' ' - 1);
-                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negate();
-                    return;
-                }
-                output = Alignment(value1);
-            }
-            //přidání funkce pro zapsání velkých čísel
-            case POWER -> {
-                value1 = MathLib.pow(value1);
-                output = Alignment(value1);
-            }
-            case SQRT -> {
-                try {
-                    value1 = MathLib.sqrt(value1);
-                } catch (Exception e) {
-                    String error = e.toString().substring(' ' - 1);
-                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negate();
-                    return;
-                }
-                output = Alignment(value1);
-            }
-            case NPOWER -> {
-                int tmp1 = (int) value2;
-                if (MathLib.mod(tmp1, value2) != 0) {
-                    JOptionPane.showMessageDialog(null, "n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negate();
-                    return;
-                }
-                try {
-                    value1 = MathLib.nPow(value1, tmp1);
-                } catch (Exception e) {
-                    String error = e.toString().substring(' ' - 1);
-                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negate();
-                    return;
-                }
-                output = Alignment(value1);
-            }
-            case NSQRT -> {
-                int tmp2 = (int) value2;
-                if (MathLib.mod(tmp2, value2) != 0) {
-                    JOptionPane.showMessageDialog(null, "n musí být celé nenulové číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negate();
-                    return;
-                }
-                try {
-                    value1 = MathLib.nSqrt(value1, tmp2);
-                } catch (Exception e) {
-                    String error = e.toString().substring(' ' - 1);
-                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negate();
-                    return;
-                }
-                output = Alignment(value1);
-            }
-            case SIN -> {
-                value1 = MathLib.sin(value1);
-                output = Alignment(value1);
-            }
-            case COS -> {
-                value1 = MathLib.cos(value1);
-                output = Alignment(value1);
-            }
-            case TAN -> {
-                value1 = MathLib.tan(value1);
-                output = Alignment(value1);
-            }
-            default -> {
-                negate();
-                return;
-            }
-        }
-        if(negative1){
-            jText.setText(" - " + output);
-        }else{
-            jText.setText("   " + output);
-        }
-        negative2 = false;
-    }
-    public void negate(){
-        if(negative1){
-            value1 *= -1;
-        }
-        if(negative2){
-            value2 *= -1;
-        }
-    }
+
     public String Alignment(double value){
         value2 = 0;
         digitsVal2 = 0;
@@ -445,68 +60,94 @@ public class MainJFrame extends javax.swing.JFrame {
         System.out.println("Číslo po zaokrouhlením: " + tmp);
         return tmp;
     }
-    public void Pi(){
-        if(operatorSet){
-           if(value2 == 0){
-                value2 = MathLib.pi();
-           }else{
-               printOperator("*");
-               operatorID = MULTIPLY;
-               operatorSet = true;
-               value2 = MathLib.pi();
-           }
-        }else{
-            if(value1 == 0){
-                if(jText.getText().length() == 3){
-                    value1 = MathLib.pi();
-                }else{
-                    printOperator("*");
-                    operatorID = MULTIPLY;
-                    operatorSet = true;
-                    value2 = MathLib.pi();
-                }
 
-            }else{
-                printOperator("*");
-                operatorID = MULTIPLY;
-                operatorSet = true;
-                value2 = MathLib.pi();
-            }
-        }
-        printf("π");
-    }
-    public void Negation(){
-        String text = jText.getText();
-        StringBuilder sb = new StringBuilder(text);
-        if(!operatorSet){
-            negative1 = !negative1;
-            if(negative1){
-                sb.deleteCharAt(1);
-                sb.replace(1, 1, "-");
-            }else{
-                sb.deleteCharAt(1);
-                sb.replace(1, 1, " ");
-            }
-        }else{
-            negative2 = !negative2;
-            if(negative2) {
-                for (int i = text.length()-1; i >= 0; i--) {
-                    if (sb.charAt(i) == ' ') {
-                        sb.replace(i + 1, i + 1, "-");
-                        break;
+    public void BackSpace(){
+        String y = jText.getText();
+        StringBuilder sb = new StringBuilder(y);
+        if(y.length() != 3){
+            char[] operators = {'+','-','*','/', '%'};
+            char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+            char c = y.charAt(y.length()-2);
+            for (char operator : operators) {
+                if (c == operator) {
+                    sb.deleteCharAt(y.length()-1);
+                    sb.deleteCharAt(y.length()-2);
+                    sb.deleteCharAt(y.length()-3);
+                    if(c=='-'){
+                        sb.deleteCharAt(y.length()-4);
                     }
-                }
-            }else{
-                for (int i = text.length()-1; i >= 0; i--) {
-                    if (sb.charAt(i) == '-') {
-                        sb.deleteCharAt(i);
-                        break;
-                    }
+                    operatorID = DEFAULT;
+                    operatorSet = false;
+                    break;
                 }
             }
+            c = y.charAt(y.length()-1);
+            for (char number : numbers) {
+                if (c == number) {
+                    if(!operatorSet){
+                        if (!decimalVal1) {
+                            value1 -= ((double)c-'0');
+                            value1 /= 10.0;
+                        } else {
+                            value1 -= (double)(c-'0')/ MathLib.nPow(10.0, digitsVal1--);
+                        }
+                    }else{
+                        if (!decimalVal2) {
+                            value2 -= ((double)c-'0');
+                            value2 /= 10;
+                        } else {
+                            value2 -= (double)(c-'0')/ MathLib.nPow(10.0, digitsVal2--);
+                        }
+                    }
+                    sb.deleteCharAt(y.length()-1);
+                    break;
+                }
+            }
+            if(c == 'π'){
+                if(!operatorSet){
+                    value1 -= MathLib.pi();
+                }else{
+                    value2 -= MathLib.pi();
+                }
+                sb.deleteCharAt(y.length()-1);
+            }
+            if(c == ','){
+                if(!operatorSet){
+                    decimalVal1 = false;
+                    value1 = (int)value1;
+                }else{
+                    value2 = (int)value2;
+                    decimalVal2 = false;
+                }
+                sb.deleteCharAt(y.length()-1);
+            }
+            if(c == '-'){
+                negative2 = false;
+                sb.deleteCharAt(y.length()-1);
+            }
+        }else if(y.charAt(y.length()-2) == '-'){
+            jText.setText("   ");
+            return;
         }
         jText.setText(sb.toString());
     }
+
+    public void countValue(double x) {
+        if(!operatorSet){
+            if (!decimalVal1) {
+                value1 = value1 * 10.0 + x;
+            } else {
+                value1 += x/ MathLib.nPow(10, ++digitsVal1);
+            }
+        }else{
+            if (!decimalVal2) {
+                value2 = value2 * 10.0 + x;
+            } else {
+                value2 += x/ MathLib.nPow(10.0, ++digitsVal2);
+            }
+        }
+    }
+
     public void DarkMode(){
         java.awt.Color BLACK = new java.awt.Color(0,0,0);
         java.awt.Color WHITE = new java.awt.Color(255,255,255);
@@ -653,8 +294,379 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    public void DeleteScreen(){
+        jText.setText("   ");
+        value1 = 0.0;
+        value2 = 0.0;
+        operatorID = DEFAULT;
+        operatorSet = false;
+        decimalVal1 = false;
+        decimalVal2 = false;
+        digitsVal1 = 0;
+        digitsVal2 = 0;
+        negative1 = false;
+        negative2 = false;
+    }
+
+    public void Equals(){
+        String output;
+        negateValues();
+        switch (operatorID) {
+            case PLUS -> {
+                //funkce plus
+                value1 = MathLib.plus(value1, value2);
+                output = Alignment(value1);
+            }
+            case MINUS -> {
+                //funkce minus
+                value1 = MathLib.minus(value1, value2);
+                output = Alignment(value1);
+            }
+            case DIVIDE -> {
+                //funkce divide
+                try{
+                    value1 = MathLib.div(value1, value2);
+                }catch(Exception e){
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negateValues();
+                    return;
+                }
+                output = Alignment(value1);
+            }
+            case MULTIPLY -> {
+                //funkce multiplay
+                value1 = MathLib.mul(value1, value2);
+                output = Alignment(value1);
+            }
+            case MODULO -> {
+                //funkce modulo
+                try{
+                    value1 = MathLib.mod(value1, value2); //jen kvůli testování
+                }catch(Exception e){
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negateValues();
+                    return;
+                }
+                output = Alignment(value1);
+            }
+            case FACTORIAL -> {
+                //funkce faktorial
+                int tmp = (int) value1;
+                if (MathLib.mod(value1, tmp) != 0) {
+                    JOptionPane.showMessageDialog(null, "Faktoriál je definovanán pouze nad celými čísly", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negateValues();
+                    return;
+                }
+                try {
+                    value1 = MathLib.fact(tmp);
+                } catch (Exception e) {
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negateValues();
+                    return;
+                }
+                output = Alignment(value1);
+            }
+            //přidání funkce pro zapsání velkých čísel
+            case POWER -> {
+                value1 = MathLib.pow(value1);
+                output = Alignment(value1);
+            }
+            case SQRT -> {
+                try {
+                    value1 = MathLib.sqrt(value1);
+                } catch (Exception e) {
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negateValues();
+                    return;
+                }
+                output = Alignment(value1);
+            }
+            case NPOWER -> {
+                int tmp1 = (int) value2;
+                if (MathLib.mod(tmp1, value2) != 0) {
+                    JOptionPane.showMessageDialog(null, "n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negateValues();
+                    return;
+                }
+                try {
+                    value1 = MathLib.nPow(value1, tmp1);
+                } catch (Exception e) {
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negateValues();
+                    return;
+                }
+                output = Alignment(value1);
+            }
+            case NSQRT -> {
+                int tmp2 = (int) value2;
+                if (MathLib.mod(tmp2, value2) != 0) {
+                    JOptionPane.showMessageDialog(null, "n musí být celé nenulové číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negateValues();
+                    return;
+                }
+                try {
+                    value1 = MathLib.nSqrt(value1, tmp2);
+                } catch (Exception e) {
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negateValues();
+                    return;
+                }
+                output = Alignment(value1);
+            }
+            case SIN -> {
+                value1 = MathLib.sin(value1);
+                output = Alignment(value1);
+            }
+            case COS -> {
+                value1 = MathLib.cos(value1);
+                output = Alignment(value1);
+            }
+            case TAN -> {
+                value1 = MathLib.tan(value1);
+                output = Alignment(value1);
+            }
+            default -> {
+                negateValues();
+                return;
+            }
+        }
+        if(negative1){
+            jText.setText(" - " + output);
+        }else{
+            jText.setText("   " + output);
+        }
+        negative2 = false;
+    }
+
+    public static int getScale(double value){
+        BigDecimal bd = new BigDecimal(value);
+        if (bd.intValue() == 0) {
+            return 10;
+        }
+        int scale = 10 - (int)Math.log10(bd.intValue());
+        if(scale < 0){
+            return 0;
+        }
+        return scale;
+    }
+
+    public void KeyTracker(char c){
+        switch (c) {
+            case '1' -> btn1.doClick();
+            case '2' -> btn2.doClick();
+            case '3' -> btn3.doClick();
+            case '4' -> btn4.doClick();
+            case '5' -> btn5.doClick();
+            case '6' -> btn6.doClick();
+            case '7' -> btn7.doClick();
+            case '8' -> btn8.doClick();
+            case '9' -> btn9.doClick();
+            case '0' -> btn0.doClick();
+            case '+' -> btnPlus.doClick();
+            case '-' -> btnMinus.doClick();
+            case '*' -> btnMul.doClick();
+            case '/' -> btnDiv.doClick();
+            case '%' -> btnMod.doClick();
+            case KeyEvent.VK_DELETE -> btnC.doClick();
+            case '!' -> btnFac.doClick();
+            case '^', 'M' -> btnExpN.doClick();
+            case 'm' -> btnExp.doClick();
+            case 'o' -> btnSqrt.doClick();
+            case 'O' -> btnSqrtN.doClick();
+            case 'c', 'C' -> btnCos.doClick();
+            case 's', 'S' -> btnSin.doClick();
+            case 't', 'T' -> btnTan.doClick();
+            case 'n', 'N' -> btnPlusMinus.doClick();
+            case '=', KeyEvent.VK_ENTER -> btnEQ.doClick();
+            case KeyEvent.VK_BACK_SPACE -> btnBack.doClick();
+            case ',', '.' -> btnDec.doClick();
+            case 'd', 'D' -> DarkMode.doClick();
+            case 'i', 'I' -> btnInfo.doClick();
+            case 'h' -> { //vypis záznam
+                String debug = "OperatorID: " + operatorID + "\n" +
+                    "OperatorSet: " + operatorSet + "\n" +
+                    "Negative1: " + negative1 + "\n" +
+                    "Negative2: " + negative2 + "\n" +
+                    "Value1: " + value1 + "\n" +
+                    "Value2: " + value2 + "\n" +
+                    "DigitsVal1: " + digitsVal1 + "\n" +
+                    "DigitsVal2: " + digitsVal2 + "\n" +
+                    "DecimalVal1: " + decimalVal1 + "\n" +
+                    "DecimalVal2: " + decimalVal2 + "\n";
+                JOptionPane.showMessageDialog(null, debug, "DEBUG", JOptionPane.PLAIN_MESSAGE);
+            }
+            case 'p' -> //feature (odendat) !!ANO
+                btnPi.doClick();
+            default -> {
+            }
+        }
+    }
+
+    public void negateValues(){
+        if(negative1){
+            value1 *= -1;
+        }
+        if(negative2){
+            value2 *= -1;
+        }
+    }
+
+    public void Negation(){
+        String text = jText.getText();
+        StringBuilder sb = new StringBuilder(text);
+        if(!operatorSet){
+            negative1 = !negative1;
+            if(negative1){
+                sb.deleteCharAt(1);
+                sb.replace(1, 1, "-");
+            }else{
+                sb.deleteCharAt(1);
+                sb.replace(1, 1, " ");
+            }
+        }else{
+            negative2 = !negative2;
+            if(negative2) {
+                for (int i = text.length()-1; i >= 0; i--) {
+                    if (sb.charAt(i) == ' ') {
+                        sb.replace(i + 1, i + 1, "-");
+                        break;
+                    }
+                }
+            }else{
+                for (int i = text.length()-1; i >= 0; i--) {
+                    if (sb.charAt(i) == '-') {
+                        sb.deleteCharAt(i);
+                        break;
+                    }
+                }
+            }
+        }
+        jText.setText(sb.toString());
+    }
+
+    public void Pi(){
+        if(operatorSet){
+            if(value2 == 0){
+                value2 = MathLib.pi();
+            }else{
+                printOperator("*");
+                operatorID = MULTIPLY;
+                operatorSet = true;
+                value2 = MathLib.pi();
+            }
+        }else{
+            if(value1 == 0){
+                if(jText.getText().length() == 3){
+                    value1 = MathLib.pi();
+                }else{
+                    printOperator("*");
+                    operatorID = MULTIPLY;
+                    operatorSet = true;
+                    value2 = MathLib.pi();
+                }
+
+            }else{
+                printOperator("*");
+                operatorID = MULTIPLY;
+                operatorSet = true;
+                value2 = MathLib.pi();
+            }
+        }
+        printf("π");
+    }
+
+    public void printDec(){
+        if(operatorSet){
+            if(decimalVal2){
+                return;
+            }
+            decimalVal2 = true;
+        }else{
+            if(decimalVal1){
+                return;
+            }
+            decimalVal1 = true;
+        }
+        String y = jText.getText();
+        StringBuilder sb = new StringBuilder(y);
+        if(sb.charAt(sb.length()-1) == ' '){
+            sb.append('0');
+        }
+        sb.append(',');
+        jText.setText(sb.toString());
+    }
+
+    public void printf(String x){
+        String y = jText.getText();
+        StringBuilder sb = new StringBuilder(y);
+        if(sb.charAt(y.length()-1) == 'π'){
+            printOperator("*");
+            operatorID = MULTIPLY;
+            operatorSet = true;
+            y = jText.getText();
+            jText.setText(y + x);
+            return;
+        }
+        sb.append(x);
+        jText.setText(sb.toString());
+    }
+
+    public void printOperator(String x){
+        String y = jText.getText();
+        StringBuilder sb = new StringBuilder(y);
+        if(y.charAt(y.length()-1) == ' '){
+            if(y.length() == 3){
+                if(x.equals(" -")){
+                    jText.setText(" - ");
+                    negative1 = true;
+                    return;
+                }
+                sb.append("0");
+            }else{
+                sb.deleteCharAt(y.length()-1);
+                sb.deleteCharAt(y.length()-2);
+                sb.deleteCharAt(y.length()-3);
+            }
+        }else if(y.charAt(y.length()-1) == ','){
+            sb.append("0");
+        }else if(operatorSet) {
+            Equals();
+            String z = jText.getText();
+            jText.setText(z + "\n" + x + " ");
+            return;
+        }
+        sb.append("\n").append(x).append(" ");
+        jText.setText(sb.toString());
+    }
+
+    public String Round(double value){
+        int scale = getScale(value);
+        String tmp = new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).toPlainString();
+        digitsVal1 = scale;
+        StringBuilder sb = new StringBuilder(tmp);
+        while(sb.charAt(sb.length()-1) == '0'){
+            digitsVal1--;
+            sb.deleteCharAt(sb.length()-1);
+        }
+        if(sb.charAt(sb.length()-1)=='.'){
+            sb.deleteCharAt(sb.length()-1);
+        }
+        if(sb.charAt(0) == '-'){
+            sb.deleteCharAt(0);
+            negative1 = true;
+        }else{
+            negative1 = false;
+        }
+        return sb.toString();
+    }
+
+    //!Vytvoření compenentů
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
@@ -695,7 +707,6 @@ public class MainJFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Kalkulačka");
         setResizable(false);
-
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
         btnInfo.setText("INFO");
@@ -716,21 +727,12 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnC.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnC.setFont(new java.awt.Font("Thoma", Font.PLAIN, 13)); // NOI18N
         btnC.setText("AC");
         btnC.setFocusable(false);
         btnC.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCActionPerformed(evt);
-            }
-        });
-
-        btnSqrtN.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btnSqrtN.setText("n√");
-        btnSqrtN.setFocusable(false);
-        btnSqrtN.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSqrtNActionPerformed(evt);
             }
         });
 
@@ -740,6 +742,142 @@ public class MainJFrame extends javax.swing.JFrame {
         btnBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnBackActionPerformed(evt);
+            }
+        });
+
+        btn0.setBackground(new java.awt.Color(210, 210, 210));
+        btn0.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn0.setText("0");
+        btn0.setFocusable(false);
+        btn0.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn0ActionPerformed(evt);
+            }
+        });
+
+        btn1.setBackground(new java.awt.Color(210, 210, 210));
+        btn1.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn1.setText("1");
+        btn1.setFocusable(false);
+        btn1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn1ActionPerformed(evt);
+            }
+        });
+
+        btn2.setBackground(new java.awt.Color(210, 210, 210));
+        btn2.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn2.setText("2");
+        btn2.setFocusable(false);
+        btn2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn2ActionPerformed(evt);
+            }
+        });
+
+        btn3.setBackground(new java.awt.Color(210, 210, 210));
+        btn3.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn3.setText("3");
+        btn3.setFocusable(false);
+        btn3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn3ActionPerformed(evt);
+            }
+        });
+
+        btn4.setBackground(new java.awt.Color(210, 210, 210));
+        btn4.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn4.setText("4");
+        btn4.setFocusable(false);
+        btn4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn4ActionPerformed(evt);
+            }
+        });
+
+        btn5.setBackground(new java.awt.Color(210, 210, 210));
+        btn5.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn5.setText("5");
+        btn5.setFocusable(false);
+        btn5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn5ActionPerformed(evt);
+            }
+        });
+
+        btn6.setBackground(new java.awt.Color(210, 210, 210));
+        btn6.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn6.setText("6");
+        btn6.setFocusable(false);
+        btn6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn6ActionPerformed(evt);
+            }
+        });
+
+        btn7.setBackground(new java.awt.Color(210, 210, 210));
+        btn7.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn7.setText("7");
+        btn7.setFocusable(false);
+        btn7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn7ActionPerformed(evt);
+            }
+        });
+
+        btn8.setBackground(new java.awt.Color(210, 210, 210));
+        btn8.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn8.setText("8");
+        btn8.setFocusable(false);
+        btn8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn8ActionPerformed(evt);
+            }
+        });
+
+        btn9.setBackground(new java.awt.Color(210, 210, 210));
+        btn9.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn9.setText("9");
+        btn9.setFocusable(false);
+        btn9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn9ActionPerformed(evt);
+            }
+        });
+
+        btnPlus.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnPlus.setText("+");
+        btnPlus.setFocusable(false);
+        btnPlus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPlusActionPerformed(evt);
+            }
+        });
+
+        btnMinus.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnMinus.setText("-");
+        btnMinus.setFocusable(false);
+        btnMinus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMinusActionPerformed(evt);
+            }
+        });
+
+        btnMul.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnMul.setText("*");
+        btnMul.setFocusable(false);
+        btnMul.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMulActionPerformed(evt);
+            }
+        });
+
+        btnDiv.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnDiv.setText("÷");
+        btnDiv.setFocusable(false);
+        btnDiv.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDivActionPerformed(evt);
             }
         });
 
@@ -770,195 +908,6 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnFac.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btnFac.setText("!");
-        btnFac.setFocusable(false);
-        btnFac.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFacActionPerformed(evt);
-            }
-        });
-
-        btnDiv.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btnDiv.setText("÷");
-        btnDiv.setFocusable(false);
-        btnDiv.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDivActionPerformed(evt);
-            }
-        });
-
-        btnMul.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btnMul.setText("*");
-        btnMul.setFocusable(false);
-        btnMul.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMulActionPerformed(evt);
-            }
-        });
-
-        btn9.setBackground(new java.awt.Color(210, 210, 210));
-        btn9.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btn9.setText("9");
-        btn9.setFocusable(false);
-        btn9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn9ActionPerformed(evt);
-            }
-        });
-
-        btn8.setBackground(new java.awt.Color(210, 210, 210));
-        btn8.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btn8.setText("8");
-        btn8.setFocusable(false);
-        btn8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn8ActionPerformed(evt);
-            }
-        });
-
-        btn7.setBackground(new java.awt.Color(210, 210, 210));
-        btn7.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btn7.setText("7");
-        btn7.setFocusable(false);
-        btn7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn7ActionPerformed(evt);
-            }
-        });
-
-        btn4.setBackground(new java.awt.Color(210, 210, 210));
-        btn4.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btn4.setText("4");
-        btn4.setFocusable(false);
-        btn4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn4ActionPerformed(evt);
-            }
-        });
-
-        btn1.setBackground(new java.awt.Color(210, 210, 210));
-        btn1.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btn1.setText("1");
-        btn1.setFocusable(false);
-        btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn1ActionPerformed(evt);
-            }
-        });
-
-        btn0.setBackground(new java.awt.Color(210, 210, 210));
-        btn0.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btn0.setText("0");
-        btn0.setFocusable(false);
-        btn0.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn0ActionPerformed(evt);
-            }
-        });
-
-        btn5.setBackground(new java.awt.Color(210, 210, 210));
-        btn5.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btn5.setText("5");
-        btn5.setFocusable(false);
-        btn5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn5ActionPerformed(evt);
-            }
-        });
-
-        btn6.setBackground(new java.awt.Color(210, 210, 210));
-        btn6.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btn6.setText("6");
-        btn6.setFocusable(false);
-        btn6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn6ActionPerformed(evt);
-            }
-        });
-
-        btnMinus.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btnMinus.setText("-");
-        btnMinus.setFocusable(false);
-        btnMinus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMinusActionPerformed(evt);
-            }
-        });
-
-        btnPlus.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btnPlus.setText("+");
-        btnPlus.setFocusable(false);
-        btnPlus.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPlusActionPerformed(evt);
-            }
-        });
-
-        btnEQ.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btnEQ.setText("=");
-        btnEQ.setFocusable(false);
-        btnEQ.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEQActionPerformed(evt);
-            }
-        });
-
-        btn3.setBackground(new java.awt.Color(210, 210, 210));
-        btn3.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btn3.setText("3");
-        btn3.setFocusable(false);
-        btn3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn3ActionPerformed(evt);
-            }
-        });
-
-        btn2.setBackground(new java.awt.Color(210, 210, 210));
-        btn2.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btn2.setText("2");
-        btn2.setFocusable(false);
-        btn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn2ActionPerformed(evt);
-            }
-        });
-
-        btnDec.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
-        btnDec.setText(",");
-        btnDec.setFocusable(false);
-        btnDec.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnDecActionPerformed(evt);
-            }
-        });
-
-        jText.setEditable(false);
-        jText.setColumns(12);
-        jText.setFont(new java.awt.Font("Quicksand", Font.PLAIN, 18)); // NOI18N
-        jText.setRows(2);
-        jText.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextKeyTyped(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jText);
-
-        Action beep = jText.getActionMap().get(DefaultEditorKit.deletePrevCharAction);
-        Action beep2 = jText.getActionMap().get(DefaultEditorKit.deleteNextCharAction);
-        beep.setEnabled(false);
-        beep2.setEnabled(false);
-        jScrollPane1.setViewportView(jText);
-
-        btnPi.setFont(new java.awt.Font("Tamil MN", Font.PLAIN, 15)); // NOI18N
-        btnPi.setText("π");
-        btnPi.setFocusable(false);
-        btnPi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnPiActionPerformed(evt);
-            }
-        });
-
         btnExpN.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
         btnExpN.setText("xʸ");
         btnExpN.setFocusable(false);
@@ -968,12 +917,21 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnTan.setFont(new java.awt.Font("Thoma", Font.PLAIN, 11)); // NOI18N
-        btnTan.setText("tan");
-        btnTan.setFocusable(false);
-        btnTan.addActionListener(new java.awt.event.ActionListener() {
+        btnSqrtN.setFont(new java.awt.Font("Thoma", Font.PLAIN, 13)); // NOI18N
+        btnSqrtN.setText("n√");
+        btnSqrtN.setFocusable(false);
+        btnSqrtN.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnTanActionPerformed(evt);
+                btnSqrtNActionPerformed(evt);
+            }
+        });
+
+        btnFac.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnFac.setText("!");
+        btnFac.setFocusable(false);
+        btnFac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFacActionPerformed(evt);
             }
         });
 
@@ -995,7 +953,34 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
-        btnPlusMinus.setFont(new java.awt.Font("Thoma", Font.PLAIN, 12)); // NOI18N
+        btnTan.setFont(new java.awt.Font("Thoma", Font.PLAIN, 11)); // NOI18N
+        btnTan.setText("tan");
+        btnTan.setFocusable(false);
+        btnTan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTanActionPerformed(evt);
+            }
+        });
+
+        btnPi.setFont(new java.awt.Font("Tamil MN", Font.PLAIN, 15)); // NOI18N
+        btnPi.setText("π");
+        btnPi.setFocusable(false);
+        btnPi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPiActionPerformed(evt);
+            }
+        });
+
+        btnDec.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnDec.setText(",");
+        btnDec.setFocusable(false);
+        btnDec.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDecActionPerformed(evt);
+            }
+        });
+
+        btnPlusMinus.setFont(new java.awt.Font("Thoma", Font.PLAIN, 10)); // NOI18N
         btnPlusMinus.setText("+/-");
         btnPlusMinus.setFocusable(false);
         btnPlusMinus.addActionListener(new java.awt.event.ActionListener() {
@@ -1004,145 +989,196 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         });
 
+        btnEQ.setFont(new java.awt.Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnEQ.setText("=");
+        btnEQ.setFocusable(false);
+        btnEQ.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEQActionPerformed(evt);
+            }
+        });
+
+        jText.setEditable(false);
+        jText.setColumns(12);
+        jText.setFont(new java.awt.Font("Quicksand", Font.PLAIN, 18)); // NOI18N
+        jText.setRows(2);
+        jText.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextKeyTyped(evt);
+            }
+        });
+        jScrollPane1.setViewportView(jText);
+
+        Action beep = jText.getActionMap().get(DefaultEditorKit.deletePrevCharAction);
+        Action beep2 = jText.getActionMap().get(DefaultEditorKit.deleteNextCharAction);
+        beep.setEnabled(false);
+        beep2.setEnabled(false);
+        jScrollPane1.setViewportView(jText);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jScrollPane1)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(btnExpN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnTan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnSin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnCos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(btnPlusMinus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, 0)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btn0, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btnDec, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btnEQ, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btn7, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btn8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btn9, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btnMul, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btnMinus, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btnPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnExp, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btnSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btnSqrtN, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btnDiv, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(btnPi, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btnFac, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btnMod, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, 0)
-                                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(btnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(DarkMode, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(20, 20, 20))
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(btnExpN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnTan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnSin, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnCos, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnPlusMinus, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(0, 0, 0)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btn0, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btnDec, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btnEQ, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btn7, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btn8, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btn9, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btnMul, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btnMinus, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btnPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnExp, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btnSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btnSqrtN, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btnDiv, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel1Layout.createSequentialGroup()
+                                    .addComponent(btnPi, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btnFac, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btnMod, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, 0)
+                                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(20, 20, 20)
+                    .addComponent(btnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(DarkMode, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(20, 20, 20))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(DarkMode, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnFac, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMod, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnDiv, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSqrtN, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExp, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnExpN, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnTan, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn9, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMul, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCos, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnMinus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnSin, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, 0)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPlusMinus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn0, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnDec, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEQ, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(DarkMode, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnC, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPi, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnFac, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnMod, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, 0)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnDiv, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSqrtN, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSqrt, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExp, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnExpN, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, 0)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnTan, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn7, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn8, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn9, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnMul, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, 0)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnCos, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnMinus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, 0)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnSin, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPlus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(0, 0, 0)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(btnPlusMinus, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btn0, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnDec, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEQ, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
+        String INFO = """
+            Hi
+            Hi
+            Hi
+            Hi
+            Hi
+            Hi
+            Hi
+            """;
+        JOptionPane.showMessageDialog(null, INFO, "INFO", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnInfoActionPerformed
+
+    private void DarkModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DarkModeActionPerformed
+        DarkMode();
+    }//GEN-LAST:event_DarkModeActionPerformed
+
+    private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
+        DeleteScreen();
+    }//GEN-LAST:event_btnCActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        BackSpace();
+    }//GEN-LAST:event_btnBackActionPerformed
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
         printf("0");
@@ -1218,39 +1254,7 @@ public class MainJFrame extends javax.swing.JFrame {
         printOperator("÷");
         operatorSet = true;
         operatorID = operatorsID.DIVIDE;
-    }                                      
-
-    private void btnEQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEQActionPerformed
-        Equals();
-    }//GEN-LAST:event_btnEQActionPerformed
-
-    private void btnDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecActionPerformed
-        printDec();
-    }//GEN-LAST:event_btnDecActionPerformed
-
-    private void btnFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacActionPerformed
-        if(operatorSet){
-        Equals();
-        }
-        operatorID = FACTORIAL;
-        Equals();
-    }//GEN-LAST:event_btnFacActionPerformed
-
-    private void btnSqrtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtActionPerformed
-        if(operatorSet){
-            Equals();
-        }
-        operatorID = SQRT;
-        Equals();
-    }//GEN-LAST:event_btnSqrtActionPerformed
-
-    private void btnExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpActionPerformed
-        if(operatorSet){
-            Equals();
-        }
-        operatorID = POWER;
-        Equals();
-    }//GEN-LAST:event_btnExpActionPerformed
+    }
 
     private void btnModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnModActionPerformed
         printOperator("%");
@@ -1260,43 +1264,21 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_brnModActionPerformed
 
-    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        BackSpace();
-    }//GEN-LAST:event_btnBackActionPerformed
+    private void btnExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpActionPerformed
+        if(operatorSet){
+            Equals();
+        }
+        operatorID = POWER;
+        Equals();
+    }//GEN-LAST:event_btnExpActionPerformed
 
-    private void btnSqrtNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtNActionPerformed
-        printOperator("√");
-        operatorID = NSQRT;
-        operatorSet = true;
-    }//GEN-LAST:event_btnSqrtNActionPerformed
-
-    private void btnCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCActionPerformed
-        DeleteScreen();
-    }//GEN-LAST:event_btnCActionPerformed
-
-    private void DarkModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DarkModeActionPerformed
-        DarkMode();
-    }//GEN-LAST:event_DarkModeActionPerformed
-
-    private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
-        String INFO = """
-            Hi
-            Hi
-            Hi
-            Hi
-            Hi
-            Hi
-            Hi
-            """;
-        JOptionPane.showMessageDialog(null, INFO, "INFO", JOptionPane.INFORMATION_MESSAGE);
-    }//GEN-LAST:event_btnInfoActionPerformed
-    private void jTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDivActionPerformed
-        KeyTracker(evt.getKeyChar());
-    }//GEN-LAST:event_btnDivActionPerformed
-
-    private void btnPiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiActionPerformed
-        Pi();
-    }//GEN-LAST:event_btnPiActionPerformed
+    private void btnSqrtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtActionPerformed
+        if(operatorSet){
+            Equals();
+        }
+        operatorID = SQRT;
+        Equals();
+    }//GEN-LAST:event_btnSqrtActionPerformed
 
     private void btnExpNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpNActionPerformed
         printOperator("^");
@@ -1304,13 +1286,23 @@ public class MainJFrame extends javax.swing.JFrame {
         operatorSet = true;
     }//GEN-LAST:event_btnExpNActionPerformed
 
-    private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
+    private void btnSqrtNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtNActionPerformed
+        printOperator("√");
+        operatorID = NSQRT;
+        operatorSet = true;
+    }//GEN-LAST:event_btnSqrtNActionPerformed
+
+    private void btnFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacActionPerformed
         if(operatorSet){
             Equals();
         }
-        operatorID = TAN;
+        operatorID = FACTORIAL;
         Equals();
-    }//GEN-LAST:event_btnTanActionPerformed
+    }//GEN-LAST:event_btnFacActionPerformed
+
+    private void btnPiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiActionPerformed
+        Pi();
+    }//GEN-LAST:event_btnPiActionPerformed
 
     private void btnSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
         if(operatorSet){
@@ -1328,18 +1320,34 @@ public class MainJFrame extends javax.swing.JFrame {
         Equals();
     }//GEN-LAST:event_btnCosActionPerformed
 
+    private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
+        if(operatorSet){
+            Equals();
+        }
+        operatorID = TAN;
+        Equals();
+    }//GEN-LAST:event_btnTanActionPerformed
+
+    private void btnDecActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDecActionPerformed
+        printDec();
+    }//GEN-LAST:event_btnDecActionPerformed
+
     private void btnPlusMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusMinusActionPerformed
         Negation();
     }//GEN-LAST:event_btnPlusMinusActionPerformed
+
+    private void btnEQActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEQActionPerformed
+        Equals();
+    }//GEN-LAST:event_btnEQActionPerformed
+
+    private void jTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDivActionPerformed
+        KeyTracker(evt.getKeyChar());
+    }//GEN-LAST:event_btnDivActionPerformed
+
     /**
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -1350,9 +1358,6 @@ public class MainJFrame extends javax.swing.JFrame {
         } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainJFrame().setVisible(true);
