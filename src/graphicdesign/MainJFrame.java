@@ -428,7 +428,14 @@ public class MainJFrame extends javax.swing.JFrame {
                 output = Alignment(value1);
             }
             case TAN -> {
-                value1 = MathLib.tan(value1);
+                try {
+                    value1 = MathLib.tan(value1);
+                }catch(Exception e){
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negateValues();
+                    return;
+                }
                 output = Alignment(value1);
             }
             default -> {
