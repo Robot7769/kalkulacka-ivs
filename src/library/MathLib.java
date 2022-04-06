@@ -94,6 +94,9 @@ public class MathLib {
         }
         double min = 0.0;
         double max = abs(a);
+        if (abs(a) < 1) {
+            max *= 2;
+        }
         double middle = max;
         for (int i = 0; (abs(nPow(middle,(int) abs(n)) - abs(a)) > 0.0000000000000005 ) && i < 100; i++) {
             middle = div((min + max), 2);
