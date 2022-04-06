@@ -674,6 +674,7 @@ public class MainJFrame extends javax.swing.JFrame {
         if(sb.charAt(0) == '-'){
             sb.deleteCharAt(0);
             negative1 = true;
+            value1 *= -1;
         }else{
             negative1 = false;
         }
