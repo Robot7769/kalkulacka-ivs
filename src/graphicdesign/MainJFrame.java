@@ -67,9 +67,10 @@ public class MainJFrame extends javax.swing.JFrame {
         if(y.length() != 3){
             char[] operators = {'+','-','*','/', '%'};
             char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+
             char c = y.charAt(y.length()-2);
             for (char operator : operators) {
-                if (c == operator) {
+                if (c == operator && y.charAt(y.length()-1) == ' ') {
                     sb.deleteCharAt(y.length()-1);
                     sb.deleteCharAt(y.length()-2);
                     sb.deleteCharAt(y.length()-3);
@@ -99,10 +100,12 @@ public class MainJFrame extends javax.swing.JFrame {
                             value2 -= (double)(c-'0')/ MathLib.nPow(10.0, digitsVal2--);
                         }
                     }
+
                     sb.deleteCharAt(y.length()-1);
                     break;
                 }
             }
+
             if(c == 'π'){
                 if(!operatorSet){
                     value1 -= MathLib.pi();
@@ -127,6 +130,10 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         }else if(y.charAt(y.length()-2) == '-'){
             jText.setText("   ");
+            return;
+        }
+        if(sb.toString().length() == 3){
+            DeleteScreen();
             return;
         }
         jText.setText(sb.toString());
@@ -489,7 +496,7 @@ public class MainJFrame extends javax.swing.JFrame {
             case 'c', 'C' -> btnCos.doClick();
             case 's', 'S' -> btnSin.doClick();
             case 't', 'T' -> btnTan.doClick();
-            case 'n', 'N' -> btnPlusMinus.doClick();
+            case 'n', 'N', '\\', '|' -> btnPlusMinus.doClick();
             case '=', KeyEvent.VK_ENTER -> btnEQ.doClick();
             case KeyEvent.VK_BACK_SPACE -> btnBack.doClick();
             case ',', '.' -> btnDec.doClick();
@@ -667,6 +674,7 @@ public class MainJFrame extends javax.swing.JFrame {
         if(sb.charAt(0) == '-'){
             sb.deleteCharAt(0);
             negative1 = true;
+            value1 *= -1;
         }else{
             negative1 = false;
         }
