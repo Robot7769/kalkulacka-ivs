@@ -214,4 +214,7 @@ public class MathLib {
         return sign*sina;
     }
     //TODO vytvořit funkci math.log10  - logaritmus 10
+    public double log10(double a) {
+        return 0;
+    }
 }
