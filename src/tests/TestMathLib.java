@@ -46,6 +46,11 @@ public class TestMathLib {
         assertEquals(4.114015916158117,mathLib.div(-264.73569,-64.3497),delta);
     }
 
+    @Test(expected = ArithmeticException.class)
+    public void divExceptionTest() {
+        mathLib.div(7.7,0);
+    }
+
     @Test
     public void modTest() {
         assertEquals(0,mathLib.mod(20,5),0);
@@ -136,6 +141,10 @@ public class TestMathLib {
         mathLib.fact(-7);
     }
 
+    @Test(expected = ArithmeticException.class)
+    public void factTestException2() {
+        mathLib.fact(171);
+    }
 
     @Test
     public void piTest() {
