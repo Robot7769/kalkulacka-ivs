@@ -169,4 +169,13 @@ public class TestMathLib {
         assertEquals(0.472443089813982,mathLib.sin(28.193),delta);
     }
 
+    @Test
+    public void log10Test() {
+        assertEquals(0, mathLib.log10(1),0);
+        assertEquals(1,mathLib.log10(10),0);
+        assertEquals(2, mathLib.log10(100),0);
+        assertEquals(9,mathLib.log10(1000000000),0);
+
+    }
+
 }
