@@ -695,8 +695,9 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Funkce pro výpis operátoru
      * @param operator operátor
+     * @return true - operace neproběhla bezchybně, false - operace proběhla bezchybně
      */
-    public void printOperator(String operator){
+    public boolean printOperator(String operator){
         String text = jText.getText();
         StringBuilder sb = new StringBuilder(text);
         if(text.charAt(text.length()-1) == ' '){
@@ -704,7 +705,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 if(operator.equals(" -")){
                     jText.setText(" - ");
                     negative1 = true;
-                    return;
+                    return false;
                 }
                 sb.append("0");
             }else{
@@ -716,20 +717,21 @@ public class MainJFrame extends javax.swing.JFrame {
             sb.append("0");
         }else if(operatorSet) {
             if (Equals()) {
-                return;
+                return true;
             }
             if(operator.equals("n")){
                 sb.replace(1, 1, "√");
             }
             String z = jText.getText();
             jText.setText(z + "\n" + operator + " ");
-            return;
+            return false;
         }
         if(operator.equals("n")){
             sb.replace(1, 2, "√");
         }
         sb.append("\n").append(operator).append(" ");
         jText.setText(sb.toString());
+        return false;
     }
 
     /**
@@ -1339,34 +1341,37 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
-        printOperator("+");
-        operatorSet = true;
-        operatorID = operatorsID.PLUS;
+        if(!printOperator("+")) {
+            operatorSet = true;
+            operatorID = operatorsID.PLUS;
+        }
     }//GEN-LAST:event_btnPlusActionPerformed
 
     private void btnMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinusActionPerformed
-        printOperator(" -");
-        if(jText.getText().length() != 3){
-        operatorID = operatorsID.MINUS;
-        operatorSet = true;
+        if(!printOperator(" -")) {
+            if (jText.getText().length() != 3) {
+                operatorID = operatorsID.MINUS;
+                operatorSet = true;
+            }
         }
     }//GEN-LAST:event_btnMinusActionPerformed
 
     private void btnMulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMulActionPerformed
-        printOperator("*");
-        operatorSet = true;
-        operatorID = MULTIPLY;
+        if(!printOperator("*")) {
+            operatorSet = true;
+            operatorID = MULTIPLY;
+        }
     }//GEN-LAST:event_btnMulActionPerformed
 
     private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        printOperator("÷");
-        operatorSet = true;
-        operatorID = operatorsID.DIVIDE;
+        if(!printOperator("÷")) {
+            operatorSet = true;
+            operatorID = operatorsID.DIVIDE;
+        }
     }
 
     private void btnModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnModActionPerformed
-        printOperator("%");
-        if(jText.getText().length() != 3) {
+        if(!printOperator("%")) {
             operatorSet = true;
             operatorID = operatorsID.MODULO;
         }
@@ -1389,15 +1394,17 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSqrtActionPerformed
 
     private void btnExpNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpNActionPerformed
-        printOperator("^");
-        operatorID = NPOWER;
-        operatorSet = true;
+        if(!printOperator("^")) {
+            operatorID = NPOWER;
+            operatorSet = true;
+        }
     }//GEN-LAST:event_btnExpNActionPerformed
 
     private void btnSqrtNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtNActionPerformed
-        printOperator("n");
-        operatorID = NSQRT;
-        operatorSet = true;
+        if(!printOperator("n")){
+            operatorID = NSQRT;
+            operatorSet = true;
+        }
     }//GEN-LAST:event_btnSqrtNActionPerformed
 
     private void btnFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacActionPerformed
