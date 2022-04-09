@@ -4,7 +4,6 @@
  * @author xkocia19
  * @author xcafou01
  *
- * @brief
  */
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -25,13 +24,11 @@ import java.math.RoundingMode;
 import static graphicdesign.operatorsID.*;
 
 /**
- * @brief
  *
  */
 enum operatorsID {DEFAULT, PLUS, MINUS, MULTIPLY, DIVIDE, FACTORIAL, POWER, SQRT, NPOWER, NSQRT, MODULO, SIN, COS, TAN}
 
 /**
- * @brief
  *
  */
 public class MainJFrame extends javax.swing.JFrame {
@@ -49,7 +46,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private operatorsID operatorID = DEFAULT;
 
     /**
-     * @brief
      *
      */
     public MainJFrame() {
@@ -58,7 +54,6 @@ public class MainJFrame extends javax.swing.JFrame {
         jText.setText("   ");
     }
     /**
-     * @brief
      *
      * @param value
      * @return
@@ -80,7 +75,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      */
     public void BackSpace(){
@@ -161,7 +155,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      * @param x
      * @return
@@ -176,7 +169,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      * @param x
      */
@@ -197,7 +189,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      */
     public void DarkMode(){
@@ -347,7 +338,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      */
     public void DeleteScreen(){
@@ -365,7 +355,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      * @return
      */
@@ -514,7 +503,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      * @param value
      * @return
@@ -532,7 +520,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      * @param c
      */
@@ -589,7 +576,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      */
     public void negateValues(){
@@ -602,7 +588,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      */
     public void Negation(){
@@ -639,7 +624,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      */
     public void Pi(){
@@ -674,7 +658,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      */
     public void printDec(){
@@ -699,7 +682,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      * @param x
      */
@@ -719,7 +701,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      * @param x
      */
@@ -754,7 +735,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      * @param x
      * @return
@@ -769,7 +749,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * @brief
      *
      * @param value
      * @return
@@ -798,7 +777,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
     //!Vytvoření compenentů
     /**
-     * @brief
      *
      */
     private void initComponents() {
@@ -1478,7 +1456,6 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDivActionPerformed
 
     /**
-     * @brief
      *
      * @param args the command line arguments
      */
@@ -1495,7 +1472,7 @@ public class MainJFrame extends javax.swing.JFrame {
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
             /**
-             * @breif
+             *
              */
             public void run() {
                 new MainJFrame().setVisible(true);
