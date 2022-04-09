@@ -430,10 +430,12 @@ public class MainJFrame extends javax.swing.JFrame {
             }
             case NPOWER -> {
                 int tmp1 = (int) value2;
-                if (MathLib.mod(tmp1, value2) != 0) {
-                    JOptionPane.showMessageDialog(null, "n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negateValues();
-                    return true;
+                if (value2 != 0) {
+                    if (MathLib.mod(tmp1, value2) != 0) {
+                        JOptionPane.showMessageDialog(null, "n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        negateValues();
+                        return true;
+                    }
                 }
                 try {
                     value1 = MathLib.nPow(value1, tmp1);
