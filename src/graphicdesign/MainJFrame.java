@@ -1380,7 +1380,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpActionPerformed
         if(operatorSet){
-            Equals();
+            if(Equals()){
+                return;
+            }
         }
         operatorID = POWER;
         Equals();
@@ -1388,7 +1390,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnSqrtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtActionPerformed
         if(operatorSet){
-            Equals();
+            if(Equals()){
+                return;
+            }
         }
         operatorID = SQRT;
         Equals();
@@ -1410,7 +1414,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacActionPerformed
         if(operatorSet){
-            Equals();
+            if(Equals()){
+                return;
+            }
         }
         operatorID = FACTORIAL;
         Equals();
@@ -1422,7 +1428,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
         if(operatorSet){
-            Equals();
+            if(Equals()){
+                return;
+            }
         }
         operatorID = SIN;
         Equals();
@@ -1430,7 +1438,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
         if(operatorSet){
-            Equals();
+            if(Equals()){
+                return;
+            }
         }
         operatorID = COS;
         Equals();
@@ -1438,7 +1448,9 @@ public class MainJFrame extends javax.swing.JFrame {
 
     private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
         if(operatorSet){
-            Equals();
+            if(Equals()){
+                return;
+            }
         }
         operatorID = TAN;
         Equals();
