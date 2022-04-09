@@ -60,6 +60,9 @@ public class MathLib {
      * @return Vrací zbytek po dělení  'a / b'
      */
     public double mod(double a, double b) {
+        if (b == 0) {
+            throw new ArithmeticException("Modulo nulou není definováno");
+        }
         return a % b;
     }
 
