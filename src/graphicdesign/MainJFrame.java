@@ -391,9 +391,10 @@ public class MainJFrame extends javax.swing.JFrame {
                 //funkce faktorial
                 int tmp = (int) value1;
                 if (value1 != 0) {
-                    if (MathLib.mod(value1, tmp) != 0) {
+                    if (value1 > 0 && value1 < 1 || MathLib.mod(value1, tmp) != 0) {
                         JOptionPane.showMessageDialog(null, "Faktoriál je definovanán pouze nad celými čísly", "ERROR", JOptionPane.ERROR_MESSAGE);
                         negateValues();
+                        operatorID = DEFAULT;
                         return true;
                     }
                 }
@@ -403,6 +404,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negateValues();
+                    operatorID = DEFAULT;
                     return true;
                 }
                 output = Alignment();
