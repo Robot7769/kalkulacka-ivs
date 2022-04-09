@@ -421,6 +421,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negateValues();
+                    operatorID = DEFAULT;
                     return true;
                 }
                 output = Alignment();
@@ -428,7 +429,7 @@ public class MainJFrame extends javax.swing.JFrame {
             case NPOWER -> {
                 int tmp1 = (int) value2;
                 if (value2 != 0) {
-                    if (MathLib.mod(tmp1, value2) != 0) {
+                    if (value2 > 0 && value2 < 2 || MathLib.mod(tmp1, value2) != 0) {
                         JOptionPane.showMessageDialog(null, "n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
                         negateValues();
                         return true;
@@ -447,7 +448,7 @@ public class MainJFrame extends javax.swing.JFrame {
             case NSQRT -> {
                 int tmp2 = (int) value2;
                 if (value2 != 0) {
-                    if (MathLib.mod(tmp2, value2) != 0) {
+                    if (value2 > 0 && value2 < 1 || MathLib.mod(tmp2, value2) != 0) {
                         JOptionPane.showMessageDialog(null, "n musí být celé nenulové číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
                         negateValues();
                         return true;
@@ -478,6 +479,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negateValues();
+                    operatorID = DEFAULT;
                     return true;
                 }
                 output = Alignment();
@@ -1421,7 +1423,9 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         }
         operatorID = FACTORIAL;
-        Equals();
+        if(Equals()){
+            System.out.println("ahoj");
+        }
     }//GEN-LAST:event_btnFacActionPerformed
 
     private void btnPiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiActionPerformed
