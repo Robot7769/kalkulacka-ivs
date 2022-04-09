@@ -1,3 +1,11 @@
+/**
+ * @author xsafar26
+ * @author xskrab12
+ * @author xkocia19
+ * @author xcafou01
+ *
+ * @brief
+ */
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,14 +24,15 @@ import java.math.RoundingMode;
 
 import static graphicdesign.operatorsID.*;
 
+/**
+ * @brief
+ *
+ */
 enum operatorsID {DEFAULT, PLUS, MINUS, MULTIPLY, DIVIDE, FACTORIAL, POWER, SQRT, NPOWER, NSQRT, MODULO, SIN, COS, TAN}
 
 /**
+ * @brief
  *
- * @author xsafar26
- * @author xskrab12
- * @author xkocia19
- * @author xcafou01
  */
 public class MainJFrame extends javax.swing.JFrame {
 
@@ -39,12 +48,21 @@ public class MainJFrame extends javax.swing.JFrame {
     private int digitsVal2 = 0;
     private operatorsID operatorID = DEFAULT;
 
+    /**
+     * @brief
+     *
+     */
     public MainJFrame() {
         initComponents();
         setLocationRelativeTo(null);
         jText.setText("   ");
     }
-
+    /**
+     * @brief
+     *
+     * @param value
+     * @return
+     */
     public String Alignment(double value){
         value2 = 0;
         digitsVal2 = 0;
@@ -61,6 +79,10 @@ public class MainJFrame extends javax.swing.JFrame {
         return tmp;
     }
 
+    /**
+     * @brief
+     *
+     */
     public void BackSpace(){
         String y = jText.getText();
         StringBuilder sb = new StringBuilder(y);
@@ -138,6 +160,12 @@ public class MainJFrame extends javax.swing.JFrame {
         jText.setText(sb.toString());
     }
 
+    /**
+     * @brief
+     *
+     * @param x
+     * @return
+     */
     public int countNumDigits(int x){
         int counter = 0;
         while (x != 0) {
@@ -146,6 +174,12 @@ public class MainJFrame extends javax.swing.JFrame {
         }
         return counter;
     }
+
+    /**
+     * @brief
+     *
+     * @param x
+     */
     public void countValue(double x) {
         if(!operatorSet){
             if (!decimalVal1) {
@@ -162,6 +196,10 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * @brief
+     *
+     */
     public void DarkMode(){
         java.awt.Color BLACK = new java.awt.Color(0,0,0);
         java.awt.Color WHITE = new java.awt.Color(255,255,255);
@@ -308,6 +346,10 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * @brief
+     *
+     */
     public void DeleteScreen(){
         jText.setText("   ");
         value1 = 0.0;
@@ -322,6 +364,11 @@ public class MainJFrame extends javax.swing.JFrame {
         negative2 = false;
     }
 
+    /**
+     * @brief
+     *
+     * @return
+     */
     public boolean Equals(){
         String output;
         negateValues();
@@ -466,6 +513,12 @@ public class MainJFrame extends javax.swing.JFrame {
         return false;
     }
 
+    /**
+     * @brief
+     *
+     * @param value
+     * @return
+     */
     public int getScale(double value){
         BigDecimal bd = new BigDecimal(value);
         if (bd.intValue() == 0) {
@@ -478,6 +531,11 @@ public class MainJFrame extends javax.swing.JFrame {
         return scale;
     }
 
+    /**
+     * @brief
+     *
+     * @param c
+     */
     public void KeyTracker(char c){
         switch (c) {
             case '1' -> btn1.doClick();
@@ -530,6 +588,10 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * @brief
+     *
+     */
     public void negateValues(){
         if(negative1){
             value1 *= -1;
@@ -539,6 +601,10 @@ public class MainJFrame extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * @brief
+     *
+     */
     public void Negation(){
         String text = jText.getText();
         StringBuilder sb = new StringBuilder(text);
@@ -572,6 +638,10 @@ public class MainJFrame extends javax.swing.JFrame {
         jText.setText(sb.toString());
     }
 
+    /**
+     * @brief
+     *
+     */
     public void Pi(){
         if(operatorSet){
             if(value2 == 0){
@@ -603,6 +673,10 @@ public class MainJFrame extends javax.swing.JFrame {
         printf("π");
     }
 
+    /**
+     * @brief
+     *
+     */
     public void printDec(){
         if(operatorSet){
             if(decimalVal2){
@@ -624,6 +698,11 @@ public class MainJFrame extends javax.swing.JFrame {
         jText.setText(sb.toString());
     }
 
+    /**
+     * @brief
+     *
+     * @param x
+     */
     public void printf(String x){
         String y = jText.getText();
         StringBuilder sb = new StringBuilder(y);
@@ -639,6 +718,11 @@ public class MainJFrame extends javax.swing.JFrame {
         jText.setText(sb.toString());
     }
 
+    /**
+     * @brief
+     *
+     * @param x
+     */
     public void printOperator(String x){
         String y = jText.getText();
         StringBuilder sb = new StringBuilder(y);
@@ -668,6 +752,13 @@ public class MainJFrame extends javax.swing.JFrame {
         sb.append("\n").append(x).append(" ");
         jText.setText(sb.toString());
     }
+
+    /**
+     * @brief
+     *
+     * @param x
+     * @return
+     */
     public int RoundToInt(double x){
         int test = ((int)(x*10)) - (((int)x)*10);
         if(test > 5){
@@ -676,6 +767,13 @@ public class MainJFrame extends javax.swing.JFrame {
         }
         return (int)x;
     }
+
+    /**
+     * @brief
+     *
+     * @param value
+     * @return
+     */
     public String RoundToString(double value){
         int scale = getScale(value);
         String tmp = new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).toPlainString();
@@ -699,6 +797,10 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     //!Vytvoření compenentů
+    /**
+     * @brief
+     *
+     */
     private void initComponents() {
         jPanel1 = new javax.swing.JPanel();
         btnInfo = new javax.swing.JButton();
@@ -1376,6 +1478,8 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnDivActionPerformed
 
     /**
+     * @brief
+     *
      * @param args the command line arguments
      */
     public static void main(String[] args) {
@@ -1390,6 +1494,9 @@ public class MainJFrame extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         java.awt.EventQueue.invokeLater(new Runnable() {
+            /**
+             * @breif
+             */
             public void run() {
                 new MainJFrame().setVisible(true);
             }
