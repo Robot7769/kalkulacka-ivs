@@ -4,6 +4,7 @@ import library.MathLib;
 import org.junit.*;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotEquals;
 
 public class TestMathLib {
 
@@ -29,6 +30,8 @@ public class TestMathLib {
         assertEquals(0,mathLib.minus(30,30),0);
         assertEquals(-31,mathLib.minus(43,74),0);
         assertEquals(-4619.054,mathLib.minus(58.946,4678),0);
+        assertNotEquals(-6745.2455885459,mathLib.minus(3323.8223442329,-3421.423244313),0);
+        assertEquals(6745.2455885459,mathLib.minus(3323.8223442329,-3421.423244313),0);
     }
 
     @Test

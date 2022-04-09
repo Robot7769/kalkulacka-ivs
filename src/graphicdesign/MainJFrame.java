@@ -52,7 +52,7 @@ public class MainJFrame extends javax.swing.JFrame {
         operatorID = DEFAULT;
         operatorSet = false;
         System.out.println("Číslo před zaokrouhlením: " + value1);
-        String tmp = Round(value1);
+        String tmp = RoundToString(value1);
         if(tmp.contains(".")){
             decimalVal1 = true;
         }
@@ -67,7 +67,6 @@ public class MainJFrame extends javax.swing.JFrame {
         if(y.length() != 3){
             char[] operators = {'+','-','*','/', '%'};
             char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-
             char c = y.charAt(y.length()-2);
             for (char operator : operators) {
                 if (c == operator && y.charAt(y.length()-1) == ' ') {
@@ -117,9 +116,9 @@ public class MainJFrame extends javax.swing.JFrame {
             if(c == ','){
                 if(!operatorSet){
                     decimalVal1 = false;
-                    value1 = (int)value1;
+                    value1 = RoundToInt(value1);
                 }else{
-                    value2 = (int)value2;
+                    value2 = RoundToInt(value2);
                     decimalVal2 = false;
                 }
                 sb.deleteCharAt(y.length()-1);
@@ -139,6 +138,14 @@ public class MainJFrame extends javax.swing.JFrame {
         jText.setText(sb.toString());
     }
 
+    public int countNumDigits(int x){
+        int counter = 0;
+        while (x != 0) {
+            counter++;
+            x = (x/10);
+        }
+        return counter;
+    }
     public void countValue(double x) {
         if(!operatorSet){
             if (!decimalVal1) {
@@ -458,12 +465,12 @@ public class MainJFrame extends javax.swing.JFrame {
         negative2 = false;
     }
 
-    public static int getScale(double value){
+    public int getScale(double value){
         BigDecimal bd = new BigDecimal(value);
         if (bd.intValue() == 0) {
             return 10;
         }
-        int scale = 10 - (int)Math.log10(bd.intValue());
+        int scale = 10 - countNumDigits(bd.intValue());
         if(scale < 0){
             return 0;
         }
@@ -658,8 +665,15 @@ public class MainJFrame extends javax.swing.JFrame {
         sb.append("\n").append(x).append(" ");
         jText.setText(sb.toString());
     }
-
-    public String Round(double value){
+    public int RoundToInt(double x){
+        int test = ((int)(x*10)) - (((int)x)*10);
+        if(test > 5){
+            x++;
+            return (int)x;
+        }
+        return (int)x;
+    }
+    public String RoundToString(double value){
         int scale = getScale(value);
         String tmp = new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).toPlainString();
         digitsVal1 = scale;
@@ -683,7 +697,6 @@ public class MainJFrame extends javax.swing.JFrame {
 
     //!Vytvoření compenentů
     private void initComponents() {
-
         jPanel1 = new javax.swing.JPanel();
         btnInfo = new javax.swing.JButton();
         DarkMode = new javax.swing.JToggleButton();
