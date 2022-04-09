@@ -174,7 +174,8 @@ public class MathLib {
      * @return  'tan(a°)'
      */
     public double tan(double a) {
-        if (cos(a) == 0) {
+        //System.out.println("a: " + a + " sin: " +sin(a) + " cos: " + cos(a));
+        if (mod(a,90) == 0 && mod(a,180) != 0) {
             throw new ArithmeticException("Tangens úhlu "+ a + "° není definován");
         }
         return div(sin(a),cos(a));
@@ -210,7 +211,7 @@ public class MathLib {
             sign = -1;
         }
 
-        for (int i = 0; i <= 25; i++){
+        for (int i = 0; i <= 50; i++){
             denominator += 2;
             sina += nPow(-1,i) * (nPow(a, denominator) / fact(denominator));
         }
