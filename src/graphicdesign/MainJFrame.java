@@ -349,8 +349,7 @@ public class MainJFrame extends javax.swing.JFrame {
 
     /**
      * Funkce na vypočítání operace mezi hodnotami
-     * @return true nastala chyba při výpočtu
-     * @return false nenastala chyba při výpočtu
+     * @return true - nastala chyba při výpočtu, false - nenastala chyba při výpočtu
      */
     public boolean Equals(){
         String output;
@@ -647,7 +646,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 value2 = MathLib.pi();
             }
         }
-        printf("π");
+        printNum("π");
     }
 
     /**
@@ -675,10 +674,10 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     * Výpis znaku na vstupu
+     * Výpis čísla na vstupu
      * @param input vstup
      */
-    public void printf(String input){
+    public void printNum(String input){
         String text = jText.getText();
         StringBuilder sb = new StringBuilder(text);
         if(sb.charAt(text.length()-1) == 'π'){
@@ -1284,52 +1283,52 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
-        printf("0");
+        printNum("0");
         countValue(0.0);
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
-        printf("1");
+        printNum("1");
         countValue(1.0);
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
-        printf("2");
+        printNum("2");
         countValue(2.0);
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
-        printf("3");
+        printNum("3");
         countValue(3.0);
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
-        printf("4");
+        printNum("4");
         countValue(4.0);
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
-        printf("5");
+        printNum("5");
         countValue(5.0);
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
-        printf("6");
+        printNum("6");
         countValue(6.0);
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
-        printf("7");
+        printNum("7");
         countValue(7.0);
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
-        printf("8");
+        printNum("8");
         countValue(8.0);
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
-        printf("9");
+        printNum("9");
         countValue(9.0);
     }//GEN-LAST:event_btn9ActionPerformed
 
