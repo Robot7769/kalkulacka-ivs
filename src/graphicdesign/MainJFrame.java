@@ -710,11 +710,16 @@ public class MainJFrame extends javax.swing.JFrame {
                 sb.append("0");
             }else{
                 if(text.charAt(text.length()-2) == '-'){
+                    sb.deleteCharAt(text.length()-1);
+                    sb.deleteCharAt(text.length()-2);
+                    sb.deleteCharAt(text.length()-3);
                     sb.deleteCharAt(text.length()-4);
+                }else{
+                    sb.deleteCharAt(text.length()-1);
+                    sb.deleteCharAt(text.length()-2);
+                    sb.deleteCharAt(text.length()-3);
                 }
-                sb.deleteCharAt(text.length()-1);
-                sb.deleteCharAt(text.length()-2);
-                sb.deleteCharAt(text.length()-3);
+
             }
         }else if(text.charAt(text.length()-1) == ','){
             sb.append("0");
