@@ -390,10 +390,12 @@ public class MainJFrame extends javax.swing.JFrame {
             case FACTORIAL -> {
                 //funkce faktorial
                 int tmp = (int) value1;
-                if (MathLib.mod(value1, tmp) != 0) {
-                    JOptionPane.showMessageDialog(null, "Faktoriál je definovanán pouze nad celými čísly", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negateValues();
-                    return true;
+                if (value1 != 0) {
+                    if (MathLib.mod(value1, tmp) != 0) {
+                        JOptionPane.showMessageDialog(null, "Faktoriál je definovanán pouze nad celými čísly", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        negateValues();
+                        return true;
+                    }
                 }
                 try {
                     value1 = MathLib.fact(tmp);
@@ -442,10 +444,12 @@ public class MainJFrame extends javax.swing.JFrame {
             }
             case NSQRT -> {
                 int tmp2 = (int) value2;
-                if (MathLib.mod(tmp2, value2) != 0) {
-                    JOptionPane.showMessageDialog(null, "n musí být celé nenulové číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negateValues();
-                    return true;
+                if (value2 != 0) {
+                    if (MathLib.mod(tmp2, value2) != 0) {
+                        JOptionPane.showMessageDialog(null, "n musí být celé nenulové číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        negateValues();
+                        return true;
+                    }
                 }
                 try {
                     value1 = MathLib.nSqrt(value1, tmp2);
