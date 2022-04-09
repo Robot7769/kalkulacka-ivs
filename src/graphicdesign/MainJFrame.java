@@ -24,13 +24,10 @@ import java.math.RoundingMode;
 import static graphicdesign.operatorsID.*;
 
 /**
- *
+ * Množina ID operátorů mezi dvěmi hodnotami
  */
 enum operatorsID {DEFAULT, PLUS, MINUS, MULTIPLY, DIVIDE, FACTORIAL, POWER, SQRT, NPOWER, NSQRT, MODULO, SIN, COS, TAN}
 
-/**
- *
- */
 public class MainJFrame extends javax.swing.JFrame {
 
     private final MathLib MathLib = new MathLib(); //Objekt matematické knihovny
@@ -45,20 +42,16 @@ public class MainJFrame extends javax.swing.JFrame {
     private int digitsVal2 = 0;
     private operatorsID operatorID = DEFAULT;
 
-    /**
-     *
-     */
     public MainJFrame() {
         initComponents();
         setLocationRelativeTo(null);
         jText.setText("   ");
     }
     /**
-     *
-     * @param value
-     * @return
+     * Funkce pro upravení hodnoty na String pro výstup
+     * @return zaokrouhlenou hodnotu jako stringu
      */
-    public String Alignment(double value){
+    public String Alignment(){
         value2 = 0;
         digitsVal2 = 0;
         decimalVal2 = false;
@@ -75,29 +68,29 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Funkce pro mazání výstupu po jednom znaku
      */
     public void BackSpace(){
-        String y = jText.getText();
-        StringBuilder sb = new StringBuilder(y);
-        if(y.length() != 3){
+        String text = jText.getText();
+        StringBuilder sb = new StringBuilder(text);
+        if(text.length() != 3){
             char[] operators = {'+', '-', '*', '÷', '%', '√', '^'};
             char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-            char c = y.charAt(y.length()-2);
+            char c = text.charAt(text.length()-2);
             for (char operator : operators) {
-                if (c == operator && y.charAt(y.length()-1) == ' ') {
-                    sb.deleteCharAt(y.length()-1);
-                    sb.deleteCharAt(y.length()-2);
-                    sb.deleteCharAt(y.length()-3);
-                    if(c=='-'){
-                        sb.deleteCharAt(y.length()-4);
+                if (c == operator && text.charAt(text.length()-1) == ' ') {
+                    sb.deleteCharAt(text.length()-1);
+                    sb.deleteCharAt(text.length()-2);
+                    sb.deleteCharAt(text.length()-3);
+                    if(c == '-'){
+                        sb.deleteCharAt(text.length()-4);
                     }
                     operatorID = DEFAULT;
                     operatorSet = false;
                     break;
                 }
             }
-            c = y.charAt(y.length()-1);
+            c = text.charAt(text.length()-1);
             for (char number : numbers) {
                 if (c == number) {
                     if(!operatorSet){
@@ -116,7 +109,7 @@ public class MainJFrame extends javax.swing.JFrame {
                         }
                     }
 
-                    sb.deleteCharAt(y.length()-1);
+                    sb.deleteCharAt(text.length()-1);
                     break;
                 }
             }
@@ -127,7 +120,7 @@ public class MainJFrame extends javax.swing.JFrame {
                 }else{
                     value2 -= MathLib.pi();
                 }
-                sb.deleteCharAt(y.length()-1);
+                sb.deleteCharAt(text.length()-1);
             }
             if(c == ','){
                 if(!operatorSet){
@@ -137,13 +130,13 @@ public class MainJFrame extends javax.swing.JFrame {
                     value2 = RoundToInt(value2);
                     decimalVal2 = false;
                 }
-                sb.deleteCharAt(y.length()-1);
+                sb.deleteCharAt(text.length()-1);
             }
             if(c == '-'){
                 negative2 = false;
-                sb.deleteCharAt(y.length()-1);
+                sb.deleteCharAt(text.length()-1);
             }
-        }else if(y.charAt(y.length()-2) == '-'){
+        }else if(text.charAt(text.length()-2) == '-'){
             jText.setText("   ");
             return;
         }
@@ -155,41 +148,41 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     *
-     * @param x
-     * @return
+     * Funkce spočítá počet cifer v celém čísle
+     * @param value hodnota
+     * @return počet cifer v hodnotě
      */
-    public int countNumDigits(int x){
+    public int countNumDigits(int value){
         int counter = 0;
-        while (x != 0) {
+        while (value != 0) {
             counter++;
-            x = (x/10);
+            value = (value/10);
         }
         return counter;
     }
 
     /**
-     *
-     * @param x
+     * Funkce pro ukládání čísel na vstupu do proměných
+     * @param value hodnota na vstupu
      */
-    public void countValue(double x) {
+    public void countValue(double value) {
         if(!operatorSet){
             if (!decimalVal1) {
-                value1 = value1 * 10.0 + x;
+                value1 = value1 * 10.0 + value;
             } else {
-                value1 += x/ MathLib.nPow(10, ++digitsVal1);
+                value1 += value/ MathLib.nPow(10, ++digitsVal1);
             }
         }else{
             if (!decimalVal2) {
-                value2 = value2 * 10.0 + x;
+                value2 = value2 * 10.0 + value;
             } else {
-                value2 += x/ MathLib.nPow(10.0, ++digitsVal2);
+                value2 += value/ MathLib.nPow(10.0, ++digitsVal2);
             }
         }
     }
 
     /**
-     *
+     * Funkce pro změnu barvy grafického rozhraní
      */
     public void DarkMode(){
         java.awt.Color BLACK = new java.awt.Color(0,0,0);
@@ -338,7 +331,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Funkce na vymazání výstupu a resetování paměti kalkulačky
      */
     public void DeleteScreen(){
         jText.setText("   ");
@@ -355,8 +348,9 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     *
-     * @return
+     * Funkce na vypočítání operace mezi hodnotami
+     * @return true nastala chyba při výpočtu
+     * @return false nenastala chyba při výpočtu
      */
     public boolean Equals(){
         String output;
@@ -365,12 +359,12 @@ public class MainJFrame extends javax.swing.JFrame {
             case PLUS -> {
                 //funkce plus
                 value1 = MathLib.plus(value1, value2);
-                output = Alignment(value1);
+                output = Alignment();
             }
             case MINUS -> {
                 //funkce minus
                 value1 = MathLib.minus(value1, value2);
-                output = Alignment(value1);
+                output = Alignment();
             }
             case DIVIDE -> {
                 //funkce divide
@@ -382,24 +376,24 @@ public class MainJFrame extends javax.swing.JFrame {
                     negateValues();
                     return true;
                 }
-                output = Alignment(value1);
+                output = Alignment();
             }
             case MULTIPLY -> {
                 //funkce multiplay
                 value1 = MathLib.mul(value1, value2);
-                output = Alignment(value1);
+                output = Alignment();
             }
             case MODULO -> {
                 //funkce modulo
                 try{
-                    value1 = MathLib.mod(value1, value2); //jen kvůli testování
+                    value1 = MathLib.mod(value1, value2);
                 }catch(Exception e){
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negateValues();
                     return true;
                 }
-                output = Alignment(value1);
+                output = Alignment();
             }
             case FACTORIAL -> {
                 //funkce faktorial
@@ -417,12 +411,12 @@ public class MainJFrame extends javax.swing.JFrame {
                     negateValues();
                     return true;
                 }
-                output = Alignment(value1);
+                output = Alignment();
             }
             //přidání funkce pro zapsání velkých čísel
             case POWER -> {
                 value1 = MathLib.pow(value1);
-                output = Alignment(value1);
+                output = Alignment();
             }
             case SQRT -> {
                 try {
@@ -433,7 +427,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     negateValues();
                     return true;
                 }
-                output = Alignment(value1);
+                output = Alignment();
             }
             case NPOWER -> {
                 int tmp1 = (int) value2;
@@ -450,7 +444,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     negateValues();
                     return true;
                 }
-                output = Alignment(value1);
+                output = Alignment();
             }
             case NSQRT -> {
                 int tmp2 = (int) value2;
@@ -467,15 +461,15 @@ public class MainJFrame extends javax.swing.JFrame {
                     negateValues();
                     return true;
                 }
-                output = Alignment(value1);
+                output = Alignment();
             }
             case SIN -> {
                 value1 = MathLib.sin(value1);
-                output = Alignment(value1);
+                output = Alignment();
             }
             case COS -> {
                 value1 = MathLib.cos(value1);
-                output = Alignment(value1);
+                output = Alignment();
             }
             case TAN -> {
                 try {
@@ -486,7 +480,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     negateValues();
                     return true;
                 }
-                output = Alignment(value1);
+                output = Alignment();
             }
             default -> {
                 negateValues();
@@ -503,9 +497,9 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     *
-     * @param value
-     * @return
+     * Funkce na vypočítání počtu desetinných míst pro danou hodnotu
+     * @param value hodnota
+     * @return počet desetinných míst
      */
     public int getScale(double value){
         BigDecimal bd = new BigDecimal(value);
@@ -520,8 +514,8 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     *
-     * @param c
+     * Funkce na přijímání vstupu z klávesnice
+     * @param c vstup z klávesnice
      */
     public void KeyTracker(char c){
         switch (c) {
@@ -542,8 +536,8 @@ public class MainJFrame extends javax.swing.JFrame {
             case '%' -> btnMod.doClick();
             case KeyEvent.VK_DELETE -> btnC.doClick();
             case '!' -> btnFac.doClick();
-            case '^', 'M' -> btnExpN.doClick();
             case 'm' -> btnExp.doClick();
+            case '^', 'M' -> btnExpN.doClick();
             case 'o' -> btnSqrt.doClick();
             case 'O' -> btnSqrtN.doClick();
             case 'c', 'C' -> btnCos.doClick();
@@ -555,6 +549,7 @@ public class MainJFrame extends javax.swing.JFrame {
             case ',', '.' -> btnDec.doClick();
             case 'd', 'D' -> DarkMode.doClick();
             case 'i', 'I' -> btnInfo.doClick();
+            case 'p' -> btnPi.doClick();
             case 'h' -> { //vypis záznam
                 String debug = "OperatorID: " + operatorID + "\n" +
                     "OperatorSet: " + operatorSet + "\n" +
@@ -568,15 +563,13 @@ public class MainJFrame extends javax.swing.JFrame {
                     "DecimalVal2: " + decimalVal2 + "\n";
                 JOptionPane.showMessageDialog(null, debug, "DEBUG", JOptionPane.PLAIN_MESSAGE);
             }
-            case 'p' -> //feature (odendat) !!ANO
-                btnPi.doClick();
             default -> {
             }
         }
     }
 
     /**
-     *
+     * Funkce zneguje hodnoty pokud mají být negativní
      */
     public void negateValues(){
         if(negative1){
@@ -588,7 +581,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Funkce převede kladnou hodnotu na zápornou nebo naopak
      */
     public void Negation(){
         String text = jText.getText();
@@ -624,7 +617,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Funkce na výpis a uložení hodnoty Pi
      */
     public void Pi(){
         if(operatorSet){
@@ -658,7 +651,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     *
+     * Funkce pro výpis desetinné čárky
      */
     public void printDec(){
         if(operatorSet){
@@ -682,76 +675,76 @@ public class MainJFrame extends javax.swing.JFrame {
     }
 
     /**
-     *
-     * @param x
+     * Výpis znaku na vstupu
+     * @param input vstup
      */
-    public void printf(String x){
-        String y = jText.getText();
-        StringBuilder sb = new StringBuilder(y);
-        if(sb.charAt(y.length()-1) == 'π'){
+    public void printf(String input){
+        String text = jText.getText();
+        StringBuilder sb = new StringBuilder(text);
+        if(sb.charAt(text.length()-1) == 'π'){
             printOperator("*");
             operatorID = MULTIPLY;
             operatorSet = true;
-            y = jText.getText();
-            jText.setText(y + x);
+            text = jText.getText();
+            jText.setText(text + input);
             return;
         }
-        sb.append(x);
+        sb.append(input);
         jText.setText(sb.toString());
     }
 
     /**
-     *
-     * @param x
+     * Funkce pro výpis operátoru
+     * @param operator operátor
      */
-    public void printOperator(String x){
-        String y = jText.getText();
-        StringBuilder sb = new StringBuilder(y);
-        if(y.charAt(y.length()-1) == ' '){
-            if(y.length() == 3){
-                if(x.equals(" -")){
+    public void printOperator(String operator){
+        String text = jText.getText();
+        StringBuilder sb = new StringBuilder(text);
+        if(text.charAt(text.length()-1) == ' '){
+            if(text.length() == 3){
+                if(operator.equals(" -")){
                     jText.setText(" - ");
                     negative1 = true;
                     return;
                 }
                 sb.append("0");
             }else{
-                sb.deleteCharAt(y.length()-1);
-                sb.deleteCharAt(y.length()-2);
-                sb.deleteCharAt(y.length()-3);
+                sb.deleteCharAt(text.length()-1);
+                sb.deleteCharAt(text.length()-2);
+                sb.deleteCharAt(text.length()-3);
             }
-        }else if(y.charAt(y.length()-1) == ','){
+        }else if(text.charAt(text.length()-1) == ','){
             sb.append("0");
         }else if(operatorSet) {
             if (Equals()) {
                 return;
             }
             String z = jText.getText();
-            jText.setText(z + "\n" + x + " ");
+            jText.setText(z + "\n" + operator + " ");
             return;
         }
-        sb.append("\n").append(x).append(" ");
+        sb.append("\n").append(operator).append(" ");
         jText.setText(sb.toString());
     }
 
     /**
-     *
-     * @param x
-     * @return
+     * Funkce pro zaokrouhlení desetinné hodnoty na celé číslo
+     * @param value desetinná hodnota
+     * @return celé zaokrouhlené číslo
      */
-    public int RoundToInt(double x){
-        int test = ((int)(x*10)) - (((int)x)*10);
+    public int RoundToInt(double value){
+        int test = ((int)(value*10)) - (((int)value)*10);
         if(test > 5){
-            x++;
-            return (int)x;
+            value++;
+            return (int)value;
         }
-        return (int)x;
+        return (int)value;
     }
 
     /**
-     *
-     * @param value
-     * @return
+     * Funkce pro zaokrouhlení desetinné hodnoty na určitý počet desetinných míst a následné uložení jako String
+     * @param value desetinná hodnota
+     * @return String obsahující zaokrouhlenou hodnotu
      */
     public String RoundToString(double value){
         int scale = getScale(value);
@@ -775,9 +768,8 @@ public class MainJFrame extends javax.swing.JFrame {
         return sb.toString();
     }
 
-    //!Vytvoření compenentů
     /**
-     *
+     * Funkce pro vytvoření componentů grafického rozhraní
      */
     private void initComponents() {
         jPanel1 = new javax.swing.JPanel();
