@@ -548,7 +548,7 @@ public class MainJFrame extends javax.swing.JFrame {
             case ',', '.' -> btnDec.doClick();
             case 'd', 'D' -> DarkMode.doClick();
             case 'i', 'I' -> btnInfo.doClick();
-            case 'p' -> btnPi.doClick();
+            case 'p', 'P' -> btnPi.doClick();
             case 'h' -> { //vypis záznam
                 String debug = "OperatorID: " + operatorID + "\n" +
                     "OperatorSet: " + operatorSet + "\n" +
