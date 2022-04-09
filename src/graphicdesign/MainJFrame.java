@@ -69,7 +69,7 @@ public class MainJFrame extends javax.swing.JFrame {
         String text = jText.getText();
         StringBuilder sb = new StringBuilder(text);
         if(text.length() != 3){
-            char[] operators = {'+', '-', '*', '÷', '%', '^'};
+            char[] operators = {'+', '-', '*', '÷', '%', '^', '√'};
             char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
             char c = text.charAt(text.length()-2);
             for (char operator : operators) {
@@ -128,13 +128,6 @@ public class MainJFrame extends javax.swing.JFrame {
             }else if(c == '-'){
                 negative2 = false;
                 sb.deleteCharAt(text.length()-1);
-            }else if(text.charAt(text.length()-2) == 'n'){
-                sb.deleteCharAt(text.length()-1);
-                sb.deleteCharAt(text.length()-2);
-                sb.deleteCharAt(text.length()-3);
-                sb.replace(1,2, " ");
-                operatorID = DEFAULT;
-                operatorSet = false;
             }
         }else if(text.charAt(text.length()-2) == '-'){
             jText.setText("   ");
@@ -729,15 +722,9 @@ public class MainJFrame extends javax.swing.JFrame {
             if (Equals()) {
                 return true;
             }
-            if(operator.equals("n")){
-                sb.replace(1, 1, "√");
-            }
             String z = jText.getText();
             jText.setText(z + "\n" + operator + " ");
             return false;
-        }
-        if(operator.equals("n")){
-            sb.replace(1, 2, "√");
         }
         sb.append("\n").append(operator).append(" ");
         jText.setText(sb.toString());
@@ -1411,7 +1398,7 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExpNActionPerformed
 
     private void btnSqrtNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtNActionPerformed
-        if(!printOperator("n")){
+        if(!printOperator("√")){
             operatorID = NSQRT;
             operatorSet = true;
         }
