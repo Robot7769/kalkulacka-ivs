@@ -65,7 +65,7 @@ public class MainJFrame extends javax.swing.JFrame {
         String y = jText.getText();
         StringBuilder sb = new StringBuilder(y);
         if(y.length() != 3){
-            char[] operators = {'+','-','*','/', '%'};
+            char[] operators = {'+', '-', '*', '÷', '%', '√', '^'};
             char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
             char c = y.charAt(y.length()-2);
             for (char operator : operators) {
