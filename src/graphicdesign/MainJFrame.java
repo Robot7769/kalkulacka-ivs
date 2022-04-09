@@ -709,6 +709,9 @@ public class MainJFrame extends javax.swing.JFrame {
                 }
                 sb.append("0");
             }else{
+                if(text.charAt(text.length()-2) == '-'){
+                    sb.deleteCharAt(text.length()-4);
+                }
                 sb.deleteCharAt(text.length()-1);
                 sb.deleteCharAt(text.length()-2);
                 sb.deleteCharAt(text.length()-3);
