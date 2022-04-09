@@ -174,6 +174,9 @@ public class MathLib {
      * @return  'tan(a°)'
      */
     public double tan(double a) {
+        if (cos(a) == 0) {
+            throw new ArithmeticException("Tangens úhlu "+ a + "° není definován");
+        }
         return div(sin(a),cos(a));
     }
 
