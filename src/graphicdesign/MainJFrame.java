@@ -13,6 +13,8 @@ import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
@@ -1271,16 +1273,14 @@ public class MainJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
-        String INFO = """
-            Hi
-            Hi
-            Hi
-            Hi
-            Hi
-            Hi
-            Hi
-            """;
-        JOptionPane.showMessageDialog(null, INFO, "INFO", JOptionPane.INFORMATION_MESSAGE);
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File("out/INFO.pdf"); //TODO předělat cestu na info.pdf
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+            }
+        }
     }//GEN-LAST:event_btnInfoActionPerformed
 
     private void DarkModeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_DarkModeActionPerformed
