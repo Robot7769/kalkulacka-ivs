@@ -1,3 +1,5 @@
+package tests;
+
 import library.MathLib;
 import org.junit.*;
 
