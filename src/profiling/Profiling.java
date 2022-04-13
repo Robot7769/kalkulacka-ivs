@@ -26,7 +26,7 @@ public class Profiling {
 
 
 
-        /*
+        /* dodelat prevod z nacitani do rovnice
         int n = numbers.length;
         double counter = 0.0;
 
