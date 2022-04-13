@@ -26,3 +26,6 @@ hs_err_pid*
 out/
 kalkulacka-ivs.iml
 src/META-INF/MANIFEST.MF
+repo
+nbproject
+target
