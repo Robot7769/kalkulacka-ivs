@@ -97,6 +97,9 @@ public class MathLib {
         }
         double min = 0.0;
         double max = abs(a);
+        if (abs(a) < 1 && abs(a) > 0) {
+            max += 1;
+        }
         if (abs(a) < 1) {
             max *= 2;
         }

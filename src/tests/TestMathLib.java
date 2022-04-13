@@ -70,7 +70,7 @@ public class TestMathLib {
         assertEquals(1,mathLib.sqrt(1),0);
         assertEquals(2,mathLib.sqrt(4),0);
         assertEquals(0,mathLib.sqrt(0),0);
-        assertEquals(0.9486832980505138,mathLib.sqrt(0.9),0);
+        assertEquals(0.9486832980505138,mathLib.sqrt(0.9),delta);
     }
 
     @Test(expected = ArithmeticException.class)
