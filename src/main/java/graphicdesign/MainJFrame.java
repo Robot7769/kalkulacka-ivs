@@ -350,17 +350,17 @@ public class MainJFrame extends javax.swing.JFrame {
         String output;
         negateValues();
         switch (operatorID) {
-            case PLUS -> {
+            case PLUS:
                 //funkce plus
                 value1 = MathLib.plus(value1, value2);
                 output = Alignment();
-            }
-            case MINUS -> {
+            break;
+            case MINUS:
                 //funkce minus
                 value1 = MathLib.minus(value1, value2);
                 output = Alignment();
-            }
-            case DIVIDE -> {
+            break;
+            case DIVIDE:
                 //funkce divide
                 try{
                     value1 = MathLib.div(value1, value2);
@@ -371,13 +371,13 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            }
-            case MULTIPLY -> {
+            break;
+            case MULTIPLY:
                 //funkce multiplay
                 value1 = MathLib.mul(value1, value2);
                 output = Alignment();
-            }
-            case MODULO -> {
+            break;
+            case MODULO:
                 //funkce modulo
                 try{
                     value1 = MathLib.mod(value1, value2);
@@ -388,8 +388,8 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            }
-            case FACTORIAL -> {
+            break;
+            case FACTORIAL:
                 //funkce faktorial
                 int tmp = (int) value1;
                 if (value1 != 0) {
@@ -410,13 +410,13 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            }
+            break;
             //přidání funkce pro zapsání velkých čísel
-            case POWER -> {
+            case POWER:
                 value1 = MathLib.pow(value1);
                 output = Alignment();
-            }
-            case SQRT -> {
+            break;
+            case SQRT:
                 try {
                     value1 = MathLib.sqrt(value1);
                 } catch (Exception e) {
@@ -427,8 +427,8 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            }
-            case NPOWER -> {
+            break;
+            case NPOWER:
                 int tmp1 = (int) value2;
                 if (value2 != 0) {
                     if (value2 > 0 && value2 < 2 || MathLib.mod(tmp1, value2) != 0) {
@@ -446,8 +446,8 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            }
-            case NSQRT -> {
+            break;
+            case NSQRT:
                 int tmp2 = (int) value2;
                 if (value2 != 0) {
                     if (value2 > 0 && value2 < 1 || MathLib.mod(tmp2, value2) != 0) {
@@ -465,16 +465,16 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            }
-            case SIN -> {
+            break;
+            case SIN:
                 value1 = MathLib.sin(value1);
                 output = Alignment();
-            }
-            case COS -> {
+            break;
+            case COS:
                 value1 = MathLib.cos(value1);
                 output = Alignment();
-            }
-            case TAN -> {
+            break;
+            case TAN:
                 try {
                     value1 = MathLib.tan(value1);
                 }catch(Exception e){
@@ -485,11 +485,10 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            }
-            default -> {
+            break;
+            default:
                 negateValues();
                 return false;
-            }
         }
         if(negative1){
             jText.setText(" - " + output);
@@ -523,38 +522,39 @@ public class MainJFrame extends javax.swing.JFrame {
      */
     public void KeyTracker(char c){
         switch (c) {
-            case '1' -> btn1.doClick();
-            case '2' -> btn2.doClick();
-            case '3' -> btn3.doClick();
-            case '4' -> btn4.doClick();
-            case '5' -> btn5.doClick();
-            case '6' -> btn6.doClick();
-            case '7' -> btn7.doClick();
-            case '8' -> btn8.doClick();
-            case '9' -> btn9.doClick();
-            case '0' -> btn0.doClick();
-            case '+' -> btnPlus.doClick();
-            case '-' -> btnMinus.doClick();
-            case '*' -> btnMul.doClick();
-            case '/' -> btnDiv.doClick();
-            case '%' -> btnMod.doClick();
-            case KeyEvent.VK_DELETE -> btnC.doClick();
-            case '!' -> btnFac.doClick();
-            case 'm' -> btnExp.doClick();
-            case '^', 'M' -> btnExpN.doClick();
-            case 'o' -> btnSqrt.doClick();
-            case 'O' -> btnSqrtN.doClick();
-            case 'c', 'C' -> btnCos.doClick();
-            case 's', 'S' -> btnSin.doClick();
-            case 't', 'T' -> btnTan.doClick();
-            case 'n', 'N', '\\', '|' -> btnPlusMinus.doClick();
-            case '=', KeyEvent.VK_ENTER -> btnEQ.doClick();
-            case KeyEvent.VK_BACK_SPACE -> btnBack.doClick();
-            case ',', '.' -> btnDec.doClick();
-            case 'd', 'D' -> DarkMode.doClick();
-            case 'i', 'I' -> btnInfo.doClick();
-            case 'p', 'P' -> btnPi.doClick();
-            case 'h' -> { //vypis záznam
+            case '1': btn1.doClick(); break;
+            case '2': btn2.doClick(); break;
+            case '3': btn3.doClick(); break;
+            case '4': btn4.doClick(); break;
+            case '5' : btn5.doClick(); break;
+            case '6': btn6.doClick(); break;
+            case '7': btn7.doClick(); break;
+            case '8': btn8.doClick(); break;
+            case '9': btn9.doClick(); break;
+            case '0': btn0.doClick(); break;
+            case '+': btnPlus.doClick(); break;
+            case '-': btnMinus.doClick(); break;
+            case '*': btnMul.doClick(); break;
+            case '/': btnDiv.doClick(); break;
+            case '%': btnMod.doClick(); break;
+            case KeyEvent.VK_DELETE: btnC.doClick(); break;
+            case '!': btnFac.doClick(); break;
+            case 'm': btnExp.doClick(); break;
+            case '^':
+                case 'M': btnExpN.doClick(); break;
+            case 'o': btnSqrt.doClick(); break;
+            case 'O': btnSqrtN.doClick(); break;
+            case 'c': case 'C': btnCos.doClick(); break;
+            case 's': case 'S': btnSin.doClick(); break;
+            case 't': case 'T': btnTan.doClick(); break;
+            case 'n': case 'N': case '\\': case '|': btnPlusMinus.doClick(); break;
+            case '=': case KeyEvent.VK_ENTER: btnEQ.doClick(); break;
+            case KeyEvent.VK_BACK_SPACE: btnBack.doClick(); break;
+            case ',': case '.': btnDec.doClick(); break;
+            case 'd': case 'D': DarkMode.doClick(); break;
+            case 'i': case 'I': btnInfo.doClick(); break;
+            case 'p': case 'P': btnPi.doClick(); break;
+            case 'h': //vypis záznam
                 String debug = "OperatorID: " + operatorID + "\n" +
                     "OperatorSet: " + operatorSet + "\n" +
                     "Negative1: " + negative1 + "\n" +
@@ -566,9 +566,9 @@ public class MainJFrame extends javax.swing.JFrame {
                     "DecimalVal1: " + decimalVal1 + "\n" +
                     "DecimalVal2: " + decimalVal2 + "\n";
                 JOptionPane.showMessageDialog(null, debug, "DEBUG", JOptionPane.PLAIN_MESSAGE);
-            }
-            default -> {
-            }
+            break;
+            default:
+            break;
         }
     }
 
