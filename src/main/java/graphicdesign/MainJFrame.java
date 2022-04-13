@@ -3,7 +3,6 @@
  * @author xskrab12
  * @author xkocia19
  * @author xcafou01
- *
  */
 package main.java.graphicdesign;
 
@@ -44,11 +43,12 @@ public class MainJFrame extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         jText.setText("   ");
     }
+
     /**
      * Funkce pro upravení hodnoty na String pro výstup
      * @return zaokrouhlenou hodnotu jako stringu
      */
-    public String Alignment(){
+    public String Alignment() {
         value2 = 0;
         digitsVal2 = 0;
         decimalVal2 = false;
@@ -56,7 +56,7 @@ public class MainJFrame extends javax.swing.JFrame {
         operatorSet = false;
         System.out.println("Číslo před zaokrouhlením: " + value1);
         String tmp = RoundToString(value1);
-        if(tmp.contains(".")){
+        if (tmp.contains(".")) {
             decimalVal1 = true;
         }
         tmp = tmp.replace(".", ",");
@@ -67,75 +67,75 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Funkce pro mazání výstupu po jednom znaku
      */
-    public void BackSpace(){
+    public void BackSpace() {
         String text = jText.getText();
         StringBuilder sb = new StringBuilder(text);
-        if(text.length() != 3){
+        if (text.length() != 3) {
             char[] operators = {'+', '-', '*', '÷', '%', '^', '√'};
             char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
-            char c = text.charAt(text.length()-2);
+            char c = text.charAt(text.length() - 2);
             for (char operator : operators) {
-                if (c == operator && text.charAt(text.length()-1) == ' ') {
-                    sb.deleteCharAt(text.length()-1);
-                    sb.deleteCharAt(text.length()-2);
-                    sb.deleteCharAt(text.length()-3);
-                    if(c == '-'){
-                        sb.deleteCharAt(text.length()-4);
+                if (c == operator && text.charAt(text.length() - 1) == ' ') {
+                    sb.deleteCharAt(text.length() - 1);
+                    sb.deleteCharAt(text.length() - 2);
+                    sb.deleteCharAt(text.length() - 3);
+                    if (c == '-') {
+                        sb.deleteCharAt(text.length() - 4);
                     }
                     operatorID = DEFAULT;
                     operatorSet = false;
                     break;
                 }
             }
-            c = text.charAt(text.length()-1);
+            c = text.charAt(text.length() - 1);
             for (char number : numbers) {
                 if (c == number) {
-                    if(!operatorSet){
+                    if (!operatorSet) {
                         if (!decimalVal1) {
-                            value1 -= ((double)c-'0');
+                            value1 -= ((double) c - '0');
                             value1 /= 10.0;
                         } else {
-                            value1 -= (double)(c-'0')/ MathLib.nPow(10.0, digitsVal1--);
+                            value1 -= (double) (c - '0') / MathLib.nPow(10.0, digitsVal1--);
                         }
-                    }else{
+                    } else {
                         if (!decimalVal2) {
-                            value2 -= ((double)c-'0');
+                            value2 -= ((double) c - '0');
                             value2 /= 10;
                         } else {
-                            value2 -= (double)(c-'0')/ MathLib.nPow(10.0, digitsVal2--);
+                            value2 -= (double) (c - '0') / MathLib.nPow(10.0, digitsVal2--);
                         }
                     }
 
-                    sb.deleteCharAt(text.length()-1);
+                    sb.deleteCharAt(text.length() - 1);
                     break;
                 }
             }
 
-            if(c == 'π'){
-                if(!operatorSet){
+            if (c == 'π') {
+                if (!operatorSet) {
                     value1 -= MathLib.pi();
-                }else{
+                } else {
                     value2 -= MathLib.pi();
                 }
-                sb.deleteCharAt(text.length()-1);
-            }else if(c == ','){
-                if(!operatorSet){
+                sb.deleteCharAt(text.length() - 1);
+            } else if (c == ',') {
+                if (!operatorSet) {
                     decimalVal1 = false;
                     value1 = RoundToInt(value1);
-                }else{
+                } else {
                     value2 = RoundToInt(value2);
                     decimalVal2 = false;
                 }
-                sb.deleteCharAt(text.length()-1);
-            }else if(c == '-'){
+                sb.deleteCharAt(text.length() - 1);
+            } else if (c == '-') {
                 negative2 = false;
-                sb.deleteCharAt(text.length()-1);
+                sb.deleteCharAt(text.length() - 1);
             }
-        }else if(text.charAt(text.length()-2) == '-'){
+        } else if (text.charAt(text.length() - 2) == '-') {
             jText.setText("   ");
             return;
         }
-        if(sb.toString().length() == 3){
+        if (sb.toString().length() == 3) {
             DeleteScreen();
             return;
         }
@@ -147,11 +147,11 @@ public class MainJFrame extends javax.swing.JFrame {
      * @param value hodnota
      * @return počet cifer v hodnotě
      */
-    public int countNumDigits(int value){
+    public int countNumDigits(int value) {
         int counter = 0;
         while (value != 0) {
             counter++;
-            value = (value/10);
+            value = (value / 10);
         }
         return counter;
     }
@@ -161,17 +161,17 @@ public class MainJFrame extends javax.swing.JFrame {
      * @param value hodnota na vstupu
      */
     public void countValue(double value) {
-        if(!operatorSet){
+        if (!operatorSet) {
             if (!decimalVal1) {
                 value1 = value1 * 10.0 + value;
             } else {
-                value1 += value/ MathLib.nPow(10, ++digitsVal1);
+                value1 += value / MathLib.nPow(10, ++digitsVal1);
             }
-        }else{
+        } else {
             if (!decimalVal2) {
                 value2 = value2 * 10.0 + value;
             } else {
-                value2 += value/ MathLib.nPow(10.0, ++digitsVal2);
+                value2 += value / MathLib.nPow(10.0, ++digitsVal2);
             }
         }
     }
@@ -179,14 +179,14 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Funkce pro změnu barvy grafického rozhraní
      */
-    public void DarkMode(){
-        java.awt.Color BLACK = new java.awt.Color(0,0,0);
-        java.awt.Color WHITE = new java.awt.Color(255,255,255);
-        java.awt.Color GRAY15 = new java.awt.Color(15,15,15);
-        java.awt.Color GRAY45 = new java.awt.Color(45,45,45);
-        java.awt.Color GRAY180 = new java.awt.Color(180,180,180);
-        java.awt.Color GRAY210 = new java.awt.Color(210,210,210);
-        if(DarkMode.isSelected()){
+    public void DarkMode() {
+        java.awt.Color BLACK = new java.awt.Color(0, 0, 0);
+        java.awt.Color WHITE = new java.awt.Color(255, 255, 255);
+        java.awt.Color GRAY15 = new java.awt.Color(15, 15, 15);
+        java.awt.Color GRAY45 = new java.awt.Color(45, 45, 45);
+        java.awt.Color GRAY180 = new java.awt.Color(180, 180, 180);
+        java.awt.Color GRAY210 = new java.awt.Color(210, 210, 210);
+        if (DarkMode.isSelected()) {
             jPanel1.setBackground(new java.awt.Color(51, 51, 51));
             jText.setBackground(BLACK);
             jText.setForeground(WHITE);
@@ -254,7 +254,7 @@ public class MainJFrame extends javax.swing.JFrame {
             btnPi.setBackground(GRAY15);
             btnPi.setForeground(WHITE);
 
-        }else{
+        } else {
             jPanel1.setBackground(new java.awt.Color(204, 204, 204));
             jText.setBackground(WHITE);
             jText.setForeground(BLACK);
@@ -328,7 +328,7 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Funkce na vymazání výstupu a resetování paměti kalkulačky
      */
-    public void DeleteScreen(){
+    public void DeleteScreen() {
         jText.setText("   ");
         value1 = 0.0;
         value2 = 0.0;
@@ -346,7 +346,7 @@ public class MainJFrame extends javax.swing.JFrame {
      * Funkce na vypočítání operace mezi hodnotami
      * @return true - nastala chyba při výpočtu, false - nenastala chyba při výpočtu
      */
-    public boolean Equals(){
+    public boolean Equals() {
         String output;
         negateValues();
         switch (operatorID) {
@@ -354,41 +354,41 @@ public class MainJFrame extends javax.swing.JFrame {
                 //funkce plus
                 value1 = MathLib.plus(value1, value2);
                 output = Alignment();
-            break;
+                break;
             case MINUS:
                 //funkce minus
                 value1 = MathLib.minus(value1, value2);
                 output = Alignment();
-            break;
+                break;
             case DIVIDE:
                 //funkce divide
-                try{
+                try {
                     value1 = MathLib.div(value1, value2);
-                }catch(Exception e){
+                } catch (Exception e) {
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negateValues();
                     return true;
                 }
                 output = Alignment();
-            break;
+                break;
             case MULTIPLY:
                 //funkce multiplay
                 value1 = MathLib.mul(value1, value2);
                 output = Alignment();
-            break;
+                break;
             case MODULO:
                 //funkce modulo
-                try{
+                try {
                     value1 = MathLib.mod(value1, value2);
-                }catch(Exception e){
+                } catch (Exception e) {
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negateValues();
                     return true;
                 }
                 output = Alignment();
-            break;
+                break;
             case FACTORIAL:
                 //funkce faktorial
                 int tmp = (int) value1;
@@ -410,12 +410,12 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            break;
+                break;
             //přidání funkce pro zapsání velkých čísel
             case POWER:
                 value1 = MathLib.pow(value1);
                 output = Alignment();
-            break;
+                break;
             case SQRT:
                 try {
                     value1 = MathLib.sqrt(value1);
@@ -427,7 +427,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            break;
+                break;
             case NPOWER:
                 int tmp1 = (int) value2;
                 if (value2 != 0) {
@@ -446,7 +446,7 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            break;
+                break;
             case NSQRT:
                 int tmp2 = (int) value2;
                 if (value2 != 0) {
@@ -465,19 +465,19 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            break;
+                break;
             case SIN:
                 value1 = MathLib.sin(value1);
                 output = Alignment();
-            break;
+                break;
             case COS:
                 value1 = MathLib.cos(value1);
                 output = Alignment();
-            break;
+                break;
             case TAN:
                 try {
                     value1 = MathLib.tan(value1);
-                }catch(Exception e){
+                } catch (Exception e) {
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negateValues();
@@ -485,14 +485,14 @@ public class MainJFrame extends javax.swing.JFrame {
                     return true;
                 }
                 output = Alignment();
-            break;
+                break;
             default:
                 negateValues();
                 return false;
         }
-        if(negative1){
+        if (negative1) {
             jText.setText(" - " + output);
-        }else{
+        } else {
             jText.setText("   " + output);
         }
         negative2 = false;
@@ -504,13 +504,13 @@ public class MainJFrame extends javax.swing.JFrame {
      * @param value hodnota
      * @return počet desetinných míst
      */
-    public int getScale(double value){
+    public int getScale(double value) {
         BigDecimal bd = new BigDecimal(value);
         if (bd.intValue() == 0) {
             return 10;
         }
         int scale = 10 - countNumDigits(bd.intValue());
-        if(scale < 0){
+        if (scale < 0) {
             return 0;
         }
         return scale;
@@ -520,40 +520,113 @@ public class MainJFrame extends javax.swing.JFrame {
      * Funkce na přijímání vstupu z klávesnice
      * @param c vstup z klávesnice
      */
-    public void KeyTracker(char c){
+    public void KeyTracker(char c) {
         switch (c) {
-            case '1': btn1.doClick(); break;
-            case '2': btn2.doClick(); break;
-            case '3': btn3.doClick(); break;
-            case '4': btn4.doClick(); break;
-            case '5' : btn5.doClick(); break;
-            case '6': btn6.doClick(); break;
-            case '7': btn7.doClick(); break;
-            case '8': btn8.doClick(); break;
-            case '9': btn9.doClick(); break;
-            case '0': btn0.doClick(); break;
-            case '+': btnPlus.doClick(); break;
-            case '-': btnMinus.doClick(); break;
-            case '*': btnMul.doClick(); break;
-            case '/': btnDiv.doClick(); break;
-            case '%': btnMod.doClick(); break;
-            case KeyEvent.VK_DELETE: btnC.doClick(); break;
-            case '!': btnFac.doClick(); break;
-            case 'm': btnExp.doClick(); break;
+            case '1':
+                btn1.doClick();
+                break;
+            case '2':
+                btn2.doClick();
+                break;
+            case '3':
+                btn3.doClick();
+                break;
+            case '4':
+                btn4.doClick();
+                break;
+            case '5':
+                btn5.doClick();
+                break;
+            case '6':
+                btn6.doClick();
+                break;
+            case '7':
+                btn7.doClick();
+                break;
+            case '8':
+                btn8.doClick();
+                break;
+            case '9':
+                btn9.doClick();
+                break;
+            case '0':
+                btn0.doClick();
+                break;
+            case '+':
+                btnPlus.doClick();
+                break;
+            case '-':
+                btnMinus.doClick();
+                break;
+            case '*':
+                btnMul.doClick();
+                break;
+            case '/':
+                btnDiv.doClick();
+                break;
+            case '%':
+                btnMod.doClick();
+                break;
+            case KeyEvent.VK_DELETE:
+                btnC.doClick();
+                break;
+            case '!':
+                btnFac.doClick();
+                break;
+            case 'm':
+                btnExp.doClick();
+                break;
             case '^':
-                case 'M': btnExpN.doClick(); break;
-            case 'o': btnSqrt.doClick(); break;
-            case 'O': btnSqrtN.doClick(); break;
-            case 'c': case 'C': btnCos.doClick(); break;
-            case 's': case 'S': btnSin.doClick(); break;
-            case 't': case 'T': btnTan.doClick(); break;
-            case 'n': case 'N': case '\\': case '|': btnPlusMinus.doClick(); break;
-            case '=': case KeyEvent.VK_ENTER: btnEQ.doClick(); break;
-            case KeyEvent.VK_BACK_SPACE: btnBack.doClick(); break;
-            case ',': case '.': btnDec.doClick(); break;
-            case 'd': case 'D': DarkMode.doClick(); break;
-            case 'i': case 'I': btnInfo.doClick(); break;
-            case 'p': case 'P': btnPi.doClick(); break;
+            case 'M':
+                btnExpN.doClick();
+                break;
+            case 'o':
+                btnSqrt.doClick();
+                break;
+            case 'O':
+                btnSqrtN.doClick();
+                break;
+            case 'c':
+            case 'C':
+                btnCos.doClick();
+                break;
+            case 's':
+            case 'S':
+                btnSin.doClick();
+                break;
+            case 't':
+            case 'T':
+                btnTan.doClick();
+                break;
+            case 'n':
+            case 'N':
+            case '\\':
+            case '|':
+                btnPlusMinus.doClick();
+                break;
+            case '=':
+            case KeyEvent.VK_ENTER:
+                btnEQ.doClick();
+                break;
+            case KeyEvent.VK_BACK_SPACE:
+                btnBack.doClick();
+                break;
+            case ',':
+            case '.':
+                btnDec.doClick();
+                break;
+            case 'd':
+            case 'D':
+                DarkMode.doClick();
+                break;
+            case 'i':
+            case 'I':
+                btnInfo.doClick();
+                break;
+            case 'p':
+            case 'P':
+                btnPi.doClick();
+                break;
             case 'h': //vypis záznam
                 String debug = "OperatorID: " + operatorID + "\n" +
                     "OperatorSet: " + operatorSet + "\n" +
@@ -566,20 +639,20 @@ public class MainJFrame extends javax.swing.JFrame {
                     "DecimalVal1: " + decimalVal1 + "\n" +
                     "DecimalVal2: " + decimalVal2 + "\n";
                 JOptionPane.showMessageDialog(null, debug, "DEBUG", JOptionPane.PLAIN_MESSAGE);
-            break;
+                break;
             default:
-            break;
+                break;
         }
     }
 
     /**
      * Funkce zneguje hodnoty pokud mají být negativní
      */
-    public void negateValues(){
-        if(negative1){
+    public void negateValues() {
+        if (negative1) {
             value1 *= -1;
         }
-        if(negative2){
+        if (negative2) {
             value2 *= -1;
         }
     }
@@ -587,29 +660,29 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Funkce převede kladnou hodnotu na zápornou nebo naopak
      */
-    public void Negation(){
+    public void Negation() {
         String text = jText.getText();
         StringBuilder sb = new StringBuilder(text);
-        if(!operatorSet){
+        if (!operatorSet) {
             negative1 = !negative1;
-            if(negative1){
+            if (negative1) {
                 sb.deleteCharAt(1);
                 sb.replace(1, 1, "-");
-            }else{
+            } else {
                 sb.deleteCharAt(1);
                 sb.replace(1, 1, " ");
             }
-        }else{
+        } else {
             negative2 = !negative2;
-            if(negative2) {
-                for (int i = text.length()-1; i >= 0; i--) {
+            if (negative2) {
+                for (int i = text.length() - 1; i >= 0; i--) {
                     if (sb.charAt(i) == ' ') {
                         sb.replace(i + 1, i + 1, "-");
                         break;
                     }
                 }
-            }else{
-                for (int i = text.length()-1; i >= 0; i--) {
+            } else {
+                for (int i = text.length() - 1; i >= 0; i--) {
                     if (sb.charAt(i) == '-') {
                         sb.deleteCharAt(i);
                         break;
@@ -623,28 +696,28 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Funkce na výpis a uložení hodnoty Pi
      */
-    public void Pi(){
-        if(operatorSet){
-            if(value2 == 0){
+    public void Pi() {
+        if (operatorSet) {
+            if (value2 == 0) {
                 value2 = MathLib.pi();
-            }else{
+            } else {
                 printOperator("*");
                 operatorID = MULTIPLY;
                 operatorSet = true;
                 value2 = MathLib.pi();
             }
-        }else{
-            if(value1 == 0){
-                if(jText.getText().length() == 3){
+        } else {
+            if (value1 == 0) {
+                if (jText.getText().length() == 3) {
                     value1 = MathLib.pi();
-                }else{
+                } else {
                     printOperator("*");
                     operatorID = MULTIPLY;
                     operatorSet = true;
                     value2 = MathLib.pi();
                 }
 
-            }else{
+            } else {
                 printOperator("*");
                 operatorID = MULTIPLY;
                 operatorSet = true;
@@ -657,21 +730,21 @@ public class MainJFrame extends javax.swing.JFrame {
     /**
      * Funkce pro výpis desetinné čárky
      */
-    public void printDec(){
-        if(operatorSet){
-            if(decimalVal2){
+    public void printDec() {
+        if (operatorSet) {
+            if (decimalVal2) {
                 return;
             }
             decimalVal2 = true;
-        }else{
-            if(decimalVal1){
+        } else {
+            if (decimalVal1) {
                 return;
             }
             decimalVal1 = true;
         }
         String y = jText.getText();
         StringBuilder sb = new StringBuilder(y);
-        if(sb.charAt(sb.length()-1) == ' '){
+        if (sb.charAt(sb.length() - 1) == ' ') {
             sb.append('0');
         }
         sb.append(',');
@@ -682,10 +755,10 @@ public class MainJFrame extends javax.swing.JFrame {
      * Výpis čísla na vstupu
      * @param input vstup
      */
-    public void printNum(String input){
+    public void printNum(String input) {
         String text = jText.getText();
         StringBuilder sb = new StringBuilder(text);
-        if(sb.charAt(text.length()-1) == 'π'){
+        if (sb.charAt(text.length() - 1) == 'π') {
             printOperator("*");
             operatorID = MULTIPLY;
             operatorSet = true;
@@ -702,33 +775,33 @@ public class MainJFrame extends javax.swing.JFrame {
      * @param operator operátor
      * @return true - operace neproběhla bezchybně, false - operace proběhla bezchybně
      */
-    public boolean printOperator(String operator){
+    public boolean printOperator(String operator) {
         String text = jText.getText();
         StringBuilder sb = new StringBuilder(text);
-        if(text.charAt(text.length()-1) == ' '){
-            if(text.length() == 3){
-                if(operator.equals(" -")){
+        if (text.charAt(text.length() - 1) == ' ') {
+            if (text.length() == 3) {
+                if (operator.equals(" -")) {
                     jText.setText(" - ");
                     negative1 = true;
                     return false;
                 }
                 sb.append("0");
-            }else{
-                if(text.charAt(text.length()-2) == '-'){
-                    sb.deleteCharAt(text.length()-1);
-                    sb.deleteCharAt(text.length()-2);
-                    sb.deleteCharAt(text.length()-3);
-                    sb.deleteCharAt(text.length()-4);
-                }else{
-                    sb.deleteCharAt(text.length()-1);
-                    sb.deleteCharAt(text.length()-2);
-                    sb.deleteCharAt(text.length()-3);
+            } else {
+                if (text.charAt(text.length() - 2) == '-') {
+                    sb.deleteCharAt(text.length() - 1);
+                    sb.deleteCharAt(text.length() - 2);
+                    sb.deleteCharAt(text.length() - 3);
+                    sb.deleteCharAt(text.length() - 4);
+                } else {
+                    sb.deleteCharAt(text.length() - 1);
+                    sb.deleteCharAt(text.length() - 2);
+                    sb.deleteCharAt(text.length() - 3);
                 }
 
             }
-        }else if(text.charAt(text.length()-1) == ','){
+        } else if (text.charAt(text.length() - 1) == ',') {
             sb.append("0");
-        }else if(operatorSet) {
+        } else if (operatorSet) {
             if (Equals()) {
                 return true;
             }
@@ -746,13 +819,13 @@ public class MainJFrame extends javax.swing.JFrame {
      * @param value desetinná hodnota
      * @return celé zaokrouhlené číslo
      */
-    public int RoundToInt(double value){
-        int test = ((int)(value*10)) - (((int)value)*10);
-        if(test > 5){
+    public int RoundToInt(double value) {
+        int test = ((int) (value * 10)) - (((int) value) * 10);
+        if (test > 5) {
             value++;
-            return (int)value;
+            return (int) value;
         }
-        return (int)value;
+        return (int) value;
     }
 
     /**
@@ -760,23 +833,23 @@ public class MainJFrame extends javax.swing.JFrame {
      * @param value desetinná hodnota
      * @return String obsahující zaokrouhlenou hodnotu
      */
-    public String RoundToString(double value){
+    public String RoundToString(double value) {
         int scale = getScale(value);
         String tmp = new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).toPlainString();
         digitsVal1 = scale;
         StringBuilder sb = new StringBuilder(tmp);
-        while(sb.charAt(sb.length()-1) == '0'){
+        while (sb.charAt(sb.length() - 1) == '0') {
             digitsVal1--;
-            sb.deleteCharAt(sb.length()-1);
+            sb.deleteCharAt(sb.length() - 1);
         }
-        if(sb.charAt(sb.length()-1)=='.'){
-            sb.deleteCharAt(sb.length()-1);
+        if (sb.charAt(sb.length() - 1) == '.') {
+            sb.deleteCharAt(sb.length() - 1);
         }
-        if(sb.charAt(0) == '-'){
+        if (sb.charAt(0) == '-') {
             sb.deleteCharAt(0);
             negative1 = true;
             value1 *= -1;
-        }else{
+        } else {
             negative1 = false;
         }
         return sb.toString();
@@ -1346,14 +1419,14 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
-        if(!printOperator("+")) {
+        if (!printOperator("+")) {
             operatorSet = true;
             operatorID = operatorsID.PLUS;
         }
     }//GEN-LAST:event_btnPlusActionPerformed
 
     private void btnMinusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMinusActionPerformed
-        if(!printOperator(" -")) {
+        if (!printOperator(" -")) {
             if (jText.getText().length() != 3) {
                 operatorID = operatorsID.MINUS;
                 operatorSet = true;
@@ -1362,29 +1435,29 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMinusActionPerformed
 
     private void btnMulActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMulActionPerformed
-        if(!printOperator("*")) {
+        if (!printOperator("*")) {
             operatorSet = true;
             operatorID = MULTIPLY;
         }
     }//GEN-LAST:event_btnMulActionPerformed
 
-    private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {                                       
-        if(!printOperator("÷")) {
+    private void btnDivActionPerformed(java.awt.event.ActionEvent evt) {
+        if (!printOperator("÷")) {
             operatorSet = true;
             operatorID = operatorsID.DIVIDE;
         }
     }
 
     private void btnModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_brnModActionPerformed
-        if(!printOperator("%")) {
+        if (!printOperator("%")) {
             operatorSet = true;
             operatorID = operatorsID.MODULO;
         }
     }//GEN-LAST:event_brnModActionPerformed
 
     private void btnExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpActionPerformed
-        if(operatorSet){
-            if(Equals()){
+        if (operatorSet) {
+            if (Equals()) {
                 return;
             }
         }
@@ -1393,8 +1466,8 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnExpActionPerformed
 
     private void btnSqrtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtActionPerformed
-        if(operatorSet){
-            if(Equals()){
+        if (operatorSet) {
+            if (Equals()) {
                 return;
             }
         }
@@ -1403,27 +1476,27 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSqrtActionPerformed
 
     private void btnExpNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpNActionPerformed
-        if(!printOperator("^")) {
+        if (!printOperator("^")) {
             operatorID = NPOWER;
             operatorSet = true;
         }
     }//GEN-LAST:event_btnExpNActionPerformed
 
     private void btnSqrtNActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtNActionPerformed
-        if(!printOperator("√")){
+        if (!printOperator("√")) {
             operatorID = NSQRT;
             operatorSet = true;
         }
     }//GEN-LAST:event_btnSqrtNActionPerformed
 
     private void btnFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacActionPerformed
-        if(operatorSet){
-            if(Equals()){
+        if (operatorSet) {
+            if (Equals()) {
                 return;
             }
         }
         operatorID = FACTORIAL;
-        if(Equals()){
+        if (Equals()) {
             System.out.println("ahoj");
         }
     }//GEN-LAST:event_btnFacActionPerformed
@@ -1433,8 +1506,8 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPiActionPerformed
 
     private void btnSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
-        if(operatorSet){
-            if(Equals()){
+        if (operatorSet) {
+            if (Equals()) {
                 return;
             }
         }
@@ -1443,8 +1516,8 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSinActionPerformed
 
     private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
-        if(operatorSet){
-            if(Equals()){
+        if (operatorSet) {
+            if (Equals()) {
                 return;
             }
         }
@@ -1453,8 +1526,8 @@ public class MainJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCosActionPerformed
 
     private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
-        if(operatorSet){
-            if(Equals()){
+        if (operatorSet) {
+            if (Equals()) {
                 return;
             }
         }
