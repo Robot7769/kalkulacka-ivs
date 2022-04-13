@@ -5,9 +5,9 @@
  * @author xcafou01
  *
  */
-package graphicdesign;
+package main.java.graphicdesign;
 
-import library.MathLib; //Matematická knihovna
+import main.java.library.MathLib; //Matematická knihovna
 
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
@@ -18,7 +18,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-import static graphicdesign.operatorsID.*;
+import static main.java.graphicdesign.operatorsID.*;
 
 /**
  * Množina ID operátorů mezi dvěmi hodnotami

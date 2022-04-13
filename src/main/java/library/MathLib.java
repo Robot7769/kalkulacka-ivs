@@ -1,4 +1,4 @@
-package library;
+package main.java.library;
 
 public class MathLib {
     /**

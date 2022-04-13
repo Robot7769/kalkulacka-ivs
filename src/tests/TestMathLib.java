@@ -1,6 +1,6 @@
 package tests;
 
-import library.MathLib;
+import main.java.library.MathLib;
 import org.junit.*;
 
 import static org.junit.Assert.assertEquals;
