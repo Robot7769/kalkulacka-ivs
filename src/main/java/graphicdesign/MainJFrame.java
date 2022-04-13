@@ -54,13 +54,11 @@ public class MainJFrame extends javax.swing.JFrame {
         decimalVal2 = false;
         operatorID = DEFAULT;
         operatorSet = false;
-        System.out.println("Číslo před zaokrouhlením: " + value1);
         String tmp = RoundToString(value1);
         if (tmp.contains(".")) {
             decimalVal1 = true;
         }
         tmp = tmp.replace(".", ",");
-        System.out.println("Číslo po zaokrouhlením: " + tmp);
         return tmp;
     }
 
@@ -1496,9 +1494,7 @@ public class MainJFrame extends javax.swing.JFrame {
             }
         }
         operatorID = FACTORIAL;
-        if (Equals()) {
-            System.out.println("ahoj");
-        }
+        Equals();
     }//GEN-LAST:event_btnFacActionPerformed
 
     private void btnPiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPiActionPerformed
@@ -1550,11 +1546,6 @@ public class MainJFrame extends javax.swing.JFrame {
     private void jTextKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnDivActionPerformed
         KeyTracker(evt.getKeyChar());
     }//GEN-LAST:event_btnDivActionPerformed
-
-    /**
-     *
-     * @param args the command line arguments
-     */
     public static void main(String[] args) {
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
