@@ -6,12 +6,12 @@ import java.util.Scanner;
 import java.io.FileNotFoundException;
 import java.io.File;
 
-public class Profiling {//Pokus o nacaitani
+public class Profiling {
 
     private final main.java.library.MathLib MathLib = new MathLib(); //Objekt matematické knihovny
 
     public static void main(String[] args){
-        try {
+        try {//Pokus o nacaitani
             File Objective = new File("data.txt");
             Scanner myReader = new Scanner(Objective);
             while (myReader.hasNextLine()){
