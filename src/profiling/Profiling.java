@@ -10,7 +10,7 @@ public class Profiling {//Pokus o nacaitani
 
     private final main.java.library.MathLib MathLib = new MathLib(); //Objekt matematické knihovny
 
-    public static double main(String[] args){
+    public static void main(String[] args){
         try {
             File Objective = new File("data.txt");
             Scanner myReader = new Scanner(Objective);
@@ -21,7 +21,7 @@ public class Profiling {//Pokus o nacaitani
             myReader.close();
         } catch (FileNotFoundException error) {
             System.out.println("Soubor nebyl nalezen.");
-            error.printStackTrace();
+            //error.printStackTrace();
         }
 
 
@@ -44,6 +44,5 @@ public class Profiling {//Pokus o nacaitani
 
 
     */
-        return 0;
     }
 }
