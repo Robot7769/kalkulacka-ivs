@@ -4,16 +4,14 @@ import main.java.library.MathLib; //Matematická knihovna
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
-
 public class Profiling {
 
-    private final main.java.library.MathLib MathLib = new MathLib(); //Objekt matematické knihovny
+    private final MathLib MathLib = new MathLib(); //Objekt matematické knihovny
 
     public static void main(String[] args) {
-        ArrayList<Double> N = new ArrayList<>();
+        ArrayList<Double> Values = new ArrayList<>();
         //Nacitani            //TODO predelat aby se dalo nacitat pomoci java Profiling *.txt
-            File Objective = new File("src/profiling/data.txt");
+            File Objective = new File("https://github.com/Robot7769/kalkulacka-ivs/blob/d4ae8e51c91ca7fb98039ba7d855b761072154b6/src/profiling/data.txt");
             if(!Objective.exists() || !Objective.canRead()){
                 System.out.println("Soubor nebyl nalezen.");
             }
@@ -24,39 +22,36 @@ public class Profiling {
                    String[] parts = line.split(" ");
                     for (int j = 0; j < parts.length; j++) {
                         try {
-                            N.add(Double.parseDouble(parts[j]));
+                            Values.add(Double.parseDouble(parts[j]));
                         }catch (Exception e){
                             System.out.println("Neobsahuje cislo.");
                         }
                     }
                 }
-
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        for (int j = 0; j < N.size(); j++) {
-            System.out.println(N.get(j));
+     for (int j = 0; j < Values.size(); j++) { //test vypisu dat
+            System.out.println(Values.get(j));
         }
-
-        /* dodelat prevod z nacitani do rovnice
-        int n = numbers.length;
+  /*
         double counter = 0.0;
+        double NumOfNum = Values.size();
 
-        for (int i = 0; i < n; i++) {
-            counter += numbers[i];
+        for (int i = 0; i < Values.size(); i++) {
+            counter += Values.get(i);
         }
 
-        double scale = MathLib.div(counter, n);
+        double scale = MathLib.div(counter, NumOfNum);
 
-        double root = MathLib.mul(MathLib.div(1,1-n),MathLib.pow(counter) - MathLib.mul(n, MathLib.pow(scale)));
+        double root = main.java.library.MathLib.mul(MathLib.div(1,1-Values),MathLib.pow(counter) - MathLib.mul(Values, MathLib.pow(scale)));
 
         double amplitude = MathLib.sqrt(root);
 
         System.out.println(amplitude);
 
-
-    */
+       */
     }
 }
