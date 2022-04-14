@@ -6,12 +6,12 @@ import java.io.*;
 import java.util.ArrayList;
 public class Profiling {
 
-    private final MathLib MathLib = new MathLib(); //Objekt matematické knihovny
+    private static final MathLib MathLib = new MathLib(); //Objekt matematické knihovny
 
     public static void main(String[] args) {
         ArrayList<Double> Values = new ArrayList<>();
         //Nacitani            //TODO predelat aby se dalo nacitat pomoci java Profiling *.txt
-            File Objective = new File("src/profiling/data.txt"); //cesta v pocitaci, nefunkcni pro ostatni
+            File Objective = new File("src/profiling/data.txt");
             if(!Objective.exists() || !Objective.canRead()){
                 System.out.println("Soubor nebyl nalezen.");
             }
@@ -21,10 +21,12 @@ public class Profiling {
                 if (line.length() > 0){
                    String[] parts = line.split(" ");
                     for (int j = 0; j < parts.length; j++) {
-                        try {
-                            Values.add(Double.parseDouble(parts[j]));
-                        }catch (Exception e){
-                            System.out.println("Neobsahuje cislo.");
+                        if(parts[j].length() > 0){
+                            try {
+                                Values.add(Double.parseDouble(parts[j]));
+                            }catch (Exception e){
+                                System.out.println("Neobsahuje cislo.");
+                            }
                         }
                     }
                 }
@@ -33,10 +35,10 @@ public class Profiling {
             throw new RuntimeException(e);
         }
 
-     for (int j = 0; j < Values.size(); j++) { //test vypisu dat
-            System.out.println(Values.get(j));
-        }
-  /*
+//     for (int j = 0; j < Values.size(); j++) { //test vypisu dat
+  //          System.out.println(Values.get(j));
+    //    }
+/*
         double counter = 0.0;
         double NumOfNum = Values.size();
 
@@ -44,14 +46,17 @@ public class Profiling {
             counter += Values.get(i);
         }
 
+
         double scale = MathLib.div(counter, NumOfNum);
 
-        double root = main.java.library.MathLib.mul(MathLib.div(1,1-Values),MathLib.pow(counter) - MathLib.mul(Values, MathLib.pow(scale)));
+        System.out.println(MathLib.pow(counter));
+        System.out.println(MathLib.mul(Values.size(), MathLib.pow(scale)));
+
+        double root = MathLib.mul(MathLib.div(1,MathLib.minus(1,Values.size())),MathLib.minus(MathLib.pow(counter) ,MathLib.mul(Values.size(), MathLib.pow(scale))));
 
         double amplitude = MathLib.sqrt(root);
 
-        System.out.println(amplitude);
-
-       */
+        System.out.println("\n"+ amplitude);
+    */
     }
 }
