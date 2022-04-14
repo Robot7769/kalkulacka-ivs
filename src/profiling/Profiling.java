@@ -2,29 +2,43 @@ package profiling;
 
 import main.java.library.MathLib; //Matematická knihovna
 
-import java.io.File;
+import java.io.*;
+import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.FileNotFoundException;
 
 public class Profiling {
 
     private final main.java.library.MathLib MathLib = new MathLib(); //Objekt matematické knihovny
 
-    public static void main(String[] args){
-        try {                                           //Nacitani            //TODO predelat aby se dalo nacitat pomoci java Profiling *.txt && presunout data do pole
+    public static void main(String[] args) {
+        ArrayList<Double> N = new ArrayList<>();
+        //Nacitani            //TODO predelat aby se dalo nacitat pomoci java Profiling *.txt
             File Objective = new File("src/profiling/data.txt");
-            Scanner myReader = new Scanner(Objective);
-            while (myReader.hasNext()){
-                String data = myReader.next();
-                System.out.println(data);
+            if(!Objective.exists() || !Objective.canRead()){
+                System.out.println("Soubor nebyl nalezen.");
             }
-            myReader.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Soubor nebyl nalezen.");
-            //e.printStackTrace();
+        try (BufferedReader myReader = new BufferedReader(new FileReader(Objective))){
+            String line;
+            while ((line = myReader.readLine()) != null) {
+                if (line.length() > 0){
+                   String[] parts = line.split(" ");
+                    for (int j = 0; j < parts.length; j++) {
+                        try {
+                            N.add(Double.parseDouble(parts[j]));
+                        }catch (Exception e){
+                            System.out.println("Neobsahuje cislo.");
+                        }
+                    }
+                }
+
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
-
+        for (int j = 0; j < N.size(); j++) {
+            System.out.println(N.get(j));
+        }
 
         /* dodelat prevod z nacitani do rovnice
         int n = numbers.length;
