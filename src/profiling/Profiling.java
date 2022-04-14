@@ -11,7 +11,7 @@ public class Profiling {
     public static void main(String[] args) {
         ArrayList<Double> Values = new ArrayList<>();
         //Nacitani            //TODO predelat aby se dalo nacitat pomoci java Profiling *.txt
-            File Objective = new File("https://github.com/Robot7769/kalkulacka-ivs/blob/d4ae8e51c91ca7fb98039ba7d855b761072154b6/src/profiling/data.txt");
+            File Objective = new File("src/profiling/data.txt"); //cesta v pocitaci, nefunkcni pro ostatni
             if(!Objective.exists() || !Objective.canRead()){
                 System.out.println("Soubor nebyl nalezen.");
             }
