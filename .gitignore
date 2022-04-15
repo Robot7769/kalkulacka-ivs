@@ -34,3 +34,6 @@ build.xml
 dist
 src/app/dependency-reduced-pom.xml
 src/profiling/dependency-reduced-pom.xml
+scr/dedian
+kalkulacka_*
+kalkulacka.tar.gz
