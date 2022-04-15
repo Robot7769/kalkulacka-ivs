@@ -1,4 +1,4 @@
-package fit.ivs.mathlibrary;
+package fit.ivs.calc.mathlibrary;
 
 public class MathLib {
     /**

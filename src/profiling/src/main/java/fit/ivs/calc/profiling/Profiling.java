@@ -1,6 +1,6 @@
-package fit.ivs.profiling;
+package fit.ivs.calc.profiling;
 
-import fit.ivs.mathlibrary.MathLib;
+import fit.ivs.calc.mathlibrary.MathLib;
 
 import java.io.*;
 import java.util.ArrayList;

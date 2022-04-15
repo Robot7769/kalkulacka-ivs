@@ -5,7 +5,7 @@ package fit.ivs.calc.app; /**
  * @author xcafou01
  */
 
-import fit.ivs.mathlibrary.MathLib;
+import fit.ivs.calc.mathlibrary.MathLib;
 
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
