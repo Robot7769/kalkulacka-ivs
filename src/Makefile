@@ -8,7 +8,7 @@ INSFLAGS = -m 0755
 #############################################################################
 all: build
 
-build: app/src/main/java/fit/ivs/calc/app/MainJFrame.java math-library/src/main/java/fit/ivs/calc/mathlibrary/MathLib.java
+build: app/src/main/java/fit/ivs/calc/app/MainJFrame.java math-library/src/main/java/fit/ivs/calc/mathlibrary/MathLib.java profiling/src/main/java/fit/ivs/calc/profiling/Profiling.java
 	mvn clean package -Dmaven.repo.local=../../repo/
 
 test: math-library/src/main/java/fit/ivs/calc/mathlibrary/MathLib.java math-library/src/main
