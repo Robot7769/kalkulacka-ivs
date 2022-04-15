@@ -33,3 +33,4 @@ build
 build.xml
 dist
 src/app/dependency-reduced-pom.xml
+src/profiling/dependency-reduced-pom.xml
