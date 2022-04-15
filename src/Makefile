@@ -5,17 +5,19 @@ DESTDIR = $(HOME)
 SHELL = /bin/bash
 INSFLAGS = -m 0755
 
-vpath %.jar target #složka ve které se vytvoří classky spustitelné .jar soubory
-
 #############################################################################
-all: kalkulacka-2.0.jar test.jar
+all: kalkulacka.jar
 
-kalkulacka-2.0.jar: src/main/java/graphicdesign/MainJFrame.java src/main/java/library/MathLib.java
+kalkulacka.jar: app/src/main/java/fit/ivs/calc/app/MainJFrame.java math-library/src/main/java/fit/ivs/calc/mathlibrary/MathLib.java
 	mvn clean package -Dmaven.repo.local=../repo/
 
 clean:
 	mvn clean -Dmaven.repo.local=../repo/
 
-run: kalkulacka-2.0.jar
-	exec java -jar ./target/kalkulacka-2.0.jar
-
+run:
+	@if [ -f app/target/kalkulacka.jar ]; then \
+	exec java -jar app/target/kalkulacka.jar; \
+	else \
+	  make; \
+	  exec java -jar app/target/kalkulacka.jar; \
+	fi
