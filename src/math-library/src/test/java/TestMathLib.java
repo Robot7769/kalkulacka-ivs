@@ -1,5 +1,3 @@
-package fit.ivs.calc.tests;
-
 import org.junit.*;
 import fit.ivs.calc.mathlibrary.MathLib;
 import static org.junit.Assert.assertEquals;

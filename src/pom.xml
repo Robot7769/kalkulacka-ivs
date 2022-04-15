@@ -12,7 +12,6 @@
         <module>math-library</module>
         <module>profiling</module>
         <module>app</module>
-        <module>tests</module>
     </modules>
 
     <properties>
