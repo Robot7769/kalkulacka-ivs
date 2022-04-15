@@ -1,0 +1,9 @@
+[Desktop Entry]
+Name=Kalkulačka
+Categories=Utility;Calculator;
+Keywords=calculation;arithmetic;scientific;calculator;kalkulacka;kalkulačka;
+Exec=kalkulačka
+Icon=/usr/share/pixmaps/kalkulačka.png
+Terminal=false
+Type=Application
+X-KDE-StartupNotify=false

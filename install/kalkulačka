@@ -1,0 +1,5 @@
+#!/bin/bash
+# -*- coding: utf-8 -*-
+
+KALKULACKA_HOME=`dirname "$0"`
+exec java -jar "${KALKULACKA_HOME}/kalkulacka.jar"
