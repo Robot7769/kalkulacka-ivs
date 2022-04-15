@@ -1,8 +1,7 @@
-package tests;
+package fit.ivs.calc.tests;
 
-import main.java.library.MathLib;
 import org.junit.*;
-
+import fit.ivs.mathlibrary.MathLib;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 

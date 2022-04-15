@@ -1,4 +1,4 @@
-package main.java.library;
+package fit.ivs.mathlibrary;
 
 public class MathLib {
     /**
