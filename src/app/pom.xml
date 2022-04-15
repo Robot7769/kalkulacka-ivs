@@ -25,7 +25,6 @@
     </properties>
 
    <build>
-       <finalName>kalkulacka</finalName>
        <plugins>
            <plugin>
                <groupId>org.apache.maven.plugins</groupId>
@@ -50,6 +49,7 @@
                            <goal>shade</goal>
                        </goals>
                        <configuration>
+                           <finalName>kalkulacka</finalName>
                            <shadedArtifactAttached>true</shadedArtifactAttached>
                        </configuration>
                    </execution>
