@@ -1,7 +1,7 @@
 
 .PHONY: all pack clean test doc run profile
 
-DESTDIR = $(HOME)
+DESTDIRHONZA = $(HOME)
 SHELL = /bin/bash
 INSFLAGS = -m 0755
 
@@ -26,5 +26,12 @@ run:
 	  make;
 	  exec java -jar app/target/kalkulacka.jar;
 
-deb:
+tar:
 	tar cf kalkulacka.tar.gz app/src app/pom.xml pom.xml math-library/src math-library/pom.xml Makefile
+
+install:
+	mkdir -p $(DESTDIRHONZA)/usr/bin
+	install $(INSFLAGS) app/target/kalkulacka.jar $(DESTDIRHONZA)/usr/bin/
+	install $(INSFLAGS) install/kalkulacka $(DESTDIRHONZA)/usr/bin/
+	install $(INSFLAGS) install/kalkulacka.png $(DESTDIRHONZA)/usr/share/pixmaps/
+	install $(INSFLAGS) install/kalkulacka.desktop $(DESTDIRHONZA)/usr/share/applications/
