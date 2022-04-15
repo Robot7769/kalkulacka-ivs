@@ -9,13 +9,14 @@ INSFLAGS = -m 0755
 all: build
 
 build: app/src/main/java/fit/ivs/calc/app/MainJFrame.java math-library/src/main/java/fit/ivs/calc/mathlibrary/MathLib.java profiling/src/main/java/fit/ivs/calc/profiling/Profiling.java
-	mvn clean package -Dmaven.repo.local=../../repo/
+	mvn clean package -Dmaven.repo.local=../repo/
 
 test: math-library/src/main/java/fit/ivs/calc/mathlibrary/MathLib.java math-library/src/main
-	mvn test -Dmaven.repo.local=../../repo/
+	mvn test -Dmaven.repo.local=../repo/
 
 clean:
-	mvn clean -Dmaven.repo.local=../../repo/
+	mvn clean -Dmaven.repo.local=../repo/
+	rm -rf ../repo/
 
 profile:
 	  make;
