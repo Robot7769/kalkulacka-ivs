@@ -25,6 +25,7 @@
     </properties>
 
    <build>
+       <finalName>kalkulacka</finalName>
        <plugins>
            <plugin>
                <groupId>org.apache.maven.plugins</groupId>
