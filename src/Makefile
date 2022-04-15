@@ -25,3 +25,6 @@ profile:
 run:
 	  make;
 	  exec java -jar app/target/kalkulacka.jar;
+
+deb:
+	tar cf kalkulacka.tar.gz app/src app/pom.xml pom.xml math-library/src math-library/pom.xml Makefile
