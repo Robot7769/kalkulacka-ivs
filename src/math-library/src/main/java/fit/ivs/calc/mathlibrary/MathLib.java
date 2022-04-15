@@ -175,7 +175,7 @@ public class MathLib {
     }
 
     /**
-     * Funkce na výpočt tangentu úhlu 'a°'
+     * Funkce na výpočet tangensu úhlu 'a°'
      * @param a úhel ve ° (stupních)
      * @return  'tan(a°)'
      */
@@ -188,7 +188,7 @@ public class MathLib {
     }
 
     /**
-     * Funkce na výpočt kosínusu úhlu 'a°'
+     * Funkce na výpočet kosinu úhlu 'a°'
      * @param a úhel ve ° (stupních)
      * @return  'cos(a°)'
      */
@@ -197,7 +197,7 @@ public class MathLib {
     }
 
     /**
-     * Funkce na výpočt sínusu úhlu 'a°'
+     * Funkce na výpočet sinu úhlu 'a°'
      * @param a úhel ve ° (stupních)
      * @return  'sin(a°)'
      */
