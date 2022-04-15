@@ -6,9 +6,9 @@ SHELL = /bin/bash
 INSFLAGS = -m 0755
 
 #############################################################################
-all: kalkulacka.jar
+all: build
 
-kalkulacka.jar: app/src/main/java/fit/ivs/calc/app/MainJFrame.java math-library/src/main/java/fit/ivs/calc/mathlibrary/MathLib.java
+build: app/src/main/java/fit/ivs/calc/app/MainJFrame.java math-library/src/main/java/fit/ivs/calc/mathlibrary/MathLib.java
 	mvn clean package -Dmaven.repo.local=../repo/
 
 test: math-library/src/main/java/fit/ivs/calc/mathlibrary/MathLib.java math-library/src/main
@@ -17,10 +17,10 @@ test: math-library/src/main/java/fit/ivs/calc/mathlibrary/MathLib.java math-libr
 clean:
 	mvn clean -Dmaven.repo.local=../repo/
 
+profile:
+	  make;
+	  exec java -jar profiling/target/stddev.jar;
+
 run:
-	@if [ -f app/target/kalkulacka.jar ]; then \
-	exec java -jar app/target/kalkulacka.jar; \
-	else \
-	  make; \
-	  exec java -jar app/target/kalkulacka.jar; \
-	fi
+	  make;
+	  exec java -jar app/target/kalkulacka.jar;
