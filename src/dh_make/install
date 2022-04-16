@@ -2,3 +2,4 @@ app/target/kalkulacka.jar /usr/bin/
 install/kalkulacka /usr/bin/
 install/kalkulacka.png /usr/share/pixmaps
 install/kalkulacka.desktop /usr/share/applications
+install/INFO.pdf /usr/share/kalkulacka

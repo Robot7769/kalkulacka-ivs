@@ -1341,7 +1341,7 @@ public class MainJFrame extends JFrame {
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
         if (Desktop.isDesktopSupported()) {
             try {
-                File myFile = new File("out/INFO.pdf"); //TODO předělat cestu na info.pdf
+                File myFile = new File("/usr/share/kalkulacka/INFO.pdf"); //TODO předělat cestu na info.pdf
                 Desktop.getDesktop().open(myFile);
             } catch (IOException ex) {
                 // no application registered for PDFs
