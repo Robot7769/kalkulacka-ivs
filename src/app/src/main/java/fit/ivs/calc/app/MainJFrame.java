@@ -1,4 +1,5 @@
-package fit.ivs.calc.app; /**
+package fit.ivs.calc.app;
+/**
  * @author xsafar26
  * @author xskrab12
  * @author xkocia19
@@ -88,6 +89,8 @@ public class MainJFrame extends JFrame {
                             value1 -= ((double) c - '0');
                             value1 /= 10.0;
                         } else {
+                            double tmp = RoundToLong(value1 * mathLib.nPow(10.0, digitsVal1));
+                            value1 = tmp/mathLib.nPow(10.0, digitsVal1);
                             value1 -= (double) (c - '0') / mathLib.nPow(10.0, digitsVal1--);
                         }
                     } else {
@@ -114,9 +117,9 @@ public class MainJFrame extends JFrame {
             } else if (c == ',') {
                 if (!operatorSet) {
                     decimalVal1 = false;
-                    value1 = RoundToInt(value1);
+                    value1 = RoundToLong(value1);
                 } else {
-                    value2 = RoundToInt(value2);
+                    value2 = RoundToLong(value2);
                     decimalVal2 = false;
                 }
                 sb.deleteCharAt(text.length() - 1);
@@ -814,13 +817,13 @@ public class MainJFrame extends JFrame {
      * @param value desetinná hodnota
      * @return celé zaokrouhlené číslo
      */
-    public int RoundToInt(double value) {
-        int test = ((int) (value * 10)) - (((int) value) * 10);
-        if (test > 5) {
+    public long RoundToLong(double value) {
+        long test = ((long) (value * 10)) - (((long) value) * 10);
+        if (test > 4) {
             value++;
-            return (int) value;
+            return (long) value;
         }
-        return (int) value;
+        return (long) value;
     }
 
     /**
