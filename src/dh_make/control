@@ -10,8 +10,8 @@ Package: kalkulacka
 Architecture: any
 Depends: ${misc:Depends} ${misc:Depends}, default-jre
 Description: Kalkulačka
- Kalkakulačka pro výpočet jednoduchých aritmetických operací. Můžete využít spostu matematických funcí,
- například sinus,kosinus, tangens, n-tá odmocnina/mocnina a spoustu dalších.
+ Kalkulačka pro výpočet jednoduchých aritmetických operací. Můžete využít spoustu matematických funkcí,
+ například sinus, kosinus, tangens, n-tá odmocnina/mocnina a spoustu dalších.
  Kalkulačka má tmavý i světlý režim, takže si můžete vybrat.
  Pokud budete potřebovat pomoct s ovládáním kalkulačky stačí kliknout na tlačítko INFO v levém horním rohu.
  Projekt vytvořen do předmětu IVS FIT VUT BRNO
