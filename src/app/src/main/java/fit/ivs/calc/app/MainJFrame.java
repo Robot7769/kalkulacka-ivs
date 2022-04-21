@@ -505,9 +505,11 @@ public class MainJFrame extends JFrame {
         if (bd.intValue() == 0) {
             return 10;
         }
-        int scale = 10 - countNumDigits(bd.intValue());
+        int scale = 16 - countNumDigits(bd.intValue());
         if (scale < 0) {
-            return 0;
+            scale = 0;
+        } else if (scale > 10){
+            scale = 10;
         }
         return scale;
     }
