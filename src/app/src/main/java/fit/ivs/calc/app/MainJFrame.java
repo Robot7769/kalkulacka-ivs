@@ -161,6 +161,8 @@ public class MainJFrame extends JFrame {
             if (!decimalVal1) {
                 value1 = value1 * 10.0 + value;
             } else {
+                double tmp = RoundToLong(value1 * mathLib.nPow(10.0, digitsVal1));
+                value1 = tmp/mathLib.nPow(10.0, digitsVal1);
                 value1 += value / mathLib.nPow(10, ++digitsVal1);
             }
         } else {
@@ -625,7 +627,6 @@ public class MainJFrame extends JFrame {
             case 'P':
                 btnPi.doClick();
                 break;
-            /*
             case 'h': //vypis záznam
                 String debug = "OperatorID: " + operatorID + "\n" +
                     "OperatorSet: " + operatorSet + "\n" +
@@ -639,7 +640,7 @@ public class MainJFrame extends JFrame {
                     "DecimalVal2: " + decimalVal2 + "\n";
                 JOptionPane.showMessageDialog(null, debug, "DEBUG", JOptionPane.PLAIN_MESSAGE);
                 break;
-            */
+            //*/
             default:
                 break;
         }
