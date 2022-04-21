@@ -251,7 +251,6 @@ public class MainJFrame extends JFrame {
             btnTan.setForeground(WHITE);
             btnPi.setBackground(GRAY15);
             btnPi.setForeground(WHITE);
-
         } else {
             jPanel1.setBackground(new Color(204, 204, 204));
             jText.setBackground(WHITE);
@@ -755,20 +754,24 @@ public class MainJFrame extends JFrame {
     /**
      * Výpis čísla na vstupu
      * @param input vstup
+     * @return true - Výpis proběhl správně, false - Při výpisu nastala chyba
      */
-    public void printNum(String input) {
+    public boolean printNum(String input) {
         String text = jText.getText();
         StringBuilder sb = new StringBuilder(text);
         if (sb.charAt(text.length() - 1) == 'π') {
-            printOperator("*");
-            operatorID = OperatorsID.MULTIPLY;
-            operatorSet = true;
-            text = jText.getText();
-            jText.setText(text + input);
-            return;
+            if(!printOperator("*")) {
+                operatorID = OperatorsID.MULTIPLY;
+                operatorSet = true;
+                text = jText.getText();
+                jText.setText(text + input);
+                return true;
+            }
+            return false;
         }
         sb.append(input);
         jText.setText(sb.toString());
+        return true;
     }
 
     /**
@@ -1370,53 +1373,63 @@ public class MainJFrame extends JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btn0ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn0ActionPerformed
-        printNum("0");
-        countValue(0.0);
+        if(printNum("0")){
+            countValue(0.0);
+        }
     }//GEN-LAST:event_btn0ActionPerformed
 
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
-        printNum("1");
-        countValue(1.0);
+        if(printNum("1")){
+            countValue(1.0);
+        }
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
-        printNum("2");
-        countValue(2.0);
+        if(printNum("2")){
+            countValue(2.0);
+        }
     }//GEN-LAST:event_btn2ActionPerformed
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
-        printNum("3");
-        countValue(3.0);
+        if(printNum("3")){
+            countValue(3.0);
+        }
     }//GEN-LAST:event_btn3ActionPerformed
 
     private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
-        printNum("4");
-        countValue(4.0);
+        if(printNum("4")) {
+            countValue(4.0);
+        }
     }//GEN-LAST:event_btn4ActionPerformed
 
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
-        printNum("5");
-        countValue(5.0);
+        if(printNum("5")) {
+            countValue(5.0);
+        }
     }//GEN-LAST:event_btn5ActionPerformed
 
     private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
-        printNum("6");
-        countValue(6.0);
+        if(printNum("6")) {
+            countValue(6.0);
+        }
     }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
-        printNum("7");
-        countValue(7.0);
+        if(printNum("7")) {
+            countValue(7.0);
+        }
     }//GEN-LAST:event_btn7ActionPerformed
 
     private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
-        printNum("8");
-        countValue(8.0);
+        if(printNum("8")) {
+            countValue(8.0);
+        }
     }//GEN-LAST:event_btn8ActionPerformed
 
     private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
-        printNum("9");
-        countValue(9.0);
+        if(printNum("9")) {
+            countValue(9.0);
+        }
     }//GEN-LAST:event_btn9ActionPerformed
 
     private void btnPlusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPlusActionPerformed
