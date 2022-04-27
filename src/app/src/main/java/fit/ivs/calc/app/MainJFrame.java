@@ -626,6 +626,7 @@ public class MainJFrame extends JFrame {
             case 'P':
                 btnPi.doClick();
                 break;
+            /*
             case 'h': //vypis záznam
                 String debug = "OperatorID: " + operatorID + "\n" +
                     "OperatorSet: " + operatorSet + "\n" +
@@ -639,7 +640,7 @@ public class MainJFrame extends JFrame {
                     "DecimalVal2: " + decimalVal2 + "\n";
                 JOptionPane.showMessageDialog(null, debug, "DEBUG", JOptionPane.PLAIN_MESSAGE);
                 break;
-            //*/
+            */
             default:
                 break;
         }

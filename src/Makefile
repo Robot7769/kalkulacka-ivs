@@ -1,7 +1,7 @@
 
 .PHONY: all pack clean test doc run profile
 
-VER = 2.1
+VER = 2.2
 
 DESTDIRHONZA = $(HOME)
 SHELL = /bin/bash
