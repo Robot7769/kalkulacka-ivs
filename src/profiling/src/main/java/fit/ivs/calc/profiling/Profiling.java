@@ -10,7 +10,7 @@
  * Popis: Výpočet výběrové směrodatné odchylky (profiling pro omtimalizaci kódu kalkulačky)
  *******************************************************************************************/
 /**
- * @file MathLib.java
+ * @file Profiling.java
  *
  * @brief Výpočet výběrové směrodatné odchylky (profiling pro omtimalizaci kódu kalkulačky)
  * @author Vítězslav Šafář (xsafar26)
@@ -31,7 +31,7 @@ public class Profiling {
 
     public static void main(String[] args) {
         ArrayList<Double> Values = new ArrayList<>();
-        //Nacitani
+
         if(args.length == 0){
            System.out.println("Zadejte název souboru");
            return;
@@ -42,12 +42,14 @@ public class Profiling {
             return;
         }
         //System.out.println(args[0]);
+        //Načítání ze souboru
         File Objective = new File(args[0]);
         if (!Objective.exists() || !Objective.canRead()) {
             System.out.println("Soubor nebyl nalezen");
             return;
         }
         //System.out.println("ahoj");
+        //čtení znaků ze souborů
         try (BufferedReader myReader = new BufferedReader(new FileReader(Objective))) {
             String line;
             //System.out.println("ahoj1");
@@ -75,6 +77,7 @@ public class Profiling {
 //     for (int j = 0; j < Values.size(); j++) { //test vypisu dat
         //          System.out.println(Values.get(j));
         //    }
+        //Výpočet směrodatné odchylky
         if (Values.size() > 1){
             double counter = 0.0;
             double counterPower = 0.0;
@@ -98,6 +101,7 @@ public class Profiling {
 
             //System.out.println(" -- Test -- ");
             System.out.println(amplitude);
+            //Výsledek směrodatné odchylky
         }
     }
 }
