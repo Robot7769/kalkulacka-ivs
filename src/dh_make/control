@@ -8,7 +8,7 @@ Homepage: https://github.com/Robot7769/kalkulacka-ivs
 
 Package: kalkulacka
 Architecture: any
-Depends: ${misc:Depends} ${misc:Depends}, default-jre
+Depends: openjdk-17-jre | openjdk-15-jre | openjdk-13-jre | openjdk-11-jre, default-jre, libcanberra-gtk-module, libcanberra-gtk3-module
 Description: Kalkulačka
  Kalkulačka pro výpočet jednoduchých aritmetických operací. Můžete využít spoustu matematických funkcí,
  například sinus, kosinus, tangens, n-tá odmocnina/mocnina a spoustu dalších.
