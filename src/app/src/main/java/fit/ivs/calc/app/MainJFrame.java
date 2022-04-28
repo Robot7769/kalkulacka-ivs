@@ -635,7 +635,7 @@ public class MainJFrame extends JFrame {
             case 'P':
                 btnPi.doClick();
                 break;
-                //Výpis debug okna
+            /*  //Výpis debug okna
             case 'h':
                 String debug = "OperatorID: " + operatorID + "\n" +
                     "OperatorSet: " + operatorSet + "\n" +
@@ -1575,8 +1575,8 @@ public class MainJFrame extends JFrame {
 
     private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
         if (operatorSet) {
-            if( jText.getText().charAt(jText.getText().length()-1)== ' '){
-                if(operatorID != OperatorsID.PLUS && operatorID != OperatorsID.MINUS){
+            if( jText.getText().charAt(jText.getText().length()-1)== ' ') {
+                if (operatorID != OperatorsID.PLUS && operatorID != OperatorsID.MINUS) {
                     value2 = 1;
                 }
             }
