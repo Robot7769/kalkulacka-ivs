@@ -33,6 +33,11 @@ Ve složce kalkulacka-ivs/src spustit příkaz
 
 `make debian`
 
+Profiling
+---------
+
+- Překlad pomocí `make profile` (výsledný stddev.jar bude ve složce src/profiling/target)
+- Spuštení ve složce target pomocí `java -jar stddev.jar data.txt`
 
 Autoři
 ------

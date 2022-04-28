@@ -1,4 +1,4 @@
-/****************************************************
+/*******************************************************
  * Název projektu: Kalkulačka
  * Balíček: fit.ivs.calc.app
  * Soubor: MainJFrame.java
@@ -8,7 +8,7 @@
  *         Petr Cafourek (xcafou01)
  *
  * Popis: Grafické rozhraní a ukládání hodnot kalkulačky
- ****************************************************/
+ *******************************************************/
 /**
  * @file MainJFrame.java
  *
