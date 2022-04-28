@@ -1,11 +1,11 @@
 ---------------------------------
 ROZDÍLY MEZI PLÁNY A SKUTEČNOSTÍ
 ---------------------------------
-- Nebyly dodržené plánované deadliny z důvodu jiných projektů, naštěstí díky časové rezervě u každého deadlinu se skoro vše stíhalo v pořádku
-- Někteří členová museli však čekat na zbylé, když už měli svou práci hotovou
+- Nebyly dodržené plánované deadliny z důvodu jiných projektů, naštěstí díky časové rezervě u každého deadlinu se skoro vše stíhalo v pořádku.
+- Někteří členové museli však čekat na zbylé, když už měli svoji práci hotovou.
 
-- Bylo přidáno mnoho termínů a přerozdělení úkolů pro jiné členy a rozdělení těžších úkolů na menší podproblémy 
-- Některé úkoly zabrali více času než se očekávalo
-- Nebyla dodržena maximální frekvence na odpovídání při komunikaci o projektu
+- Bylo přidáno mnoho termínů a přerozdělení úkolů pro jiné členy a rozdělení těžších úkolů na menší podproblémy .
+- Některé úkoly zabraly více času než se očekávalo.
+- Nebyla dodržena maximální frekvence na odpovídání při komunikaci o projektu.
 
-- Pro kontrolu kódu se používala metoda párového programování a občasný code review
+- Pro kontrolu kódu se používala metoda párového programování a občasný code review.
