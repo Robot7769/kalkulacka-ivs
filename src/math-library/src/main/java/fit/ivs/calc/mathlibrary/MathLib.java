@@ -4,7 +4,7 @@
  * Soubor: MathLib.java
  * Autoři: Vítězslav Šafář (xsafar26)
  *         Jan Škrabal (xskrab12)
- *         Richard Kocian (xkocia19)
+ *         Richard Kocián (xkocia19)
  *         Petr Cafourek (xcafou01)
  *
  * Popis: Matematická knihovna kalkulačky
@@ -15,7 +15,7 @@
  * @brief Matematická knihovna kalkulačky
  * @author Vítězslav Šafář (xsafar26)
  * @author Jan Škrabal (xskrab12)
- * @author Richard Kocian (xkocia19)
+ * @author Richard Kocián (xkocia19)
  * @author Petr Cafourek (xcafou01)
  */
 package fit.ivs.calc.mathlibrary;
@@ -31,7 +31,7 @@ public class MathLib {
     }
 
     /**
-     * Funkce sčítá hodnoty 'a' a 'b'
+     * Funkce pro sečtení hodnot 'a' a 'b'
      * @param a sčítanec b
      * @param b sčítanec b
      * @return Vrací sočet 'a + b'
@@ -41,7 +41,7 @@ public class MathLib {
     }
 
     /**
-     * Funkce odečítá hodnoty 'b' od 'a'
+     * Funkce pro odečtení hodnot 'b' od 'a'
      * @param a  menšenec
      * @param b  menšitel
      * @return Vrací rodíl 'a - b'
@@ -51,7 +51,7 @@ public class MathLib {
     }
 
     /**
-     * Funkce násobí hodnoty 'a' a 'b'
+     * Funkce pro násobení hodnot 'a' a 'b'
      * @param a  činitel
      * @param b  činitel
      * @return Vrací součin 'a * b'
@@ -61,20 +61,20 @@ public class MathLib {
     }
 
     /**
-     * Funkce dělí hodnotu 'a' hodnotou 'b'
+     * Funkce pro dělení hodnot 'a' hodnotou 'b'
      * @param a  čitatel
      * @param b  jmenovatel
      * @return Vrací podíl 'a / b'
      */
     public double div(double a, double b) {
         if (b == 0) {
-            throw new ArithmeticException("Nelze dělit nulou");
+            throw new ArithmeticException("Dělení nulou není definováno");
         }
         return a / b;
     }
 
     /**
-     * Funkce 'a' modulo 'b'
+     * Funkce pro zjištění zbytku po dělení hodnot 'a' a 'b'
      * @param a  čitatel
      * @param b  jmenovatel
      * @return Vrací zbytek po dělení  'a / b'
@@ -87,7 +87,7 @@ public class MathLib {
     }
 
     /**
-     * Funkce na výpočet druhé odmocniny z čísla 'a'
+     * Funkce pro výpočet druhé odmocniny z čísla 'a'
      * @param a  čitatel
      * @return Vrací '√a'
      */
@@ -96,19 +96,19 @@ public class MathLib {
     }
 
     /**
-     * Funkce na výpočet n-té odmocnině z čísla 'a'
+     * Funkce pro výpočet n-té odmocnině z čísla 'a'
      * @param a odmocněnec
      * @param n odmocnitel
      * @return Vrací 'ᶰ√a'
      */
     public double nSqrt(double a, int n) {
         if (n == 0) {
-            throw new ArithmeticException("Není definována nultá odmocnina");
+            throw new ArithmeticException("Nultá odmocnina není definovaná");
         }
         int sing = 1;
         if (mod(n, 2) == 0) {
             if (a < 0.0) {
-                throw new ArithmeticException("Není definována sudá odmocnina ze záporného čísla");
+                throw new ArithmeticException("Sudá odmocnina ze záporného čísla není definovaná");
             }
         } else {
             if (a < 0.0) {
@@ -141,19 +141,19 @@ public class MathLib {
     }
 
     /**
-     * Funkce na výpočet druhé mocniny z čísla 'a'
-     * @param a  čitatel
-     * @return Vrací 'aᴺ'
+     * Funkce pro výpočet druhé mocniny z čísla 'a'
+     * @param a  základ
+     * @return Vrací 'a²'
      */
     public double pow(double a) {
         return a * a;
     }
 
     /**
-     * Funkce na výpočet n-té mocniny čísla 'a'
+     * Funkce pro výpočet n-té mocniny čísla 'a'
      * @param a základ
      * @param n exponent
-     * @return  'aᴺ'
+     * @return Vrací 'aᴺ'
      */
     public double nPow(double a, int n) {
         double a_n = 1;
@@ -169,16 +169,16 @@ public class MathLib {
     }
 
     /**
-     * Funkce na výpočet faktoriálu čísla 'a'
+     * Funkce pro výpočet faktoriálu čísla 'a'
      * @param a základ
-     * @return  'a!'
+     * @return Vrací 'a!'
      */
     public double fact(int a) {
         if (a > 170) {
             throw new ArithmeticException("Příliš velký faktoriál čísla " + a);
         }
         if (a < 0) {
-            throw new ArithmeticException("Factorial ze záporného čísla není definovám");
+            throw new ArithmeticException("Faktoriál ze záporného čísla není definován");
         }
         if (a == 1 || a == 0) {
             return 1;
@@ -188,16 +188,16 @@ public class MathLib {
 
     /**
      * Funkce π (pí)
-     * @return  'π'
+     * @return Vrací 'π'
      */
     public double pi() {
         return 3.141592653589793;
     }
 
     /**
-     * Funkce na výpočet tangensu úhlu 'a°'
+     * Funkce pro výpočet tangensu úhlu 'a°'
      * @param a úhel ve ° (stupních)
-     * @return  'tan(a°)'
+     * @return Vrací 'tan(a°)'
      */
     public double tan(double a) {
         //System.out.println("a: " + a + " sin: " +sin(a) + " cos: " + cos(a));
@@ -208,18 +208,18 @@ public class MathLib {
     }
 
     /**
-     * Funkce na výpočet kosinu úhlu 'a°'
+     * Funkce pro výpočet kosinu úhlu 'a°'
      * @param a úhel ve ° (stupních)
-     * @return  'cos(a°)'
+     * @return Vrací 'cos(a°)'
      */
     public double cos(double a) {
         return sin(a + 90);
     }
 
     /**
-     * Funkce na výpočet sinu úhlu 'a°'
+     * Funkce pro výpočet sinu úhlu 'a°'
      * @param a úhel ve ° (stupních)
-     * @return  'sin(a°)'
+     * @return Vrací 'sin(a°)'
      */
     public double sin(double a) {
         double sina = 0.0;

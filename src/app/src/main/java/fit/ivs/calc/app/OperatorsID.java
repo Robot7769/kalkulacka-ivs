@@ -4,18 +4,18 @@
  * Soubor: OperatorsID.java
  * Autoři: Vítězslav Šafář (xsafar26)
  *         Jan Škrabal (xskrab12)
- *         Richard Kocian (xkocia19)
+ *         Richard Kocián (xkocia19)
  *         Petr Cafourek (xcafou01)
  *
- * Popis: Enum ID operátorů kalkulačky
+ * Popis: Množina ID operátorů kalkulačky
  ****************************************************/
 /**
  * @file OperatorsID.java
  *
- * @brief Enum ID operátorů kalkulačky
+ * @brief Množina ID operátorů kalkulačky
  * @author Vítězslav Šafář (xsafar26)
  * @author Jan Škrabal (xskrab12)
- * @author Richard Kocian (xkocia19)
+ * @author Richard Kocián (xkocia19)
  * @author Petr Cafourek (xcafou01)
  */
 package fit.ivs.calc.app;

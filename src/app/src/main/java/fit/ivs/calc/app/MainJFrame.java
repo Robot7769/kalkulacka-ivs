@@ -4,7 +4,7 @@
  * Soubor: MainJFrame.java
  * Autoři: Vítězslav Šafář (xsafar26)
  *         Jan Škrabal (xskrab12)
- *         Richard Kocian (xkocia19)
+ *         Richard Kocián (xkocia19)
  *         Petr Cafourek (xcafou01)
  *
  * Popis: Grafické rozhraní a ukládání hodnot
@@ -15,7 +15,7 @@
  * @brief Grafické rozhraní a ukládání hodnot kalkulačky
  * @author Vítězslav Šafář (xsafar26)
  * @author Jan Škrabal (xskrab12)
- * @author Richard Kocian (xkocia19)
+ * @author Richard Kocián (xkocia19)
  * @author Petr Cafourek (xcafou01)
  */
 package fit.ivs.calc.app;
@@ -30,9 +30,6 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-/**
- * Množina ID operátorů mezi dvěmi hodnotami
- */
 public class MainJFrame extends JFrame {
 
     private final MathLib mathLib = new MathLib(); //Objekt matematické knihovny
@@ -55,7 +52,7 @@ public class MainJFrame extends JFrame {
 
     /**
      * Funkce pro upravení hodnoty na String pro výstup
-     * @return zaokrouhlenou hodnotu jako stringu
+     * @return Vrací zaokrouhlenou hodnotu jako String
      */
     public String Alignment() {
         value2 = 0;
@@ -72,7 +69,7 @@ public class MainJFrame extends JFrame {
     }
 
     /**
-     * Funkce pro mazání výstupu po jednom znaku
+     * Funkce pro mazání po jednom znaku
      */
     public void BackSpace() {
         String text = jText.getText();
@@ -154,7 +151,7 @@ public class MainJFrame extends JFrame {
     /**
      * Funkce spočítá počet cifer v celém čísle
      * @param value hodnota
-     * @return počet cifer v hodnotě
+     * @return Vrací počet cifer v hodnotě
      */
     public int countNumDigits(int value) {
         int counter = 0;
@@ -188,7 +185,7 @@ public class MainJFrame extends JFrame {
     }
 
     /**
-     * Funkce pro změnu barvy grafického rozhraní
+     * Funkce pro změnu motivu grafického rozhraní
      */
     public void DarkMode() {
         Color BLACK = new Color(0, 0, 0);
@@ -336,7 +333,7 @@ public class MainJFrame extends JFrame {
     }
 
     /**
-     * Funkce na vymazání výstupu a resetování paměti kalkulačky
+     * Funkce na vymazání vstupního/výstupního okna kalkulačky a resetování paměti kalkulačky
      */
     public void DeleteScreen() {
         jText.setText("   ");
@@ -354,7 +351,7 @@ public class MainJFrame extends JFrame {
 
     /**
      * Funkce na vypočítání operace mezi hodnotami
-     * @return true - nastala chyba při výpočtu, false - nenastala chyba při výpočtu
+     * @return Vrací true - nastala chyba při výpočtu, false - nenastala chyba při výpočtu
      */
     public boolean Equals() {
         String output;
@@ -400,11 +397,11 @@ public class MainJFrame extends JFrame {
                 output = Alignment();
                 break;
             case FACTORIAL:
-                //funkce faktorial
+                //funkce factorial
                 int tmp = (int) value1;
                 if (value1 != 0) {
                     if (value1 > 0 && value1 < 1 || mathLib.mod(value1, tmp) != 0) {
-                        JOptionPane.showMessageDialog(null, "Faktoriál je definovanán pouze nad celými čísly", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Faktoriál je definován pouze nad celými čísly", "ERROR", JOptionPane.ERROR_MESSAGE);
                         negateValues();
                         operatorID = OperatorsID.DEFAULT;
                         return true;
@@ -421,7 +418,6 @@ public class MainJFrame extends JFrame {
                 }
                 output = Alignment();
                 break;
-            //přidání funkce pro zapsání velkých čísel
             case POWER:
                 value1 = mathLib.pow(value1);
                 output = Alignment();
@@ -442,7 +438,7 @@ public class MainJFrame extends JFrame {
                 int tmp1 = (int) value2;
                 if (value2 != 0) {
                     if (value2 > 0 && value2 < 2 || mathLib.mod(tmp1, value2) != 0) {
-                        JOptionPane.showMessageDialog(null, "n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Hodnota n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
                         negateValues();
                         return true;
                     }
@@ -461,7 +457,7 @@ public class MainJFrame extends JFrame {
                 int tmp2 = (int) value2;
                 if (value2 != 0) {
                     if (value2 > 0 && value2 < 1 || mathLib.mod(tmp2, value2) != 0) {
-                        JOptionPane.showMessageDialog(null, "n musí být celé nenulové číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
+                        JOptionPane.showMessageDialog(null, "Hodnota n musí být celé nenulové číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
                         negateValues();
                         return true;
                     }
@@ -512,7 +508,7 @@ public class MainJFrame extends JFrame {
     /**
      * Funkce na vypočítání počtu desetinných míst pro danou hodnotu
      * @param value hodnota
-     * @return počet desetinných míst
+     * @return Vrací počet desetinných míst
      */
     public int getScale(double value) {
         BigDecimal bd = new BigDecimal(value);
@@ -639,8 +635,8 @@ public class MainJFrame extends JFrame {
             case 'P':
                 btnPi.doClick();
                 break;
-            /*
-            case 'h': //vypis záznam
+            /* //Výpis debug okna
+            case 'h':
                 String debug = "OperatorID: " + operatorID + "\n" +
                     "OperatorSet: " + operatorSet + "\n" +
                     "Negative1: " + negative1 + "\n" +
@@ -767,8 +763,8 @@ public class MainJFrame extends JFrame {
 
     /**
      * Výpis čísla na vstupu
-     * @param input vstup
-     * @return true - Výpis proběhl správně, false - Při výpisu nastala chyba
+     * @param input číslo na vstupu
+     * @return Vrací true - Výpis proběhl bezchybně, false - Při výpisu nastala chyba
      */
     public boolean printNum(String input) {
         String text = jText.getText();
@@ -791,7 +787,7 @@ public class MainJFrame extends JFrame {
     /**
      * Funkce pro výpis operátoru
      * @param operator operátor
-     * @return true - operace neproběhla bezchybně, false - operace proběhla bezchybně
+     * @return Vrací true - operace neproběhla bezchybně, false - operace proběhla bezchybně
      */
     public boolean printOperator(String operator) {
         String text = jText.getText();
@@ -835,7 +831,7 @@ public class MainJFrame extends JFrame {
     /**
      * Funkce pro zaokrouhlení desetinné hodnoty na celé číslo
      * @param value desetinná hodnota
-     * @return celé zaokrouhlené číslo
+     * @return Vrací celé zaokrouhlené číslo
      */
     public long RoundToLong(double value) {
         long test = ((long) (value * 10)) - (((long) value) * 10);
@@ -849,7 +845,7 @@ public class MainJFrame extends JFrame {
     /**
      * Funkce pro zaokrouhlení desetinné hodnoty na určitý počet desetinných míst a následné uložení jako String
      * @param value desetinná hodnota
-     * @return String obsahující zaokrouhlenou hodnotu
+     * @return Vrací String obsahující zaokrouhlenou hodnotu
      */
     public String RoundToString(double value) {
         int scale = getScale(value);
@@ -875,6 +871,7 @@ public class MainJFrame extends JFrame {
 
     /**
      * Funkce pro vytvoření componentů grafického rozhraní
+     * Vygenerováno pomocí java SWING gui
      */
     private void initComponents() {
         jPanel1 = new JPanel();
@@ -925,7 +922,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        DarkMode.setFont(new Font("Thoma", Font.PLAIN, 11)); // NOI18N
+        DarkMode.setFont(new Font("Thoma", Font.PLAIN, 11));
         DarkMode.setText("Dark Mode");
         DarkMode.setFocusTraversalKeysEnabled(true);
         DarkMode.setFocusable(false);
@@ -935,7 +932,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnC.setFont(new Font("Thoma", Font.PLAIN, 13)); // NOI18N
+        btnC.setFont(new Font("Thoma", Font.PLAIN, 13));
         btnC.setText("AC");
         btnC.setFocusable(false);
         btnC.addActionListener(new java.awt.event.ActionListener() {
@@ -944,7 +941,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnBack.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnBack.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnBack.setText("←");
         btnBack.setFocusable(false);
         btnBack.addActionListener(new java.awt.event.ActionListener() {
@@ -954,7 +951,7 @@ public class MainJFrame extends JFrame {
         });
 
         btn0.setBackground(new Color(210, 210, 210));
-        btn0.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn0.setFont(new Font("Thoma", Font.PLAIN, 14));
         btn0.setText("0");
         btn0.setFocusable(false);
         btn0.addActionListener(new java.awt.event.ActionListener() {
@@ -964,7 +961,7 @@ public class MainJFrame extends JFrame {
         });
 
         btn1.setBackground(new Color(210, 210, 210));
-        btn1.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn1.setFont(new Font("Thoma", Font.PLAIN, 14));
         btn1.setText("1");
         btn1.setFocusable(false);
         btn1.addActionListener(new java.awt.event.ActionListener() {
@@ -974,7 +971,7 @@ public class MainJFrame extends JFrame {
         });
 
         btn2.setBackground(new Color(210, 210, 210));
-        btn2.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn2.setFont(new Font("Thoma", Font.PLAIN, 14));
         btn2.setText("2");
         btn2.setFocusable(false);
         btn2.addActionListener(new java.awt.event.ActionListener() {
@@ -984,7 +981,7 @@ public class MainJFrame extends JFrame {
         });
 
         btn3.setBackground(new Color(210, 210, 210));
-        btn3.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn3.setFont(new Font("Thoma", Font.PLAIN, 14));
         btn3.setText("3");
         btn3.setFocusable(false);
         btn3.addActionListener(new java.awt.event.ActionListener() {
@@ -994,7 +991,7 @@ public class MainJFrame extends JFrame {
         });
 
         btn4.setBackground(new Color(210, 210, 210));
-        btn4.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn4.setFont(new Font("Thoma", Font.PLAIN, 14));
         btn4.setText("4");
         btn4.setFocusable(false);
         btn4.addActionListener(new java.awt.event.ActionListener() {
@@ -1004,7 +1001,7 @@ public class MainJFrame extends JFrame {
         });
 
         btn5.setBackground(new Color(210, 210, 210));
-        btn5.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn5.setFont(new Font("Thoma", Font.PLAIN, 14));
         btn5.setText("5");
         btn5.setFocusable(false);
         btn5.addActionListener(new java.awt.event.ActionListener() {
@@ -1014,7 +1011,7 @@ public class MainJFrame extends JFrame {
         });
 
         btn6.setBackground(new Color(210, 210, 210));
-        btn6.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn6.setFont(new Font("Thoma", Font.PLAIN, 14));
         btn6.setText("6");
         btn6.setFocusable(false);
         btn6.addActionListener(new java.awt.event.ActionListener() {
@@ -1024,7 +1021,7 @@ public class MainJFrame extends JFrame {
         });
 
         btn7.setBackground(new Color(210, 210, 210));
-        btn7.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn7.setFont(new Font("Thoma", Font.PLAIN, 14));
         btn7.setText("7");
         btn7.setFocusable(false);
         btn7.addActionListener(new java.awt.event.ActionListener() {
@@ -1034,7 +1031,7 @@ public class MainJFrame extends JFrame {
         });
 
         btn8.setBackground(new Color(210, 210, 210));
-        btn8.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn8.setFont(new Font("Thoma", Font.PLAIN, 14));
         btn8.setText("8");
         btn8.setFocusable(false);
         btn8.addActionListener(new java.awt.event.ActionListener() {
@@ -1044,7 +1041,7 @@ public class MainJFrame extends JFrame {
         });
 
         btn9.setBackground(new Color(210, 210, 210));
-        btn9.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btn9.setFont(new Font("Thoma", Font.PLAIN, 14));
         btn9.setText("9");
         btn9.setFocusable(false);
         btn9.addActionListener(new java.awt.event.ActionListener() {
@@ -1053,7 +1050,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnPlus.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnPlus.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnPlus.setText("+");
         btnPlus.setFocusable(false);
         btnPlus.addActionListener(new java.awt.event.ActionListener() {
@@ -1062,7 +1059,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnMinus.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnMinus.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnMinus.setText("-");
         btnMinus.setFocusable(false);
         btnMinus.addActionListener(new java.awt.event.ActionListener() {
@@ -1071,7 +1068,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnMul.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnMul.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnMul.setText("*");
         btnMul.setFocusable(false);
         btnMul.addActionListener(new java.awt.event.ActionListener() {
@@ -1080,7 +1077,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnDiv.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnDiv.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnDiv.setText("÷");
         btnDiv.setFocusable(false);
         btnDiv.addActionListener(new java.awt.event.ActionListener() {
@@ -1089,7 +1086,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnMod.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnMod.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnMod.setText("%");
         btnMod.setFocusable(false);
         btnMod.addActionListener(new java.awt.event.ActionListener() {
@@ -1098,7 +1095,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnExp.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnExp.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnExp.setText("x²");
         btnExp.setFocusable(false);
         btnExp.addActionListener(new java.awt.event.ActionListener() {
@@ -1107,7 +1104,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnSqrt.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnSqrt.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnSqrt.setText("√‾");
         btnSqrt.setFocusable(false);
         btnSqrt.addActionListener(new java.awt.event.ActionListener() {
@@ -1116,7 +1113,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnExpN.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnExpN.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnExpN.setText("xʸ");
         btnExpN.setFocusable(false);
         btnExpN.addActionListener(new java.awt.event.ActionListener() {
@@ -1125,7 +1122,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnSqrtN.setFont(new Font("Thoma", Font.PLAIN, 13)); // NOI18N
+        btnSqrtN.setFont(new Font("Thoma", Font.PLAIN, 13));
         btnSqrtN.setText("n√");
         btnSqrtN.setFocusable(false);
         btnSqrtN.addActionListener(new java.awt.event.ActionListener() {
@@ -1134,7 +1131,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnFac.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnFac.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnFac.setText("!");
         btnFac.setFocusable(false);
         btnFac.addActionListener(new java.awt.event.ActionListener() {
@@ -1143,7 +1140,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnSin.setFont(new Font("Thoma", Font.PLAIN, 11)); // NOI18N
+        btnSin.setFont(new Font("Thoma", Font.PLAIN, 11));
         btnSin.setText("sin");
         btnSin.setFocusable(false);
         btnSin.addActionListener(new java.awt.event.ActionListener() {
@@ -1152,7 +1149,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnCos.setFont(new Font("Thoma", Font.PLAIN, 10)); // NOI18N
+        btnCos.setFont(new Font("Thoma", Font.PLAIN, 10));
         btnCos.setText("cos");
         btnCos.setFocusable(false);
         btnCos.addActionListener(new java.awt.event.ActionListener() {
@@ -1161,7 +1158,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnTan.setFont(new Font("Thoma", Font.PLAIN, 11)); // NOI18N
+        btnTan.setFont(new Font("Thoma", Font.PLAIN, 11));
         btnTan.setText("tan");
         btnTan.setFocusable(false);
         btnTan.addActionListener(new java.awt.event.ActionListener() {
@@ -1170,7 +1167,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnPi.setFont(new Font("Tamil MN", Font.PLAIN, 15)); // NOI18N
+        btnPi.setFont(new Font("Tamil MN", Font.PLAIN, 15));
         btnPi.setText("π");
         btnPi.setFocusable(false);
         btnPi.addActionListener(new java.awt.event.ActionListener() {
@@ -1179,7 +1176,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnDec.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnDec.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnDec.setText(",");
         btnDec.setFocusable(false);
         btnDec.addActionListener(new java.awt.event.ActionListener() {
@@ -1188,7 +1185,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnPlusMinus.setFont(new Font("Thoma", Font.PLAIN, 10)); // NOI18N
+        btnPlusMinus.setFont(new Font("Thoma", Font.PLAIN, 10));
         btnPlusMinus.setText("+/-");
         btnPlusMinus.setFocusable(false);
         btnPlusMinus.addActionListener(new java.awt.event.ActionListener() {
@@ -1197,7 +1194,7 @@ public class MainJFrame extends JFrame {
             }
         });
 
-        btnEQ.setFont(new Font("Thoma", Font.PLAIN, 14)); // NOI18N
+        btnEQ.setFont(new Font("Thoma", Font.PLAIN, 14));
         btnEQ.setText("=");
         btnEQ.setFocusable(false);
         btnEQ.addActionListener(new java.awt.event.ActionListener() {
@@ -1208,7 +1205,7 @@ public class MainJFrame extends JFrame {
 
         jText.setEditable(false);
         jText.setColumns(12);
-        jText.setFont(new Font("Quicksand", Font.PLAIN, 18)); // NOI18N
+        jText.setFont(new Font("Quicksand", Font.PLAIN, 18));
         jText.setRows(2);
         jText.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(KeyEvent evt) {
@@ -1588,9 +1585,6 @@ public class MainJFrame extends JFrame {
             java.util.logging.Logger.getLogger(MainJFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         EventQueue.invokeLater(new Runnable() {
-            /**
-             *
-             */
             public void run() {
                 new MainJFrame().setVisible(true);
             }
