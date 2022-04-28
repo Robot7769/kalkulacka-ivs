@@ -1,7 +1,7 @@
 
-.PHONY: all pack clean test doc run profile debian tar install
+.PHONY: all pack clean test doc run profile debian install
 
-VER = 2.2
+VER = 2.3
 
 DESTINATION_DIR_UBUNTU = $(HOME)
 SHELL = /bin/bash
@@ -46,10 +46,6 @@ profile:
 	  make;
 	  exec java -jar profiling/target/stddev.jar;
 
-
-tar:
-	tar cf ../../kalkulacka-$(VER).tar.gz app/src app/pom.xml pom.xml math-library/src math-library/pom.xml Makefile
-
 install:
 	mkdir -p $(DESTINATION_DIR_UBUNTU)/usr/bin
 	install $(INSFLAGS) app/target/kalkulacka.jar $(DESTINATION_DIR_UBUNTU)/usr/bin/
@@ -57,7 +53,8 @@ install:
 	install $(INSFLAGS) install/kalkulacka.png $(DESTINATION_DIR_UBUNTU)/usr/share/pixmaps/
 	install $(INSFLAGS) install/kalkulacka.desktop $(DESTINATION_DIR_UBUNTU)/usr/share/applications/
 
-debian: tar
+debian:
+	tar cf ../../kalkulacka-$(VER).tar.gz app/src app/pom.xml pom.xml math-library/src math-library/pom.xml Makefile
 	dh_make -e jan.robot7@gmail.com -n -i -p kalkulacka_$(VER) -c gpl3 -f ../../kalkulacka-$(VER).tar.gz -y
 	cp dh_make/* debian
 	dpkg-buildpackage -rfakeroot -uc -b

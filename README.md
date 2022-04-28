@@ -33,6 +33,8 @@ Ve složce kalkulacka-ivs/src spustit příkaz
 
 `make debian`
 
+Je za potřebí mít **Apache Maven 3.6.3** a **openjdk-11-jdk**
+
 Profiling
 ---------
 
