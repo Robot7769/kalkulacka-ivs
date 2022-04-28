@@ -752,8 +752,8 @@ public class MainJFrame extends JFrame {
             }
             decimalVal1 = true;
         }
-        String y = jText.getText();
-        StringBuilder sb = new StringBuilder(y);
+        String text = jText.getText();
+        StringBuilder sb = new StringBuilder(text);
         if (sb.charAt(sb.length() - 1) == ' ') {
             sb.append('0');
         }
@@ -819,8 +819,8 @@ public class MainJFrame extends JFrame {
             if (Equals()) {
                 return true;
             }
-            String z = jText.getText();
-            jText.setText(z + "\n" + operator + " ");
+            String text1 = jText.getText();
+            jText.setText(text1 + "\n" + operator + " ");
             return false;
         }
         sb.append("\n").append(operator).append(" ");
