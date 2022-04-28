@@ -437,7 +437,7 @@ public class MainJFrame extends JFrame {
             case NPOWER:
                 int tmp1 = (int) value2;
                 if (value2 != 0) {
-                    if (value2 > 0 && value2 < 2 || mathLib.mod(tmp1, value2) != 0) {
+                    if (value2 > 0 && value2 < 1 || mathLib.mod(tmp1, value2) != 0) {
                         JOptionPane.showMessageDialog(null, "Hodnota n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
                         negateValues();
                         return true;
@@ -635,7 +635,7 @@ public class MainJFrame extends JFrame {
             case 'P':
                 btnPi.doClick();
                 break;
-            /* //Výpis debug okna
+                //Výpis debug okna
             case 'h':
                 String debug = "OperatorID: " + operatorID + "\n" +
                     "OperatorSet: " + operatorSet + "\n" +
@@ -649,7 +649,7 @@ public class MainJFrame extends JFrame {
                     "DecimalVal2: " + decimalVal2 + "\n";
                 JOptionPane.showMessageDialog(null, debug, "DEBUG", JOptionPane.PLAIN_MESSAGE);
                 break;
-            */
+            //*/
             default:
                 break;
         }
@@ -1482,6 +1482,11 @@ public class MainJFrame extends JFrame {
 
     private void btnExpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExpActionPerformed
         if (operatorSet) {
+            if( jText.getText().charAt(jText.getText().length()-1)== ' '){
+                if(operatorID != OperatorsID.PLUS && operatorID != OperatorsID.MINUS){
+                    value2 = 1;
+                }
+            }
             if (Equals()) {
                 return;
             }
@@ -1492,6 +1497,11 @@ public class MainJFrame extends JFrame {
 
     private void btnSqrtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSqrtActionPerformed
         if (operatorSet) {
+            if( jText.getText().charAt(jText.getText().length()-1)== ' '){
+                if(operatorID != OperatorsID.PLUS && operatorID != OperatorsID.MINUS){
+                    value2 = 1;
+                }
+            }
             if (Equals()) {
                 return;
             }
@@ -1516,6 +1526,11 @@ public class MainJFrame extends JFrame {
 
     private void btnFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacActionPerformed
         if (operatorSet) {
+            if( jText.getText().charAt(jText.getText().length()-1)== ' '){
+                if(operatorID != OperatorsID.PLUS && operatorID != OperatorsID.MINUS){
+                    value2 = 1;
+                }
+            }
             if (Equals()) {
                 return;
             }
@@ -1530,6 +1545,11 @@ public class MainJFrame extends JFrame {
 
     private void btnSinActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSinActionPerformed
         if (operatorSet) {
+            if( jText.getText().charAt(jText.getText().length()-1)== ' '){
+                if(operatorID != OperatorsID.PLUS && operatorID != OperatorsID.MINUS){
+                    value2 = 1;
+                }
+            }
             if (Equals()) {
                 return;
             }
@@ -1540,6 +1560,11 @@ public class MainJFrame extends JFrame {
 
     private void btnCosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCosActionPerformed
         if (operatorSet) {
+            if( jText.getText().charAt(jText.getText().length()-1)== ' '){
+                if(operatorID != OperatorsID.PLUS && operatorID != OperatorsID.MINUS){
+                    value2 = 1;
+                }
+            }
             if (Equals()) {
                 return;
             }
@@ -1550,6 +1575,11 @@ public class MainJFrame extends JFrame {
 
     private void btnTanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTanActionPerformed
         if (operatorSet) {
+            if( jText.getText().charAt(jText.getText().length()-1)== ' '){
+                if(operatorID != OperatorsID.PLUS && operatorID != OperatorsID.MINUS){
+                    value2 = 1;
+                }
+            }
             if (Equals()) {
                 return;
             }
