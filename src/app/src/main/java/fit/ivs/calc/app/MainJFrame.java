@@ -423,15 +423,7 @@ public class MainJFrame extends JFrame {
                 output = Alignment();
                 break;
             case SQRT:
-                try {
-                    value1 = mathLib.sqrt(value1);
-                } catch (Exception e) {
-                    String error = e.toString().substring(' ' - 1);
-                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
-                    negateValues();
-                    operatorID = OperatorsID.DEFAULT;
-                    return true;
-                }
+                value1 = mathLib.sqrt(value1);
                 output = Alignment();
                 break;
             case NPOWER:
@@ -496,6 +488,10 @@ public class MainJFrame extends JFrame {
                 negateValues();
                 return false;
         }
+        if(output.equals("ERROR")){
+            DeleteScreen();
+            return true;
+        }
         if (negative1) {
             jText.setText(" - " + output);
         } else {
@@ -511,7 +507,13 @@ public class MainJFrame extends JFrame {
      * @return Vrací počet desetinných míst
      */
     public int getScale(double value) {
-        BigDecimal bd = new BigDecimal(value);
+        BigDecimal bd;
+        try {
+            bd = new BigDecimal(value);
+        }catch(NumberFormatException e){
+            JOptionPane.showMessageDialog(null, "Příliš velké číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
+            return -1;
+        }
         if (bd.intValue() == 0) {
             return 10;
         }
@@ -849,6 +851,9 @@ public class MainJFrame extends JFrame {
      */
     public String RoundToString(double value) {
         int scale = getScale(value);
+        if(scale == -1){
+            return "ERROR";
+        }
         String tmp = new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).toPlainString();
         digitsVal1 = scale;
         StringBuilder sb = new StringBuilder(tmp);
