@@ -1,3 +1,23 @@
+/****************************************************
+ * Název projektu: Kalkulačka
+ * Balíček: fit.ivs.calc.profiling
+ * Soubor: Profiling.java
+ * Autoři: Vítězslav Šafář (xsafar26)
+ *         Jan Škrabal (xskrab12)
+ *         Richard Kocian (xkocia19)
+ *         Petr Cafourek (xcafou01)
+ *
+ * Popis: Výpočet výběrové směrodatné odchylky, pro omtimalizaci kódu
+ ****************************************************/
+/**
+ * @file MathLib.java
+ *
+ * @brief Výpočet výběrové směrodatné odchylky, pro omtimalizaci kódu kalkulačky
+ * @author Vítězslav Šafář (xsafar26)
+ * @author Jan Škrabal (xskrab12)
+ * @author Richard Kocian (xkocia19)
+ * @author Petr Cafourek (xcafou01)
+ */
 package fit.ivs.calc.profiling;
 
 import fit.ivs.calc.mathlibrary.MathLib;
