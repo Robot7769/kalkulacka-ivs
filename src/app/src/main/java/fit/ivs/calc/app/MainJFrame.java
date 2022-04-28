@@ -1,13 +1,26 @@
-package fit.ivs.calc.app;
+/****************************************************
+ * Název projektu: Kalkulačka
+ * Balíček: fit.ivs.calc.app
+ * Soubor: MainJFrame.java
+ * Autoři: Vítězslav Šafář (xsafar26)
+ *         Jan Škrabal (xskrab12)
+ *         Richard Kocian (xkocia19)
+ *         Petr Cafourek (xcafou01)
+ *
+ * Popis: Grafické rozhraní a ukládání hodnot
+ ****************************************************/
 /**
- * @author xsafar26
- * @author xskrab12
- * @author xkocia19
- * @author xcafou01
+ * @file MainJFrame.java
+ *
+ * @brief Grafické rozhraní a ukládání hodnot kalkulačky
+ * @author Vítězslav Šafář (xsafar26)
+ * @author Jan Škrabal (xskrab12)
+ * @author Richard Kocian (xkocia19)
+ * @author Petr Cafourek (xcafou01)
  */
+package fit.ivs.calc.app;
 
 import fit.ivs.calc.mathlibrary.MathLib;
-
 import javax.swing.*;
 import javax.swing.text.DefaultEditorKit;
 import java.awt.*;

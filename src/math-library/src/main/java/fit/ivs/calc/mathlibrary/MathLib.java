@@ -1,3 +1,23 @@
+/****************************************************
+ * Název projektu: Kalkulačka
+ * Balíček: fit.ivs.calc.mathlibrary
+ * Soubor: MathLib.java
+ * Autoři: Vítězslav Šafář (xsafar26)
+ *         Jan Škrabal (xskrab12)
+ *         Richard Kocian (xkocia19)
+ *         Petr Cafourek (xcafou01)
+ *
+ * Popis: Matematická knihovna kalkulačky
+ ****************************************************/
+/**
+ * @file MathLib.java
+ *
+ * @brief Matematická knihovna kalkulačky
+ * @author Vítězslav Šafář (xsafar26)
+ * @author Jan Škrabal (xskrab12)
+ * @author Richard Kocian (xkocia19)
+ * @author Petr Cafourek (xcafou01)
+ */
 package fit.ivs.calc.mathlibrary;
 
 public class MathLib {
