@@ -26,7 +26,7 @@ public class MathLib {
      * @param a hodnota
      * @return Vrací absolutní hodnotu čísla 'a'
      */
-    private double abs(double a) {
+    private double abs(double a) {  //privátní funkce, využívá se pouze v matematické knihovně
         return a < 0 ? -a : a;
     }
 
@@ -115,21 +115,25 @@ public class MathLib {
                 sing = -1;
             }
         }
-        double min = 0.0;
-        double max = abs(a);
+        double min = 0.0;           //spodní hranice pro hledání odmocniny
+        double max = abs(a);        //horní hranice pro hledání odmocniny
+        //pro odmocninu z malého čísla se zvýší horní hranice
         if (abs(a) < 1 && abs(a) > 0) {
             max += 1;
         }
         if (abs(a) < 1) {
             max *= 2;
         }
-        double middle = max;
+        double middle = max;        //střední hodnota pro hledání odmocniny
+
+        //hledání odmocniny čísla za pomoci zkracování intervalu <min,max>
+        //zkracování se provádí dokud není odchylka menší jak stanovená hodnota nebo nanejvýš 100x kdyby číslo oscilovalo
         for (int i = 0; (abs(nPow(middle,(int) abs(n)) - abs(a)) > 0.0000000000000005 ) && i < 100; i++) {
             middle = div((min + max), 2);
-            if (nPow(middle,(int) abs(n)) > abs(a)) {
-                max = middle;
+            if (nPow(middle,(int) abs(n)) > abs(a)) {   //zkracování itervalu na kterém leží odmocnina čísla 'a'
+                max = middle;       //zmenšení horní hranice
             } else {
-                min = middle;
+                min = middle;       //zvětšení spodní hranice
             }
             //System.out.println("i: " + i + " min: " + min + " max: " + max + " middle: " + middle + " nPow: " + nPow(middle,(int) abs(n)));
         }
@@ -161,7 +165,7 @@ public class MathLib {
             a_n *= a;
         }
         if (n < 0) {
-            return div(1,a_n);
+            return div(1,a_n);      //záporná mocnina se dá počítat jako 'a^(1/n)'
         } else {
             return a_n;
         }
@@ -204,7 +208,7 @@ public class MathLib {
         if (mod(a,90) == 0 && mod(a,180) != 0) {
             throw new ArithmeticException("Tangens úhlu "+ a + "° není definován");
         }
-        return div(sin(a),cos(a));
+        return div(sin(a),cos(a));  //tan(a) = sin(a)/cos(a)
     }
 
     /**
@@ -213,7 +217,7 @@ public class MathLib {
      * @return Vrací 'cos(a°)'
      */
     public double cos(double a) {
-        return sin(a + 90);
+        return sin(a + 90);         //kosínus je stejný jakko sínus jen o 90° (stupňů) posunutý
     }
 
     /**
@@ -224,22 +228,23 @@ public class MathLib {
     public double sin(double a) {
         double sina = 0.0;
         double rad;
-        rad = (a * pi())/180;
+        rad = (a * pi())/180;       //přepočet úhlu ve stpních na radiány
 
-        a = mod(rad,(2 * pi()));
+        a = mod(rad,(2 * pi()));    //zmanšení veikosti úhlu v radiánech na interval <0,2π (pí)>
         int denominator = -1;
-        if(a < 0.0)
+        if (a < 0.0) {
             a = (2 * pi()) + a;
+        }
 
         int sign = 1;
-        if (a > pi()){
+        if (a > pi()) {             //nastavení znaménka podle kvadrantu
             a -= pi();
             sign = -1;
         }
 
-        for (int i = 0; i <= 50; i++){
+        for (int i = 0; i <= 50; i++) {
             denominator += 2;
-            sina += nPow(-1,i) * (nPow(a, denominator) / fact(denominator));
+            sina += nPow(-1,i) * (nPow(a, denominator) / fact(denominator));  //výpočet Taylorovy řady
         }
         return sign*sina;
     }
