@@ -3,7 +3,7 @@
 
 VER = 2.2
 
-DESTDIRHONZA = $(HOME)
+DESTINATION_DIR_UBUNTU = $(HOME)
 SHELL = /bin/bash
 INSFLAGS = -m 0755
 ZIPNAME = xsafar26_xskrab12_xkocia19_xcafou01
@@ -51,11 +51,11 @@ tar:
 	tar cf ../../kalkulacka-$(VER).tar.gz app/src app/pom.xml pom.xml math-library/src math-library/pom.xml Makefile
 
 install:
-	mkdir -p $(DESTDIRHONZA)/usr/bin
-	install $(INSFLAGS) app/target/kalkulacka.jar $(DESTDIRHONZA)/usr/bin/
-	install $(INSFLAGS) install/kalkulacka $(DESTDIRHONZA)/usr/bin/
-	install $(INSFLAGS) install/kalkulacka.png $(DESTDIRHONZA)/usr/share/pixmaps/
-	install $(INSFLAGS) install/kalkulacka.desktop $(DESTDIRHONZA)/usr/share/applications/
+	mkdir -p $(DESTINATION_DIR_UBUNTU)/usr/bin
+	install $(INSFLAGS) app/target/kalkulacka.jar $(DESTINATION_DIR_UBUNTU)/usr/bin/
+	install $(INSFLAGS) install/kalkulacka $(DESTINATION_DIR_UBUNTU)/usr/bin/
+	install $(INSFLAGS) install/kalkulacka.png $(DESTINATION_DIR_UBUNTU)/usr/share/pixmaps/
+	install $(INSFLAGS) install/kalkulacka.desktop $(DESTINATION_DIR_UBUNTU)/usr/share/applications/
 
 debian: tar
 	dh_make -e jan.robot7@gmail.com -n -i -p kalkulacka_$(VER) -c gpl3 -f ../../kalkulacka-$(VER).tar.gz -y
