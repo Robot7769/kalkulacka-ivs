@@ -1,4 +1,4 @@
-/****************************************************
+/*******************************************************************************************
  * Název projektu: Kalkulačka
  * Balíček: fit.ivs.calc.profiling
  * Soubor: Profiling.java
@@ -7,12 +7,12 @@
  *         Richard Kocian (xkocia19)
  *         Petr Cafourek (xcafou01)
  *
- * Popis: Výpočet výběrové směrodatné odchylky, pro omtimalizaci kódu
- ****************************************************/
+ * Popis: Výpočet výběrové směrodatné odchylky (profiling pro omtimalizaci kódu kalkulačky)
+ *******************************************************************************************/
 /**
  * @file MathLib.java
  *
- * @brief Výpočet výběrové směrodatné odchylky, pro omtimalizaci kódu kalkulačky
+ * @brief Výpočet výběrové směrodatné odchylky (profiling pro omtimalizaci kódu kalkulačky)
  * @author Vítězslav Šafář (xsafar26)
  * @author Jan Škrabal (xskrab12)
  * @author Richard Kocian (xkocia19)

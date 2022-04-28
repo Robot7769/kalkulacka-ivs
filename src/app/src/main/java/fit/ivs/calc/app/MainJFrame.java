@@ -7,7 +7,7 @@
  *         Richard Kocián (xkocia19)
  *         Petr Cafourek (xcafou01)
  *
- * Popis: Grafické rozhraní a ukládání hodnot
+ * Popis: Grafické rozhraní a ukládání hodnot kalkulačky
  ****************************************************/
 /**
  * @file MainJFrame.java
