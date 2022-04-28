@@ -15,8 +15,12 @@ build: app/src/main/java/fit/ivs/calc/app/MainJFrame.java math-library/src/main/
 	mvn clean package -Dmaven.repo.local=../repo/
 
 pack: clean debian doc
-	mkdir ../../repo && cd ../../repo && git clone https://github.com/Robot7769/kalkulacka-ivs.git
-	cd ../../ && zip -r $(ZIPNAME) doc install repo
+	mkdir ../../$(ZIPNAME) && cd ../../$(ZIPNAME) && mkdir doc install repo
+	cd ../../$(ZIPNAME)/repo && git clone https://github.com/Robot7769/kalkulacka-ivs.git
+	cp -r ../../doc ../../$(ZIPNAME)/doc
+	cp -r ../../install ../../$(ZIPNAME)/install
+	cd ../../ && zip -r $(ZIPNAME) $(ZIPNAME)
+	rm -rf ../../$(ZIPNAME)
 
 clean:
 	mvn clean -Dmaven.repo.local=../repo/
