@@ -1,0 +1,4 @@
+xsafar26 101 (celé GUI, celková funkčnost zápisu do kalkulačky, Mockup, debugging, testování instalátoru a odinstalátoru)  
+xskrab12 101 (Instalátor a odinstalátor, dokumentace, většina matematické knihovny, README, debugging)
+xkocia19 101 (Testy nad matematickou knihovnou, testování instalátoru a odinstalátoru, Makefile, uživatelká příručka) 
+xcafou01 97  (profiling, goniometrické funkce matematické knihovny, základ uživatelské příručky)
