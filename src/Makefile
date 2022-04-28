@@ -26,7 +26,6 @@ clean:
 	rm -rf ../../doc/
 	rm -rf ../../$(ZIPNAME).zip
 	rm -rf ../../kalkulacka*.tar.gz
-	rm -rf debian
 	rm -rf ../kalkulacka_*.buildinfo ../kalkulacka_*.changes
 
 test: math-library/src/main/java/fit/ivs/calc/mathlibrary/MathLib.java math-library/src/main
@@ -55,9 +54,9 @@ install:
 	install $(INSFLAGS) install/kalkulacka.desktop $(DESTDIRHONZA)/usr/share/applications/
 
 debian: tar
-	rm -rf debian
 	dh_make -e jan.robot7@gmail.com -n -i -p kalkulacka_$(VER) -c gpl3 -f ../../kalkulacka-$(VER).tar.gz -y
 	cp dh_make/* debian
 	dpkg-buildpackage -rfakeroot -uc -b
 	mkdir -p ../../install
 	mv ../kalkulacka_*.deb ../../install/
+	rm -rf debian
