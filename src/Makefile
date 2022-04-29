@@ -17,8 +17,8 @@ build: app/src/main/java/fit/ivs/calc/app/MainJFrame.java math-library/src/main/
 pack: clean debian doc
 	mkdir ../../$(ZIPNAME) && cd ../../$(ZIPNAME) && mkdir doc install repo
 	cd ../../$(ZIPNAME)/repo && git clone https://github.com/Robot7769/kalkulacka-ivs.git
-	cp -r ../../doc ../../$(ZIPNAME)/doc
-	cp -r ../../install ../../$(ZIPNAME)/install
+	cp -r ../../doc/* ../../$(ZIPNAME)/doc
+	cp -r ../../install/* ../../$(ZIPNAME)/install
 	cd ../../ && zip -r $(ZIPNAME) $(ZIPNAME)
 	rm -rf ../../$(ZIPNAME)
 
