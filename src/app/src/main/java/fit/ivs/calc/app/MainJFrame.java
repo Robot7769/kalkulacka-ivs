@@ -32,17 +32,17 @@ import java.math.RoundingMode;
 
 public class MainJFrame extends JFrame {
 
-    private final MathLib mathLib = new MathLib(); //Objekt matematické knihovny
-    private double value1 = 0.0;
-    private double value2 = 0.0;
-    private boolean operatorSet = false;
-    private boolean decimalVal1 = false;
-    private boolean decimalVal2 = false;
-    private boolean negative1 = false;
-    private boolean negative2 = false;
-    private int digitsVal1 = 0;
-    private int digitsVal2 = 0;
-    private OperatorsID operatorID = OperatorsID.DEFAULT;
+    private final MathLib mathLib = new MathLib();      //Objekt matematické knihovny
+    private double value1 = 0.0;                        // První hodnota pro výpočet
+    private double value2 = 0.0;                        // Druhá hodnota pro výpočet
+    private boolean operatorSet = false;                // Kalkulačka má/nemá zadaný operátor
+    private boolean decimalVal1 = false;                // První hodnota je/není zobrazená jako desetinné číslo
+    private boolean decimalVal2 = false;                // Druhá hodnota je/není zobrazená jako desetinné číslo
+    private boolean negative1 = false;                  // První hodnota je/není záporná (pro výpis - před číslem)
+    private boolean negative2 = false;                  // Druhá hodnota je/není záporná
+    private int digitsVal1 = 0;                         // Počet desetinných míst v první hodnotě
+    private int digitsVal2 = 0;                         // Počet desetinných míst v druhé hodnotě
+    private OperatorsID operatorID = OperatorsID.DEFAULT; // ID operátoru matematických funkcí
 
     public MainJFrame() {
         initComponents();
@@ -61,10 +61,10 @@ public class MainJFrame extends JFrame {
         operatorID = OperatorsID.DEFAULT;
         operatorSet = false;
         String tmp = RoundToString(value1);
-        if (tmp.contains(".")) {
+        if (tmp.contains(".")) {                        // Číslo je desetinné
             decimalVal1 = true;
         }
-        tmp = tmp.replace(".", ",");
+        tmp = tmp.replace(".", ",");  // Záměna tečky za čárku
         return tmp;
     }
 
@@ -75,7 +75,7 @@ public class MainJFrame extends JFrame {
         String text = jText.getText();
         StringBuilder sb = new StringBuilder(text);
         if (text.length() != 3) {
-            char[] operators = {'+', '-', '*', '÷', '%', '^', '√'};
+            char[] operators = {'+', '-', '*', '÷', '%', '^', '√'};         //pole operátorů
             char[] numbers = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
             char c = text.charAt(text.length() - 2);
             for (char operator : operators) {
@@ -84,7 +84,7 @@ public class MainJFrame extends JFrame {
                     sb.deleteCharAt(text.length() - 2);
                     sb.deleteCharAt(text.length() - 3);
                     if (c == '-') {
-                        sb.deleteCharAt(text.length() - 4);
+                        sb.deleteCharAt(text.length() - 4);  // Operátor mínus se vypisuje s jednou mezerou navíc
                     }
                     operatorID = OperatorsID.DEFAULT;
                     operatorSet = false;
@@ -94,8 +94,8 @@ public class MainJFrame extends JFrame {
             c = text.charAt(text.length() - 1);
             for (char number : numbers) {
                 if (c == number) {
-                    if (!operatorSet) {
-                        if (!decimalVal1) {
+                    if (!operatorSet) {                 // Není nastavený operátor
+                        if (!decimalVal1) {             // První hodnota není desetinná
                             value1 -= ((double) c - '0');
                             value1 /= 10.0;
                         } else {
@@ -104,7 +104,7 @@ public class MainJFrame extends JFrame {
                             value1 -= (double) (c - '0') / mathLib.nPow(10.0, digitsVal1--);
                         }
                     } else {
-                        if (!decimalVal2) {
+                        if (!decimalVal2) {             // Druhá hodnota není desetinná
                             value2 -= ((double) c - '0');
                             value2 /= 10;
                         } else {
@@ -155,9 +155,9 @@ public class MainJFrame extends JFrame {
      */
     public int countNumDigits(int value) {
         int counter = 0;
-        while (value != 0) {
+        while (value != 0) {                            // Cyklus dokud vstupní hodnota není nula
             counter++;
-            value = (value / 10);
+            value = (value / 10);                       // Vydělení hodnoty desíti a následné oříznutí desetinné části
         }
         return counter;
     }
@@ -172,14 +172,14 @@ public class MainJFrame extends JFrame {
                 value1 = value1 * 10.0 + value;
             } else {
                 double tmp = RoundToLong(value1 * mathLib.nPow(10.0, digitsVal1));
-                value1 = tmp/mathLib.nPow(10.0, digitsVal1);
-                value1 += value / mathLib.nPow(10, ++digitsVal1);
+                value1 = tmp/mathLib.nPow(10.0, digitsVal1);          // Změní stávající value1 na číslo na vstupu
+                value1 += value / mathLib.nPow(10, ++digitsVal1);     // Změní stávající desetinnou value1 na číslo na vstupu
             }
         } else {
             if (!decimalVal2) {
-                value2 = value2 * 10.0 + value;
+                value2 = value2 * 10.0 + value;                       // Změní stávající value2 na číslo na vstupu
             } else {
-                value2 += value / mathLib.nPow(10.0, ++digitsVal2);
+                value2 += value / mathLib.nPow(10.0, ++digitsVal2);   // Změní stávající desetinnou value2 na číslo na vstupu
             }
         }
     }
@@ -336,6 +336,7 @@ public class MainJFrame extends JFrame {
      * Funkce na vymazání vstupního/výstupního okna kalkulačky a resetování paměti kalkulačky
      */
     public void DeleteScreen() {
+        // Funkce nastaví všechny proměnné na defaultní hodnoty
         jText.setText("   ");
         value1 = 0.0;
         value2 = 0.0;
@@ -409,7 +410,7 @@ public class MainJFrame extends JFrame {
                 }
                 try {
                     value1 = mathLib.fact(tmp);
-                } catch (Exception e) {
+                } catch (Exception e) {                 // Chytání chybového stavu při funkci z matematické knihovny
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negateValues();
@@ -429,7 +430,7 @@ public class MainJFrame extends JFrame {
             case NPOWER:
                 int tmp1 = (int) value2;
                 if (value2 != 0) {
-                    if (value2 > 0 && value2 < 1 || mathLib.mod(tmp1, value2) != 0) {
+                    if (value2 > 0 && value2 < 1 || mathLib.mod(tmp1, value2) != 0) { // Testování, zda hodnota je celé číslo
                         JOptionPane.showMessageDialog(null, "Hodnota n musí být celé číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
                         negateValues();
                         return true;
@@ -437,7 +438,7 @@ public class MainJFrame extends JFrame {
                 }
                 try {
                     value1 = mathLib.nPow(value1, tmp1);
-                } catch (Exception e) {
+                } catch (Exception e) {                 // Chytání chybového stavu při funkci z matematické knihovny
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negateValues();
@@ -475,7 +476,7 @@ public class MainJFrame extends JFrame {
             case TAN:
                 try {
                     value1 = mathLib.tan(value1);
-                } catch (Exception e) {
+                } catch (Exception e) {                 // Chytání chybového stavu při funkci z matematické knihovny
                     String error = e.toString().substring(' ' - 1);
                     JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
                     negateValues();
@@ -510,17 +511,17 @@ public class MainJFrame extends JFrame {
         BigDecimal bd;
         try {
             bd = new BigDecimal(value);
-        }catch(NumberFormatException e){
+        }catch(NumberFormatException e){                // Chytání chybového stavu při přetečení (hodnota INF nebo NaN)
             JOptionPane.showMessageDialog(null, "Příliš velké číslo", "ERROR", JOptionPane.ERROR_MESSAGE);
             return -1;
         }
         if (bd.intValue() == 0) {
             return 10;
         }
-        int scale = 16 - countNumDigits(bd.intValue());
+        int scale = 16 - countNumDigits(bd.intValue()); // Výpočet počtu desetinných míst
         if (scale < 0) {
             scale = 0;
-        } else if (scale > 10){
+        } else if (scale > 10){                         // Max 10 desetinných míst
             scale = 10;
         }
         return scale;
@@ -531,6 +532,7 @@ public class MainJFrame extends JFrame {
      * @param c vstup z klávesnice
      */
     public void KeyTracker(char c) {
+        // Funkce zmáčkne dané tlačítko podle vstupu z klávesnice
         switch (c) {
             case '1':
                 btn1.doClick();
@@ -857,11 +859,11 @@ public class MainJFrame extends JFrame {
         String tmp = new BigDecimal(value).setScale(scale, RoundingMode.HALF_UP).toPlainString();
         digitsVal1 = scale;
         StringBuilder sb = new StringBuilder(tmp);
-        while (sb.charAt(sb.length() - 1) == '0') {
+        while (sb.charAt(sb.length() - 1) == '0') {     // Odstranění přebytečných 0 ve výsledku
             digitsVal1--;
             sb.deleteCharAt(sb.length() - 1);
         }
-        if (sb.charAt(sb.length() - 1) == '.') {
+        if (sb.charAt(sb.length() - 1) == '.') {        // ODstranění desetinné čárky, pokud za ní nic není
             sb.deleteCharAt(sb.length() - 1);
         }
         if (sb.charAt(0) == '-') {
@@ -1368,7 +1370,7 @@ public class MainJFrame extends JFrame {
     private void btnInfoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInfoActionPerformed
         if (Desktop.isDesktopSupported()) {
             try {
-                File myFile = new File("/usr/share/kalkulacka/INFO.pdf"); //TODO předělat cestu na info.pdf
+                File myFile = new File("/usr/share/kalkulacka/INFO.pdf");
                 Desktop.getDesktop().open(myFile);
             } catch (IOException ex) {
                 // no application registered for PDFs
@@ -1626,7 +1628,7 @@ public class MainJFrame extends JFrame {
         });
     }
 
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Deklarace entit grafického rozhraní
     private JToggleButton DarkMode;
     private JButton btn0;
     private JButton btn1;
