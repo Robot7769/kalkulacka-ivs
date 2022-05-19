@@ -92,13 +92,7 @@ public class MathLib {
      * @return Vrací '√a'
      */
     public double sqrt(double a) {
-        double tmp = -1;
-        try{
-            tmp = nSqrt(a,2);
-        } catch (ArithmeticException e) {
-            throw e;
-        }
-        return tmp;
+        return nSqrt(a,2);
     }
 
     /**
