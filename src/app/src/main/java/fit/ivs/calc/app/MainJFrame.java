@@ -646,7 +646,7 @@ public class MainJFrame extends JFrame {
             case 'P':
                 btnPi.doClick();
                 break;
-            /*  //Výpis debug okna
+              //Výpis debug okna
             case 'h':
                 String debug = "OperatorID: " + operatorID + "\n" +
                     "OperatorSet: " + operatorSet + "\n" +
@@ -752,6 +752,10 @@ public class MainJFrame extends JFrame {
      * Funkce pro výpis desetinné čárky
      */
     public void printDec() {
+        String text = jText.getText();
+        if(text.charAt(text.length()-1)=='π'){
+            return;
+        }
         if (operatorSet) {
             if (decimalVal2) {
                 return;
@@ -763,7 +767,6 @@ public class MainJFrame extends JFrame {
             }
             decimalVal1 = true;
         }
-        String text = jText.getText();
         StringBuilder sb = new StringBuilder(text);
         if (sb.charAt(sb.length() - 1) == ' ') {
             sb.append('0');
@@ -824,8 +827,9 @@ public class MainJFrame extends JFrame {
                 }
 
             }
-        } else if (text.charAt(text.length() - 1) == ',') {
+        } else if (text.charAt(text.length() - 1) == ',' && !operatorSet) {
             sb.append("0");
+            decimalVal1 = false;
         } else if (operatorSet) {
             if (Equals()) {
                 return true;
