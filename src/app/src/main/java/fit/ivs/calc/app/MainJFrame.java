@@ -424,7 +424,14 @@ public class MainJFrame extends JFrame {
                 output = Alignment();
                 break;
             case SQRT:
-                value1 = mathLib.sqrt(value1);
+                try {
+                    value1 = mathLib.sqrt(value1);
+                }catch (Exception e) {
+                    String error = e.toString().substring(' ' - 1);
+                    JOptionPane.showMessageDialog(null, error, "ERROR", JOptionPane.ERROR_MESSAGE);
+                    negateValues();
+                    return true;
+                }
                 output = Alignment();
                 break;
             case NPOWER:
